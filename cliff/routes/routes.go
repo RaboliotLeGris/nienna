@@ -1,0 +1,66 @@
+package routes
+
+import (
+	"encoding/json"
+	"net/http"
+	"os"
+
+	"github.com/gorilla/mux"
+	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/rbcervilla/redisstore/v8"
+	"github.com/rs/cors"
+	log "github.com/sirupsen/logrus"
+)
+
+type router struct {
+	router *mux.Router
+}
+
+func (r router) Launch() error {
+	log.Info("router - Launching HTTP server")
+
+	// To ease development, we disable CORS
+	var handler http.Handler
+	if isDev := os.Getenv("NIENNA_DEV"); isDev == "true" {
+		handler = cors.AllowAll().Handler(r.router)
+	} else {
+		handler = r.router
+	}
+
+	srv := &http.Server{
+		Handler: handler,
+		Addr:    "0.0.0.0:8000",
+	}
+
+	return srv.ListenAndServe()
+}
+
+func Create(pool *pgxpool.Pool, store *redisstore.RedisStore) router {
+	log.Info("router - Creating routers")
+
+	// Routes order creation matter. Static route must be last or it will match all routes
+	r := mux.NewRouter()
+
+	log.Debug("router - Adding api/health route")
+	r.HandleFunc("/api/health", func(w http.ResponseWriter, r *http.Request) {
+		json.NewEncoder(w).Encode(map[string]bool{"ok": true})
+	})
+
+	log.Debug("router - Adding users routes")
+	r.PathPrefix("/api/users/register").Handler(registerUserHandler{pool, store}).Methods("POST")
+	r.PathPrefix("/api/users/login").Handler(loginUserHandler{pool, store}).Methods("POST")
+	// r.PathPrefix("/api/users/reload").Handler(reloadUserHandler{pool, store}).Methods("POST")
+
+	log.Debug("router - Adding videos routes")
+	r.PathPrefix("/api/videos/upload").Handler(uploadVideoHandler{pool, store}).Methods("POST")
+	// r.PathPrefix("/api/videos/view").Handler(viewVideoHandler{pool, store}).Methods("GET")
+	// r.PathPrefix("/api/videos/viewall").Handler(viewAllVideoHandler{pool, store}).Methods("GET")
+	// r.PathPrefix("/api/videos/search").Handler(searchVideoHandler{pool, store}).Methods("GET")
+
+	log.Debug("router - Adding static folder routes")
+	r.PathPrefix("/").Handler(staticHandler{staticPath: "static", indexPath: "index.html"})
+
+	return router{
+		router: r,
+	}
+}

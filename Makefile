@@ -2,24 +2,30 @@
 .PHONY: build test d_launch
 
 d_launch:
-	docker-compose up --build --remove-orphans
+	docker-compose -f docker-compose.yml -f services/docker-compose.yml  up --build --remove-orphans
 
-build: build_api build_backburner build_webapp
+d_db:
+	docker exec -ti `docker ps -aqf "name=nienna_db"` psql --user nienna
 
-test: test_api test_backburner test_webapp
+d_redis:
+	docker exec -ti `docker ps -aqf "name=nienna_redis"` redis-cli
+
+build: build_cliff build_backburner build_webapp
+
+test: test_cliff test_backburner test_webapp
 
 build_webapp:
 	(cd webapp && npm i && npm run build)
-	(rm -rf webapi/static/*; cp -r webapp/dist/* webapi/static/)
+	(rm -rf cliff/static/*; cp -r webapp/dist/* cliff/static/)
 build_backburner:
 	(cd backburner && cargo build)
-build_webapi:
-	(cd webapi && go build -o build/webapi)
+build_cliff:
+	(cd cliff && go build -o build/cliff)
 
 test_webapp:
 	echo 'TODO'
 test_backburner:
-	(cd backburner && cargo test)
-test_webapi:
 	echo 'TODO'
+test_cliff:
+	docker-compose -f cliff/tests/docker-compose.yml up --build --remove-orphans
 

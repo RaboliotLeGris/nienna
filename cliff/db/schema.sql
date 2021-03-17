@@ -33,3 +33,4 @@ CREATE TABLE videos
 -- initial data
 
 INSERT INTO meta_info VALUES (1);
+INSERT INTO users (username) VALUES ('admin');

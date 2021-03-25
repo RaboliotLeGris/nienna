@@ -27,5 +27,5 @@ test_webapp:
 test_backburner:
 	echo 'TODO'
 test_cliff:
-	docker-compose -f cliff/tests/docker-compose.yml up --build --remove-orphans
+	(cd cliff && pwd && make test)
 

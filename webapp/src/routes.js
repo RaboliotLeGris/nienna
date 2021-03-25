@@ -1,7 +1,8 @@
 const routes = {
   postLogin: '/api/users/login',
   postRegister: '/api/users/register',
-  getUserDetail: '/api/users/details',
+  getAllVideos: '/api/videos/all',
+  postVideo: '/api/videos/upload',
 };
 
 export default routes;

@@ -4,20 +4,19 @@ services:
   cliff:
     build: cliff
     restart: unless-stopped
-    # TMP
-#    ports:
-#      - "8000:8000"
     environment:
       DB_URI: "postgresql://db/nienna?user=nienna&password=nienna"
       REDIS_URI: "redis:6379"
+      S3_URI: "s3:9000"
+      S3_ACCESS_KEY: "minio"
+      S3_SECRET_KEY: "minio123" # Yes
       # If NIENNA_DEV is defined, debug logs are printed
       NIENNA_DEV: "true"
       SESSION_KEY: "95c5a0ae-6bd8-4866-81d3-6f67223f8ff2"
-    labels:
-      - "traefik.http.services.cliff.loadbalancer.server.port=8000"
     depends_on:
       - db
       - redis
+      - s3
 
 #  backburner:
 #    build: backburner

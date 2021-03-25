@@ -8,7 +8,7 @@ import (
 	"github.com/rbcervilla/redisstore/v8"
 	log "github.com/sirupsen/logrus"
 
-	"nienna/db/DAOs"
+	"nienna/db/daos"
 )
 
 type registerUserHandler struct {
@@ -29,7 +29,7 @@ func (s registerUserHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	userDAO := DAOs.NewUserDAO(s.pool)
+	userDAO := daos.NewUserDAO(s.pool)
 	err = userDAO.Create(body.Username)
 	if err != nil {
 		w.WriteHeader(500)
@@ -66,7 +66,7 @@ func (s loginUserHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = DAOs.NewUserDAO(s.pool).Login(body.Username)
+	err = daos.NewUserDAO(s.pool).Login(body.Username)
 	if err != nil {
 		log.Error("Failed to login user: ", body.Username, " - ", err)
 		w.WriteHeader(400)

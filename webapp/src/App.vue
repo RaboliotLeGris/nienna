@@ -1,24 +1,21 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/">Home</router-link>
+      <router-link v-show="this.$store.state.logged" to="/upload">Upload</router-link>
       <Session/>
     </div>
     <router-view/>
-    <Miniature/>
   </div>
 </template>
 
 <script>
 import Session from '@/components/Session.vue';
-import Miniature from '@/components/Miniature.vue';
 
 export default {
   name: 'App',
   components: {
     Session,
-    Miniature,
   },
 };
 </script>

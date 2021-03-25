@@ -14,16 +14,17 @@
 * Bucket storage (minio) -> https://hub.docker.com/r/minio/minio/
 * async message bus (Rabbitmq) -> https://hub.docker.com/_/rabbitmq
 * Relational database (pgsql) -> https://hub.docker.com/_/postgres
-* Reverse proxy (traefik) -> https://hub.docker.com/_/traefik
+* Reverse proxy (caddy) -> https://hub.docker.com/_/traefik
 
 ### TODOLIST
 
-* How to handle auth
-* Front - Login & register once done move to /
-* Front - Login State
-* Front - Display login state
-* Upload videos
-  
+* send message through rabbit
+* Add status route
+* Do view
+
+* Lock database when initializing database
+* Do not crash when db is not ready
 * Use resumable ?
 * Test Cliff
 * Prevent SQL injection (OMG)
+* add password

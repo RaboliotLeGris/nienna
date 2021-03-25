@@ -8,11 +8,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-var (
-	uninitializedDBError = "ERROR: relation \"meta_info\" does not exist (SQLSTATE 42P01)"
-)
-
-func InitDb() error {
+func InitDB() error {
 	log.Info("DB - init - Checking database status")
 	conn, err := pgx.Connect(context.Background(), os.Getenv("DB_URI"))
 	if err != nil {
@@ -37,7 +33,10 @@ func InitDb() error {
 			return err
 		}
 
-		tx.Commit(context.Background())
+		err = tx.Commit(context.Background())
+		if err != nil {
+			return err
+		}
 
 	}
 	return nil
@@ -48,7 +47,7 @@ func isInitRequired(conn *pgx.Conn) (bool, error) {
 	err := conn.QueryRow(context.Background(), "SELECT * FROM meta_info;").Scan(&version)
 
 	if err != nil {
-		if err.Error() == uninitializedDBError {
+		if err.Error() == "ERROR: relation \"meta_info\" does not exist (SQLSTATE 42P01)" {
 			return true, nil
 		}
 		return false, err

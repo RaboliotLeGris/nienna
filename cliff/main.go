@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"os"
+	"time"
 
 	"github.com/go-redis/redis/v8"
 	"github.com/jackc/pgx/v4/pgxpool"
@@ -18,10 +19,13 @@ func main() {
 		log.SetLevel(log.DebugLevel)
 	}
 
-	log.Info("Starting Cliff - Nienna api")
+	log.Info("Starting Cliff - Nienna API")
+
+	// FIXME wait for services (db & ObjectStorage) to be up
+	time.Sleep(2 * time.Second)
 
 	// initializing database with nienna schema
-	err := db.InitDb()
+	err := db.InitDB()
 	if err != nil {
 		log.Fatal("Failed to init db with error: ", err)
 	}
@@ -40,7 +44,14 @@ func main() {
 		log.Fatal("failed to create redis store: ", err)
 	}
 
-	err = routes.Create(pool, sessionStore).Launch()
+	// Init Object Storage buckets
+	storage, err := NewStorageClient(os.Getenv("S3_URI"), os.Getenv("S3_ACCESS_KEY"), os.Getenv("S3_SECRET_KEY"), "nienna-1", os.Getenv("NIENNA_DEV") != "true")
+	if err != nil {
+		log.Fatal("failed to create Object Storage client: ", err)
+	}
+
+	// RabbitMQ event bus
+	err = routes.Create(pool, sessionStore, storage).Launch()
 	if err != nil {
 		log.Fatal("Router exit with error: ", err)
 	}

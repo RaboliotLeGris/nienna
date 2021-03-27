@@ -11,6 +11,7 @@ import (
 	log "github.com/sirupsen/logrus"
 
 	"nienna/db"
+	"nienna/objectStorage"
 	"nienna/routes"
 )
 
@@ -45,7 +46,7 @@ func main() {
 	}
 
 	// Init Object Storage buckets
-	storage, err := NewStorageClient(os.Getenv("S3_URI"), os.Getenv("S3_ACCESS_KEY"), os.Getenv("S3_SECRET_KEY"), "nienna-1", os.Getenv("NIENNA_DEV") != "true")
+	storage, err := objectStorage.NewStorageClient(os.Getenv("S3_URI"), os.Getenv("S3_ACCESS_KEY"), os.Getenv("S3_SECRET_KEY"), "nienna-1", os.Getenv("NIENNA_DEV") != "true")
 	if err != nil {
 		log.Fatal("failed to create Object Storage client: ", err)
 	}

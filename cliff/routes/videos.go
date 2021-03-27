@@ -8,18 +8,18 @@ import (
 	"path/filepath"
 
 	"github.com/jackc/pgx/v4/pgxpool"
-	"github.com/minio/minio-go/v7"
 	"github.com/rbcervilla/redisstore/v8"
 	log "github.com/sirupsen/logrus"
 	"github.com/thanhpk/randstr"
 
 	"nienna/db/daos"
+	"nienna/objectStorage"
 )
 
 type uploadVideoHandler struct {
 	pool         *pgxpool.Pool
 	sessionStore *redisstore.RedisStore
-	storage      *minio.Client
+	storage      *objectStorage.ObjectStorage
 }
 
 func (v uploadVideoHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -50,8 +50,11 @@ func (v uploadVideoHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	slug := randstr.Hex(10)
 	filep := fmt.Sprintf("%s/source%s", slug, filepath.Ext(fileheader.Filename))
 	// This use a lot of memory due to the "-1" params. See: https://github.com/minio/minio-go/issues/989
-	uploadInfo, err := v.storage.PutObject(context.Background(), "nienna-1", filep, file, -1, minio.PutObjectOptions{ContentType: "application/octet-stream"})
-	log.Debug("Upload info : ", uploadInfo, err)
+	err = v.storage.PutObject(context.Background(), "nienna-1", filep, file, -1)
+	if err != nil {
+		http.Error(w, "Failed to upload video", http.StatusInternalServerError)
+		return
+	}
 
 	// Save into database new video
 	video, err := daos.NewVideoDAO(v.pool).Create(slug, user, "WIP title", "WIP description")

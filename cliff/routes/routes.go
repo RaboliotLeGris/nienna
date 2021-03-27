@@ -7,10 +7,11 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v4/pgxpool"
-	"github.com/minio/minio-go/v7"
 	"github.com/rbcervilla/redisstore/v8"
 	"github.com/rs/cors"
 	log "github.com/sirupsen/logrus"
+
+	"nienna/objectStorage"
 )
 
 type router struct {
@@ -36,7 +37,7 @@ func (r router) Launch() error {
 	return srv.ListenAndServe()
 }
 
-func Create(pool *pgxpool.Pool, sessionStore *redisstore.RedisStore, storage *minio.Client) router {
+func Create(pool *pgxpool.Pool, sessionStore *redisstore.RedisStore, storage *objectStorage.ObjectStorage) router {
 	log.Info("router - Creating routers")
 
 	// Routes order creation matter. Static route must be last or it will match all routes

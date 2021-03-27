@@ -13,8 +13,13 @@ services:
     build: services/redis
     restart: unless-stopped
 
-#    rabbitmq:
-#      build: services/rabbitmq
+  rabbitmq:
+    build: services/rabbitmq
+    ports:
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: "nienna"
+      RABBITMQ_DEFAULT_PASS: "nienna123"
 
   s3:
     build: services/minio

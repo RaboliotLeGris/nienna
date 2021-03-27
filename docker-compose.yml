@@ -10,6 +10,9 @@ services:
       S3_URI: "s3:9000"
       S3_ACCESS_KEY: "minio"
       S3_SECRET_KEY: "minio123" # Yes
+      RABBITMQ_URI: "rabbitmq"
+      RABBITMQ_USER: "nienna"
+      RABBITMQ_PASS: "nienna123"
       # If NIENNA_DEV is defined, debug logs are printed
       NIENNA_DEV: "true"
       SESSION_KEY: "95c5a0ae-6bd8-4866-81d3-6f67223f8ff2"

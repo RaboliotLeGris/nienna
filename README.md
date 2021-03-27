@@ -22,6 +22,7 @@
 * Add status route
 * Do view
 
+* fix memory usage when uploading file to minio (another client or some tweaks)
 * Lock database when initializing database
 * Do not crash when db is not ready
 * Use resumable ?

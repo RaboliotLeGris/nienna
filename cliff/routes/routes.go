@@ -11,7 +11,8 @@ import (
 	"github.com/rs/cors"
 	log "github.com/sirupsen/logrus"
 
-	"nienna/objectStorage"
+	"nienna/core/msgbus"
+	"nienna/core/objectStorage"
 )
 
 type router struct {
@@ -37,7 +38,7 @@ func (r router) Launch() error {
 	return srv.ListenAndServe()
 }
 
-func Create(pool *pgxpool.Pool, sessionStore *redisstore.RedisStore, storage *objectStorage.ObjectStorage) router {
+func Create(pool *pgxpool.Pool, sessionStore *redisstore.RedisStore, storage *objectStorage.ObjectStorage, msgbus *msgbus.Msgbus) router {
 	log.Info("router - Creating routers")
 
 	// Routes order creation matter. Static route must be last or it will match all routes
@@ -54,7 +55,7 @@ func Create(pool *pgxpool.Pool, sessionStore *redisstore.RedisStore, storage *ob
 	// r.PathPrefix("/api/users/reload").Handler(reloadUserHandler{pool, store}).Methods("POST")
 
 	log.Debug("router - Adding videos routes")
-	r.PathPrefix("/api/videos/upload").Handler(uploadVideoHandler{pool, sessionStore, storage}).Methods("POST")
+	r.PathPrefix("/api/videos/upload").Handler(uploadVideoHandler{pool, sessionStore, storage, msgbus}).Methods("POST")
 	r.PathPrefix("/api/videos/all").Handler(getAllVideoHandler{pool, sessionStore}).Methods("GET")
 	// r.PathPrefix("/api/videos/view").Handler(viewVideoHandler{pool, store}).Methods("GET")
 	// r.PathPrefix("/api/videos/viewall").Handler(viewAllVideoHandler{pool, store}).Methods("GET")

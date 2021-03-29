@@ -10,8 +10,9 @@ import (
 	"github.com/rbcervilla/redisstore/v8"
 	log "github.com/sirupsen/logrus"
 
-	"nienna/db"
-	"nienna/objectStorage"
+	"nienna/core/db"
+	"nienna/core/msgbus"
+	"nienna/core/objectStorage"
 	"nienna/routes"
 )
 
@@ -52,7 +53,12 @@ func main() {
 	}
 
 	// RabbitMQ event bus
-	err = routes.Create(pool, sessionStore, storage).Launch()
+	msgbus, err := msgbus.NewMsgbus(os.Getenv("RABBITMQ_URI"), "nienna_backfurnace")
+	if err != nil {
+		log.Fatal("failed to create MessageBus client: ", err)
+	}
+
+	err = routes.Create(pool, sessionStore, storage, msgbus).Launch()
 	if err != nil {
 		log.Fatal("Router exit with error: ", err)
 	}

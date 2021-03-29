@@ -12,14 +12,16 @@ import (
 	log "github.com/sirupsen/logrus"
 	"github.com/thanhpk/randstr"
 
-	"nienna/db/daos"
-	"nienna/objectStorage"
+	"nienna/core/db/dao"
+	"nienna/core/msgbus"
+	"nienna/core/objectStorage"
 )
 
 type uploadVideoHandler struct {
 	pool         *pgxpool.Pool
 	sessionStore *redisstore.RedisStore
 	storage      *objectStorage.ObjectStorage
+	msgbus       *msgbus.Msgbus
 }
 
 func (v uploadVideoHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -32,7 +34,7 @@ func (v uploadVideoHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "unauthorized video upload", http.StatusUnauthorized)
 		return
 	}
-	user, err := daos.NewUserDAO(v.pool).Get(session.Values["username"].(string))
+	user, err := dao.NewUserDAO(v.pool).Get(session.Values["username"].(string))
 	if err != nil {
 		log.Debug("Error", err)
 		http.Error(w, "unable to fetch user", http.StatusUnauthorized)
@@ -57,13 +59,18 @@ func (v uploadVideoHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Save into database new video
-	video, err := daos.NewVideoDAO(v.pool).Create(slug, user, "WIP title", "WIP description")
+	video, err := dao.NewVideoDAO(v.pool).Create(slug, user, "WIP title", "WIP description")
 	if err != nil {
 		http.Error(w, "unable to register the video", http.StatusInternalServerError)
 		return
 	}
 
 	// Send message to backburner
+	err = v.msgbus.Publish("nienna_backfurnace", &msgbus.EventSerialization{Event: msgbus.EventVideoReadyForProcessing, Slug: slug})
+	if err != nil {
+		http.Error(w, "unable to publish video event", http.StatusInternalServerError)
+		return
+	}
 
 	_ = json.NewEncoder(w).Encode(video)
 	w.Header().Add("Content-type", "application/json")
@@ -77,7 +84,7 @@ type getAllVideoHandler struct {
 func (v getAllVideoHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	log.Debug("Request GET /api/videos/all")
 
-	videos, err := daos.NewVideoDAO(v.pool).GetAll()
+	videos, err := dao.NewVideoDAO(v.pool).GetAll()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

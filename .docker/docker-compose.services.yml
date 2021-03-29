@@ -42,4 +42,4 @@ services:
     ports:
       - "80:80"
     volumes:
-      - $PWD/services/caddy/Caddyfile:/etc/caddy/Caddyfile
+      - $PWD/.docker/services/caddy/Caddyfile:/etc/caddy/Caddyfile

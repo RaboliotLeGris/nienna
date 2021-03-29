@@ -2,7 +2,13 @@
 .PHONY: build test d_launch
 
 d_launch:
-	docker-compose -f docker-compose.yml -f services/docker-compose.yml  up --build --remove-orphans
+	docker-compose -f .docker/docker-compose.app.yml -f .docker/docker-compose.services.yml up --build --remove-orphans
+
+d_launch_app:
+	docker build cliff -t cliff && docker run --env-file cliff/.env.dev.list --network=docker_default --rm -ti cliff
+
+d_launch_services:
+	docker-compose -f .docker/docker-compose.services.yml up --build --remove-orphans
 
 d_db:
 	docker exec -ti `docker ps -aqf "name=nienna_db"` psql --user nienna

@@ -25,8 +25,8 @@
 * backfurnace -> convert it to DASH/HLS
 * backfurnace -> upload them to minio
 * backfurnace -> send event with video status
-* cliff -> Add status route
 * cliff -> Do view
+* front check session status
 
 * Docker -> makefile with hadolint + on other projects
 * cliff -> fix memory usage when uploading file to minio (another client or some tweaks)

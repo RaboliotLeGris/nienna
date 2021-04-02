@@ -100,6 +100,7 @@ type checkSerialized struct {
 func (s checkSessionHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	log.Debug("Request POST /api/users/check")
 
-	_ = json.NewEncoder(w).Encode(checkSerialized{Ok: s.sessionStore.IsAuth(r)})
-	w.WriteHeader(200)
+	if !s.sessionStore.IsAuth(r) {
+		w.WriteHeader(403)
+	}
 }

@@ -13,10 +13,25 @@
 
 <script>
 import cookies from 'js-cookie';
+import axios from 'axios';
+import routes from '@/routes';
 
 export default {
   name: 'Session',
+  created() {
+    this.check();
+  },
   methods: {
+    check() {
+      axios.post(routes.postCheck, {})
+        .then((r) => {
+          if (r.status !== 200) {
+            this.logout();
+          }
+        }).catch(() => {
+          this.logout();
+        });
+    },
     logout() {
       cookies.remove('nienna_username');
       cookies.remove('nienna');
@@ -27,7 +42,7 @@ export default {
 </script>
 
 <style>
-  #session {
-    float: right;
-  }
+#session {
+  float: right;
+}
 </style>

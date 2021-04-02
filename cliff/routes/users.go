@@ -30,7 +30,7 @@ func (s registerUserHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	userDAO := dao.NewUserDAO(s.pool)
-	err = userDAO.Create(body.Username)
+	id, err := userDAO.Create(body.Username)
 	if err != nil {
 		w.WriteHeader(500)
 		return
@@ -39,6 +39,7 @@ func (s registerUserHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	session, _ := s.sessionStore.Get(r, "nienna")
 	log.Debug("session value: ", session.Values["username"])
 	session.Values["username"] = body.Username
+	session.Values["userID"] = id
 	err = session.Save(r, w)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -66,7 +67,7 @@ func (s loginUserHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = dao.NewUserDAO(s.pool).Login(body.Username)
+	id, err := dao.NewUserDAO(s.pool).Login(body.Username)
 	if err != nil {
 		log.Error("Failed to login user: ", body.Username, " - ", err)
 		w.WriteHeader(400)
@@ -76,6 +77,7 @@ func (s loginUserHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	session, _ := s.sessionStore.Get(r, "nienna")
 	log.Debug("session value: ", session.Values["username"])
 	session.Values["username"] = body.Username
+	session.Values["userID"] = id
 	err = session.Save(r, w)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

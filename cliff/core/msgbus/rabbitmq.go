@@ -6,13 +6,17 @@ import (
 	"github.com/streadway/amqp"
 )
 
+const (
+	QUEUE_BACKBURNER = "nienna_backburner"
+)
+
 type Msgbus struct {
 	conn *amqp.Connection
 	ch   *amqp.Channel
 }
 
 func NewMsgbus(uri string, queues ...string) (*Msgbus, error) {
-	conn, err := amqp.Dial(uri) // "amqp://guest:guest@localhost:5672/"
+	conn, err := amqp.Dial(uri)
 	if err != nil {
 		return nil, err
 	}

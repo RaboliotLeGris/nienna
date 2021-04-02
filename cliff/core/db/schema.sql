@@ -2,29 +2,26 @@
 
 CREATE TABLE meta_info
 (
-    version INT,
-
-    PRIMARY KEY(version)
+    version INT PRIMARY KEY
 );
 
 CREATE TABLE users
 (
-    id       INT GENERATED ALWAYS AS IDENTITY,
-    username TEXT UNIQUE,
-
-    PRIMARY KEY (id)
+    id       INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    username TEXT UNIQUE
 );
+
+CREATE TYPE video_status AS ENUM ('UPLOADED', 'PROCESSING', 'PROCESSED', 'READY', 'FAILURE');
 
 CREATE TABLE videos
 (
-    id          INT GENERATED ALWAYS AS IDENTITY,
+    id          INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     slug        TEXT UNIQUE,
     uploader    INT,
     title       TEXT,
     description TEXT,
-    status      TEXT,
+    status      video_status,
 
-    PRIMARY KEY (id),
     CONSTRAINT fk_users
         FOREIGN KEY (uploader)
             REFERENCES users (id)

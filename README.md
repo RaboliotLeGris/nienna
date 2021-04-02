@@ -5,8 +5,8 @@
 ![Docs](docs/archi_schema.png)
 
 #### Custom
-* webapp (vue + ts) -> Allow to upload, watch video and watch livestream
-* api (Go?) -> serve webapp, and deliver content
+* webapp (vue) -> Allow to upload, watch video and watch livestream
+* api (Go) -> serve webapp, and deliver content
 * backburner (rust) -> Process uploaded video into dash/hls
 * river -> handle incoming livestream and save them
 
@@ -18,14 +18,21 @@
 
 ### TODOLIST
 
-* send message through rabbit
-* Add status route
-* Do view
+* backfurnace -> worker pool
+* backfurnace -> fetch video from s3
+* backfurnace -> check mimetype
+* backfurnace -> listen to rabbitmq events
+* backfurnace -> convert it to DASH/HLS
+* backfurnace -> upload them to minio
+* backfurnace -> send event with video status
+* cliff -> Add status route
+* cliff -> Do view
 
-* fix memory usage when uploading file to minio (another client or some tweaks)
-* Lock database when initializing database
-* Do not crash when db is not ready
-* Use resumable ?
-* Test Cliff
-* Prevent SQL injection (OMG)
-* add password
+* Docker -> makefile with hadolint + on other projects
+* cliff -> fix memory usage when uploading file to minio (another client or some tweaks)
+* cliff -> Lock database when initializing database
+* cliff -> Do not crash when db is not ready
+* cliff -> Use resumable ?
+* cliff -> Test Cliff
+* cliff -> Prevent SQL injection (OMG)
+* cliff -> add password

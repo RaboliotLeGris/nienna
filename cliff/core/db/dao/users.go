@@ -20,20 +20,21 @@ func NewUserDAO(conn *pgxpool.Pool) *UserDAO {
 	return &UserDAO{conn}
 }
 
-func (u *UserDAO) Create(username string) error {
+func (u *UserDAO) Create(username string) (int, error) {
 	commandTag, err := u.conn.Exec(context.Background(), "INSERT INTO users (username) VALUES ($1);", username)
 	if err != nil {
-		return err
+		return 0, err
 	}
 	if commandTag.RowsAffected() != 1 {
-		return errors.New("failed to create new user")
+		return 0, errors.New("failed to create new user")
 	}
-	return nil
+	return u.Login(username)
 }
 
-func (u *UserDAO) Login(username string) error {
-	var _username string
-	return u.conn.QueryRow(context.Background(), "SELECT username FROM users WHERE username=$1;", username).Scan(&_username)
+func (u *UserDAO) Login(username string) (int, error) {
+	var id int
+	err := u.conn.QueryRow(context.Background(), "SELECT id FROM users WHERE username=$1;", username).Scan(&id)
+	return id, err
 }
 
 func (u *UserDAO) Get(username string) (*User, error) {

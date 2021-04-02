@@ -88,3 +88,18 @@ func (s loginUserHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(200)
 }
+
+type checkSessionHandler struct {
+	sessionStore *session.SessionStore
+}
+
+type checkSerialized struct {
+	Ok bool `json:"ok"`
+}
+
+func (s checkSessionHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	log.Debug("Request POST /api/users/check")
+
+	_ = json.NewEncoder(w).Encode(checkSerialized{Ok: s.sessionStore.IsAuth(r)})
+	w.WriteHeader(200)
+}

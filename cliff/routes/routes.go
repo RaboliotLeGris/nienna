@@ -53,6 +53,7 @@ func Create(pool *pgxpool.Pool, sessionStore *session.SessionStore, storage *obj
 	log.Debug("router - Adding users routes")
 	r.PathPrefix("/api/users/register").Handler(registerUserHandler{pool, sessionStore}).Methods("POST")
 	r.PathPrefix("/api/users/login").Handler(loginUserHandler{pool, sessionStore}).Methods("POST")
+	r.PathPrefix("/api/users/check").Handler(checkSessionHandler{sessionStore}).Methods("POST")
 	// r.PathPrefix("/api/users/reload").Handler(reloadUserHandler{pool, store}).Methods("POST")
 
 	log.Debug("router - Adding videos routes")

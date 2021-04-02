@@ -5,15 +5,15 @@ import (
 	"net/http"
 
 	"github.com/jackc/pgx/v4/pgxpool"
-	"github.com/rbcervilla/redisstore/v8"
 	log "github.com/sirupsen/logrus"
 
 	"nienna/core/db/dao"
+	"nienna/core/session"
 )
 
 type registerUserHandler struct {
 	pool         *pgxpool.Pool
-	sessionStore *redisstore.RedisStore
+	sessionStore *session.SessionStore
 }
 
 type registerUserBody struct {
@@ -36,11 +36,12 @@ func (s registerUserHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	session, _ := s.sessionStore.Get(r, "nienna")
-	log.Debug("session value: ", session.Values["username"])
-	session.Values["username"] = body.Username
-	session.Values["userID"] = id
-	err = session.Save(r, w)
+	err = s.sessionStore.Set(r, w, "username", body.Username)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	s.sessionStore.Set(r, w, "userID", id)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -51,7 +52,7 @@ func (s registerUserHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 type loginUserHandler struct {
 	pool         *pgxpool.Pool
-	sessionStore *redisstore.RedisStore
+	sessionStore *session.SessionStore
 }
 
 type loginUserBody struct {
@@ -74,11 +75,12 @@ func (s loginUserHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	session, _ := s.sessionStore.Get(r, "nienna")
-	log.Debug("session value: ", session.Values["username"])
-	session.Values["username"] = body.Username
-	session.Values["userID"] = id
-	err = session.Save(r, w)
+	err = s.sessionStore.Set(r, w, "username", body.Username)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	s.sessionStore.Set(r, w, "userID", id)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

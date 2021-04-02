@@ -7,12 +7,12 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v4/pgxpool"
-	"github.com/rbcervilla/redisstore/v8"
 	"github.com/rs/cors"
 	log "github.com/sirupsen/logrus"
 
 	"nienna/core/msgbus"
 	"nienna/core/objectStorage"
+	"nienna/core/session"
 	"nienna/routes/videos"
 )
 
@@ -39,7 +39,7 @@ func (r router) Launch() error {
 	return srv.ListenAndServe()
 }
 
-func Create(pool *pgxpool.Pool, sessionStore *redisstore.RedisStore, storage *objectStorage.ObjectStorage, msgbus *msgbus.Msgbus) router {
+func Create(pool *pgxpool.Pool, sessionStore *session.SessionStore, storage *objectStorage.ObjectStorage, msgbus *msgbus.Msgbus) router {
 	log.Info("router - Creating routers")
 
 	// Routes order creation matter. Static route must be last or it will match all routes

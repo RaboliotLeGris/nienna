@@ -5,14 +5,13 @@ import (
 	"os"
 	"time"
 
-	"github.com/go-redis/redis/v8"
 	"github.com/jackc/pgx/v4/pgxpool"
-	"github.com/rbcervilla/redisstore/v8"
 	log "github.com/sirupsen/logrus"
 
 	"nienna/core/db"
 	"nienna/core/msgbus"
 	"nienna/core/objectStorage"
+	"nienna/core/session"
 	"nienna/routes"
 )
 
@@ -39,12 +38,7 @@ func main() {
 	}
 
 	// State sessionStore
-	sessionStore, err := redisstore.NewRedisStore(context.Background(), redis.NewClient(&redis.Options{
-		Addr: os.Getenv("REDIS_URI"),
-	}))
-	if err != nil {
-		log.Fatal("failed to create redis store: ", err)
-	}
+	sessionStore, err := session.NewSessionStore(os.Getenv("REDIS_URI"), "nienna")
 
 	// Init Object Storage buckets
 	storage, err := objectStorage.NewStorageClient(os.Getenv("S3_URI"), os.Getenv("S3_ACCESS_KEY"), os.Getenv("S3_SECRET_KEY"), "nienna-1", os.Getenv("NIENNA_DEV") != "true")

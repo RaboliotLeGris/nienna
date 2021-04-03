@@ -1,14 +1,16 @@
-mod amqp;
+#[macro_use]
+extern crate log;
 
 use futures_lite::StreamExt;
 use lapin::{
-    options::*, publisher_confirm::Confirmation, types::FieldTable, BasicProperties, Connection,
-    ConnectionProperties, Result,
+    BasicProperties, Connection, ConnectionProperties, options::*, publisher_confirm::Confirmation,
+    Result, types::FieldTable,
 };
+
 use crate::amqp::serialization::EventSerialization;
 
-#[macro_use]
-extern crate log;
+mod amqp;
+mod worker_pool;
 
 fn main() {
     if std::env::var("RUST_LOG").is_err() {
@@ -16,7 +18,11 @@ fn main() {
     }
     env_logger::init();
 
-    info!("Starting service");
+    info!("Starting Backburner service");
+
+    debug!("Creating WorkerPool");
+    let worker_count: usize = std::env::var("BACKBURNER_WORKER_COUNT").unwrap_or(String::from("10")).parse::<usize>().expect("BACKBURNER_WORKER_COUNT must be a valid NON NULL and POSITIVE integer");
+    let worker_pool = worker_pool::worker_pool::WorkerPool::new(worker_count);
 
     let addr = std::env::var("RABBITMQ_URI").unwrap();
     async_global_executor::block_on(async {

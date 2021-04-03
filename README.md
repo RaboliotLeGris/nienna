@@ -18,7 +18,6 @@
 
 ### TODOLIST
 
-* backfurnace -> worker pool
 * backfurnace -> fetch video from s3
 * backfurnace -> check mimetype
 * backfurnace -> listen to rabbitmq events
@@ -26,7 +25,6 @@
 * backfurnace -> upload them to minio
 * backfurnace -> send event with video status
 * cliff -> Do view
-* front check session status
 
 * Docker -> makefile with hadolint + on other projects
 * cliff -> fix memory usage when uploading file to minio (another client or some tweaks)

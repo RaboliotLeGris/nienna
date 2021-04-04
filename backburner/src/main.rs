@@ -1,16 +1,14 @@
 #[macro_use]
 extern crate log;
 
-use futures_lite::StreamExt;
-use lapin::{
-    BasicProperties, Connection, ConnectionProperties, options::*, publisher_confirm::Confirmation,
-    Result, types::FieldTable,
-};
-
-use crate::amqp::serialization::EventSerialization;
+use crate::amqp::client::AMQP;
+use crate::s3::client::S3Client;
+use std::sync::Arc;
 
 mod amqp;
 mod worker_pool;
+mod jobs;
+mod s3;
 
 fn main() {
     if std::env::var("RUST_LOG").is_err() {
@@ -26,43 +24,14 @@ fn main() {
 
     let addr = std::env::var("RABBITMQ_URI").unwrap();
     async_global_executor::block_on(async {
-        let conn = Connection::connect(&addr, ConnectionProperties::default())
-            .await
-            .expect("connection error");
-        debug!("Connected to rabbitMQ");
-
-        let channel = conn.create_channel().await.expect("create_channel");
-        debug!("Channel status {:?}", conn.status().state());
-
-        debug!("Declaring queue: \"nienna_backburner\"");
-        let queue = channel
-            .queue_declare(
-                "nienna_backburner",
-                QueueDeclareOptions::default(),
-                FieldTable::default(),
-            )
-            .await
-            .expect("queue_declare");
-
-        debug!("Create consumer for queue: \"nienna_backburner\"");
-        let mut consumer = channel
-            .basic_consume(
-                "nienna_backburner",
-                "backburner",
-                BasicConsumeOptions::default(),
-                FieldTable::default(),
-            )
-            .await
-            .expect("basic_consume");
-
-        while let Some(delivery) = consumer.next().await {
-            if let Ok(delivery) = delivery {
-                debug!("EventSerialization {:#?}", EventSerialization::from(delivery.1.data));
-                // delivery
-                //     .ack(BasicAckOptions::default())
-                //     .await
-                //     .expect("basic_ack");
+        let mut amqp_client: AMQP = AMQP::new(addr).await;
+        while let Ok(event) = amqp_client.next().await {
+            debug!("GOT EVENT {:?}", event);
+            match event.event.as_str() {
+                "EventVideoReadyForProcessing" => worker_pool.submit(jobs::jobs::job_process_video(event, Arc::new(Box::new(S3Client::new())))),
+                _ => {}
             }
+            // worker_pool.submit()
         }
     })
 }

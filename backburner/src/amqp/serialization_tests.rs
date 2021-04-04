@@ -8,14 +8,15 @@ mod serialization_tests {
         let given = r#"
         {
             "event": "EventVideoReadyForProcessing",
-            "slug": "randomstring"
+            "slug": "randomstring",
+            "filename": "randomefilename.mp4"
         }"#;
 
         // then
         let e: EventSerialization = serde_json::from_str(given).unwrap();
 
         // expect
-        let expected = EventSerialization { event: String::from("EventVideoReadyForProcessing"), slug: String::from("randomstring") };
+        let expected = EventSerialization { event: String::from("EventVideoReadyForProcessing"), slug: String::from("randomstring"), filename: String::from("randomefilename.mp4") };
 
         assert_eq!(expected, e)
     }
@@ -28,6 +29,7 @@ mod serialization_tests {
         {
             event: "EventVideoReadyForProcessing",
             slug: "randomstring",
+            filename: "filename.mp4",
         }"#;
 
         // then
@@ -43,7 +45,8 @@ mod serialization_tests {
         let given = r#"
         {
             "event": "UnrecognizedEvent",
-            "slug": "randomstring"
+            "slug": "randomstring",
+            "filename": "randomfilename.mp4"
         }"#;
         let e: serde_json::error::Result<EventSerialization> = serde_json::from_str(given);
 

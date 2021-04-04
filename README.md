@@ -18,6 +18,7 @@
 
 ### TODOLIST
 
+* backfurnace -> Fix goddamn go to working directory
 * backfurnace -> fetch video from s3
 * backfurnace -> check mimetype
 * backfurnace -> listen to rabbitmq events

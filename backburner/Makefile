@@ -7,4 +7,4 @@ build-release:
 	cargo build --release
 
 test:
-	cargo test
+	RUST_LOG=DEBUG cargo test -- --no-capture

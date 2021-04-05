@@ -1,30 +1,30 @@
 # Nienna
 
-### Services:
+## Services:
 
 ![Docs](docs/archi_schema.png)
 
-#### Custom
+### Custom
 * webapp (vue) -> Allow to upload, watch video and watch livestream
 * api (Go) -> serve webapp, and deliver content
-* backburner (rust) -> Process uploaded video into dash/hls
+* backburner (rust) -> Process uploaded video into hls
 * river -> handle incoming livestream and save them
 
-#### Tiers
+### Tiers
 * Bucket storage (minio) -> https://hub.docker.com/r/minio/minio/
 * async message bus (Rabbitmq) -> https://hub.docker.com/_/rabbitmq
 * Relational database (pgsql) -> https://hub.docker.com/_/postgres
-* Reverse proxy (caddy) -> https://hub.docker.com/_/traefik
+* Reverse proxy (caddy) -> 
 
-### TODOLIST
+## TODOLIST
 
-* backfurnace -> Fix goddamn go to working directory
-* backfurnace -> fetch video from s3
-* backfurnace -> check mimetype
-* backfurnace -> listen to rabbitmq events
-* backfurnace -> convert it to DASH/HLS
-* backfurnace -> upload them to minio
-* backfurnace -> send event with video status
+* backburner -> fetch video from s3
+* backburner -> check mimetype
+* backburner -> convert it to DASH/HLS
+* backburner -> upload them to minio
+* backburner -> send event with video status
+* backburner -> check worker status
+* backburner -> make workers uncrashable .... HF
 * cliff -> Do view
 
 * Docker -> makefile with hadolint + on other projects
@@ -35,3 +35,6 @@
 * cliff -> Test Cliff
 * cliff -> Prevent SQL injection (OMG)
 * cliff -> add password
+
+## Interesting articles
+* https://blog.eleven-labs.com/fr/video-live-dash-hls/

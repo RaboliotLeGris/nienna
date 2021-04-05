@@ -1,7 +1,6 @@
 use std::path::PathBuf;
 
 use nanoid::nanoid;
-
 use crate::jobs::errors::JobsError;
 
 #[cfg(test)]

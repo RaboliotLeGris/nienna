@@ -26,12 +26,10 @@ fn main() {
     async_global_executor::block_on(async {
         let mut amqp_client: AMQP = AMQP::new(addr).await;
         while let Ok(event) = amqp_client.next().await {
-            debug!("GOT EVENT {:?}", event);
             match event.event.as_str() {
-                "EventVideoReadyForProcessing" => worker_pool.submit(jobs::jobs::job_process_video(event, Arc::new(Box::new(S3Client::new())))),
+                "EventVideoReadyForProcessing" => worker_pool.submit(jobs::job_video_process::job_process_video(event, Arc::new(Box::new(S3Client::new())))),
                 _ => {}
             }
-            // worker_pool.submit()
         }
     })
 }

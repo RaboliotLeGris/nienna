@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   cliff:
-    build: ../cliff
+    build: ../cliff/.dev
     restart: unless-stopped
     stdin_open: true
     tty: true
@@ -16,6 +16,8 @@ services:
       # If NIENNA_DEV is defined, debug logs are printed
       NIENNA_DEV: "true"
       SESSION_KEY: "95c5a0ae-6bd8-4866-81d3-6f67223f8ff2"
+    volumes:
+      - $PWD/cliff:/go/src/cliff
     depends_on:
       - db
       - redis

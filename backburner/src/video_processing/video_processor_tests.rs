@@ -17,6 +17,7 @@ mod video_processor_tests {
             TestVideosPath{ path: ".dev/samples/SampleVideo_1280x720_30mb.mp4", mimetype: "video/mp4"},
             TestVideosPath{ path: ".dev/samples/sample_960x400_ocean_with_audio.flv", mimetype: "video/x-flv"},
             TestVideosPath{ path: ".dev/samples/sample_960x400_ocean_with_audio.avi", mimetype: "video/x-msvideo"},
+            TestVideosPath{ path: ".dev/samples/sample_960x400_ocean_with_audio.mkv", mimetype: "video/x-matroska"},
         ];
 
         for v in videos_paths {
@@ -24,7 +25,7 @@ mod video_processor_tests {
             let video_processor = VideoProcessor::new();
 
             // when
-            let mimetype = video_processor.get_mimetype(video_path).unwrap();
+            let mimetype = video_processor.extract_mimetype(video_path).unwrap();
 
             // then
             let expected_mimetype = String::from(v.mimetype);
@@ -36,7 +37,13 @@ mod video_processor_tests {
     fn should_fail_to_extract_video_mimetype() {
         let filepath = String::from("some/wrong/path.mp4");
         let video_processor = VideoProcessor::new();
-        let mimetype = video_processor.get_mimetype(filepath).unwrap();
-        assert_eq!("cannot", mimetype);
+        let result = video_processor.extract_mimetype(filepath);
+        assert!(result.is_err());
+    }
+
+    #[test]
+    fn process() {
+        let video_processor = VideoProcessor::new();
+        video_processor.process(String::from(".dev/samples/SampleVideo_1280x720_30mb.mp4"));
     }
 }

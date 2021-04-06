@@ -18,6 +18,7 @@
 
 ## TODOLIST
 
+* backburner -> Do standalone test/package/crates to work on the video processing bits
 * backburner -> fetch video from s3
 * backburner -> check mimetype
 * backburner -> convert it to DASH/HLS

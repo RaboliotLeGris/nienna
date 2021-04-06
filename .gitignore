@@ -1,6 +1,9 @@
 .idea
+
 backburner/target
+backburner/.dev/samples/workdir
+
 cliff/build
+
 webapp/dist
 webapp/node_modules
-.dev.volume

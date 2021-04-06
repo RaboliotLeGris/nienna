@@ -1,5 +1,6 @@
 #[macro_use]
 extern crate log;
+extern crate ffmpeg_next as ffmpeg;
 
 use crate::amqp::client::AMQP;
 use crate::s3::client::S3Client;
@@ -9,6 +10,7 @@ mod amqp;
 mod worker_pool;
 mod jobs;
 mod s3;
+mod video_processing;
 
 fn main() {
     if std::env::var("RUST_LOG").is_err() {

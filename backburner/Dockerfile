@@ -1,5 +1,7 @@
 FROM rust:1.50.0-buster@sha256:91a70ac97ddb82978060db53b994f5edac1253f33dd417551810a4feac0b2245 as builder
 
+RUN sudo apt-get update && sudo apt-get install -y ffmpeg libavutil-dev libavformat-dev libavfilter-dev libavdevice-dev libclang-dev clang
+
 WORKDIR /usr/src/backburner
 COPY . .
 RUN cargo build --release

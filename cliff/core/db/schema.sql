@@ -31,3 +31,4 @@ CREATE TABLE videos
 
 INSERT INTO meta_info VALUES (1);
 INSERT INTO users (username) VALUES ('admin');
+INSERT INTO videos (slug, uploader, title, description, status) values ('EXAMPLE', 1, 'Example videos', '', 'READY');

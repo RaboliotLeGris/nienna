@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     goto() {
-      this.$router.push(`/view/${this.videoSlug}`);
+      this.$router.push({ name: 'Watch', params: { slug: this.videoSlug } });
     },
   },
 };

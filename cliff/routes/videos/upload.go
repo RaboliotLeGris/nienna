@@ -51,7 +51,7 @@ func (v PostUploadVideoHandler) ServeHTTP(w http.ResponseWriter, r *http.Request
 	slug := randstr.String(10)
 	filep := fmt.Sprintf("%s/source%s", slug, filepath.Ext(fileheader.Filename))
 	// This use a lot of memory due to the "-1" params. See: https://github.com/minio/minio-go/issues/989
-	err = v.Storage.PutObject(context.Background(), "nienna-1", filep, file, -1)
+	err = v.Storage.PutObject(context.Background(), filep, file, -1)
 	if err != nil {
 		http.Error(w, "Failed to upload video", http.StatusInternalServerError)
 		return

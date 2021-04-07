@@ -60,8 +60,7 @@ func Create(pool *pgxpool.Pool, sessionStore *session.SessionStore, storage *obj
 	r.PathPrefix("/api/videos/all").Handler(videos.GetAllVideoHandler{Pool: pool}).Methods("GET")
 	r.PathPrefix("/api/videos/upload").Handler(videos.PostUploadVideoHandler{Pool: pool, SessionStore: sessionStore, Storage: storage, Msgbus: msgbus}).Methods("POST")
 	r.PathPrefix("/api/videos/status/{slug}").Handler(videos.GetVideoStatusHandler{Pool: pool, SessionStore: sessionStore}).Methods("GET")
-	// r.PathPrefix("/api/videos/view").Handler(viewVideoHandler{pool, store}).Methods("GET")
-	// r.PathPrefix("/api/videos/viewall").Handler(viewAllVideoHandler{pool, store}).Methods("GET")
+	r.PathPrefix("/api/videos/streams/{slug}/{filename}").Handler(videos.GetStreamVideoHandler{Storage: storage}).Methods("GET")
 	// r.PathPrefix("/api/videos/search").Handler(searchVideoHandler{pool, store}).Methods("GET")
 
 	log.Debug("router - Adding static folder routes")

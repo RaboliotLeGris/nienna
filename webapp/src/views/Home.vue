@@ -36,7 +36,6 @@ export default {
       axios.get(routes.getAllVideos)
         .then((response) => {
           this.loading = false;
-          // console.log('response', response.data);
           this.videos = response.data;
         })
         .catch((err) => {

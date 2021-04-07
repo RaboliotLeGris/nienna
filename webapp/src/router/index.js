@@ -26,9 +26,9 @@ const routes = [
     component: () => import(/* webpackChunkName: "upload" */ '../views/Upload.vue'),
   },
   {
-    path: '/view',
-    name: 'View',
-    component: () => import(/* webpackChunkName: "view" */ '../views/View.vue'),
+    path: '/watch/:slug',
+    name: 'Watch',
+    component: () => import(/* webpackChunkName: "view" */ '../views/Watch.vue'),
   },
 ];
 

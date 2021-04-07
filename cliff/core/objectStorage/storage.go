@@ -10,7 +10,8 @@ import (
 )
 
 type ObjectStorage struct {
-	minio *minio.Client
+	minio      *minio.Client
+	bucketName string
 }
 
 func NewStorageClient(uri, accessKey, secretKey, bucketName string, ssl bool) (*ObjectStorage, error) {
@@ -23,7 +24,8 @@ func NewStorageClient(uri, accessKey, secretKey, bucketName string, ssl bool) (*
 	}
 
 	storage := ObjectStorage{
-		minio: minioClient,
+		minio:      minioClient,
+		bucketName: bucketName,
 	}
 
 	// Checking connection with bucket by ensuring the bucker exists
@@ -45,7 +47,11 @@ func (s *ObjectStorage) EnsureBuckerExist(bucketName string) error {
 	return errors.New("unable to create bucker")
 }
 
-func (s *ObjectStorage) PutObject(ctx context.Context, bucketName, objectName string, reader io.Reader, objectSize int64) error {
-	_, err := s.minio.PutObject(ctx, bucketName, objectName, reader, objectSize, minio.PutObjectOptions{ContentType: "application/octet-stream"})
+func (s *ObjectStorage) PutObject(ctx context.Context, objectName string, reader io.Reader, objectSize int64) error {
+	_, err := s.minio.PutObject(ctx, s.bucketName, objectName, reader, objectSize, minio.PutObjectOptions{ContentType: "application/octet-stream"})
 	return err
+}
+
+func (s *ObjectStorage) GetObject(ctx context.Context, objectName string) (io.Reader, error) {
+	return s.minio.GetObject(ctx, s.bucketName, objectName, minio.GetObjectOptions{})
 }

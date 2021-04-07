@@ -13,6 +13,9 @@ d_launch_services:
 d_backburner:
 	docker exec -ti `docker ps -aqf "name=nienna_backburner"` bash
 
+d_cliff:
+	docker exec -ti `docker ps -aqf "name=nienna_cliff"` bash
+
 d_db:
 	docker exec -ti `docker ps -aqf "name=nienna_db"` psql --user nienna
 

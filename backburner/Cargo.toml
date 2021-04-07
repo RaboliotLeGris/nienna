@@ -21,4 +21,5 @@ async-global-executor = "2.0.2"
 lapin = "1.6.8"
 rust-s3 = "0.26.4"
 
-ffmpeg-next = "4.3.8"
+[dev-dependencies]
+serial_test = "0.5.1"

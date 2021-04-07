@@ -34,28 +34,14 @@ impl VideoProcessor {
     }
 
     pub fn process(self, filepath: String) -> Result<(), VideoProcessorError> {
-        /*
-        Something like that sort of works:
-        ``` bash
-            ffmpeg -i filepath \
-            -filter_complex "[0:v:0]split=2[split1][split2];[split2]scale=width=-2:height=432:flags=fast_bilinear[scale2]" \
-            -codec:v "libx264" -crf:v 23 -profile:v "high" -pix_fmt:v "yuv420p" -force_key_frames:v expr:'gte(t,n_forced*2.000)' -preset:v "faster" -b-pyramid:v "strict" \
-            -map [split1] \
-            -map [scale2] \
-            -codec:a aac -ac:a 2 -b:a 96000 \
-            -map 0:a:0 \
-            -map 0:a:0 \
-            -f hls \
-            -hls_time 6 \
-            -hls_playlist_type "vod" \
-            -hls_segment_type "mpegts" \
-            -hls_segment_filename '%v_%05d.ts' \
-            -master_pl_name "master.m3u8" \
-            -var_stream_map "v:1,a:1 v:0,a:0" "%v.m3u8"
-        ```
-         */
-
-
+        // ffmpeg -i .dev/samples/SampleVideo_1280x720_30mb.mp4 -profile:v baseline -level 3.0 -s 640x360 -start_number 0 -hls_time 10 -hls_list_size 0 -f hls part.m3u8
+        let output = Command::new("ffmpeg")
+            .args(&["-i", filepath.as_str(), "-profile:v", "baseline", "-level", "3.0", "-start_number", "0", "-hls_time", "10", "-hls_list_size", "0", "-f", "hls", "part.m3u8"])
+            .output()?;
+        println!("{:?}", output);
+        if !output.status.success() {
+            return Err(VideoProcessorError::FailProcessVideo);
+        }
         Ok(())
     }
 }

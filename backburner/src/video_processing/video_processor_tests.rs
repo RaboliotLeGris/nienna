@@ -5,6 +5,7 @@ mod video_processor_tests {
     use crate::video_processing::video_processor::VideoProcessor;
 
     #[test]
+    #[serial]
     fn should_extract_video_mimetype() {
         // give
         struct TestVideosPath<'a> {
@@ -34,6 +35,7 @@ mod video_processor_tests {
     }
 
     #[test]
+    #[serial]
     fn should_fail_to_extract_video_mimetype() {
         let filepath = String::from("some/wrong/path.mp4");
         let video_processor = VideoProcessor::new();
@@ -42,8 +44,13 @@ mod video_processor_tests {
     }
 
     #[test]
-    fn process() {
+    #[serial]
+    fn process_video_to_hls() {
+        std::fs::create_dir("workdir");
+        std::env::set_current_dir("workdir");
         let video_processor = VideoProcessor::new();
-        video_processor.process(String::from(".dev/samples/SampleVideo_1280x720_30mb.mp4"));
+        video_processor.process(String::from("../.dev/samples/SampleVideo_1280x720_30mb.mp4")).unwrap();
+        std::env::set_current_dir("..");
+        std::fs::remove_dir_all("workdir");
     }
 }

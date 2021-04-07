@@ -1,6 +1,9 @@
 #[macro_use]
 extern crate log;
-extern crate ffmpeg_next as ffmpeg;
+#[cfg(test)]
+#[macro_use]
+extern crate serial_test;
+// extern crate ffmpeg_next as ffmpeg;
 
 use crate::amqp::client::AMQP;
 use crate::s3::client::S3Client;

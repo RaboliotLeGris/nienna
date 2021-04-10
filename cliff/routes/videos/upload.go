@@ -3,7 +3,6 @@ package videos
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"path/filepath"
 
@@ -49,7 +48,8 @@ func (v PostUploadVideoHandler) ServeHTTP(w http.ResponseWriter, r *http.Request
 	}
 
 	slug := randstr.String(10)
-	filep := fmt.Sprintf("%s/source%s", slug, filepath.Ext(fileheader.Filename))
+	sourceFilename := "/source" + filepath.Ext(fileheader.Filename)
+	filep := slug + sourceFilename
 	// This use a lot of memory due to the "-1" params. See: https://github.com/minio/minio-go/issues/989
 	err = v.Storage.PutObject(context.Background(), filep, file, -1)
 	if err != nil {
@@ -65,7 +65,7 @@ func (v PostUploadVideoHandler) ServeHTTP(w http.ResponseWriter, r *http.Request
 	}
 
 	// Send message to backburner
-	err = v.Msgbus.Publish(msgbus.QUEUE_BACKBURNER, &msgbus.EventSerialization{Event: msgbus.EventVideoReadyForProcessing, Slug: slug})
+	err = v.Msgbus.Publish(msgbus.QUEUE_BACKBURNER, &msgbus.EventSerialization{Event: msgbus.EventVideoReadyForProcessing, Slug: slug, Filename: sourceFilename})
 	if err != nil {
 		http.Error(w, "unable to publish video event", http.StatusInternalServerError)
 		return

@@ -7,6 +7,7 @@ const (
 )
 
 type EventSerialization struct {
-	Event string `json:"event"`
-	Slug  string `json:"slug"`
+	Event    string `json:"event"`
+	Slug     string `json:"slug"`
+	Filename string `json:"filename"`
 }

@@ -3,7 +3,7 @@ extern crate log;
 #[cfg(test)]
 #[macro_use]
 extern crate serial_test;
-// extern crate ffmpeg_next as ffmpeg;
+extern crate s3 as rust_s3;
 
 use crate::amqp::client::AMQP;
 use crate::s3::client::S3Client;
@@ -27,12 +27,17 @@ fn main() {
     let worker_count: usize = std::env::var("BACKBURNER_WORKER_COUNT").unwrap_or(String::from("10")).parse::<usize>().expect("BACKBURNER_WORKER_COUNT must be a valid NON NULL and POSITIVE integer");
     let worker_pool = worker_pool::worker_pool::WorkerPool::new(worker_count);
 
+    debug!("Fetching S3Client credentials");
+    let s3_endpoint = std::env::var("S3_URI").unwrap();
+    let s3_access_key = std::env::var("S3_ACCESS_KEY").unwrap();
+    let s3_secret_key= std::env::var("S3_SECRET_KEY").unwrap();
+
     let addr = std::env::var("RABBITMQ_URI").unwrap();
     async_global_executor::block_on(async {
         let mut amqp_client: AMQP = AMQP::new(addr).await;
         while let Ok(event) = amqp_client.next().await {
             match event.event.as_str() {
-                "EventVideoReadyForProcessing" => worker_pool.submit(jobs::job_video_process::job_process_video(event, Arc::new(Box::new(S3Client::new())))),
+                "EventVideoReadyForProcessing" => worker_pool.submit(jobs::job_video_process::job_process_video(event, Arc::new(Box::new(S3Client::new(s3_endpoint.clone(), "nienna-1".into(), s3_access_key.clone(), s3_secret_key.clone()))))),
                 _ => {}
             }
         }

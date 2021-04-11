@@ -49,7 +49,7 @@ mod video_processor_tests {
         std::fs::create_dir("workdir");
         std::env::set_current_dir("workdir");
         let video_processor = VideoProcessor::new();
-        video_processor.process(String::from("../.dev/samples/SampleVideo_1280x720_30mb.mp4")).unwrap();
+        video_processor.process(&String::from("../.dev/samples/SampleVideo_1280x720_30mb.mp4")).unwrap();
         std::env::set_current_dir("..");
         std::fs::remove_dir_all("workdir");
     }

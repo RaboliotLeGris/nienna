@@ -33,7 +33,7 @@ impl VideoProcessor {
         return Err(VideoProcessorError::FailExtractMimetype);
     }
 
-    pub fn process(self, filepath: String) -> Result<(), VideoProcessorError> {
+    pub fn process(self, filepath: &String) -> Result<(), VideoProcessorError> {
         // ffmpeg -i .dev/samples/SampleVideo_1280x720_30mb.mp4 -profile:v baseline -level 3.0 -s 640x360 -start_number 0 -hls_time 10 -hls_list_size 0 -f hls part.m3u8
         let output = Command::new("ffmpeg")
             .args(&["-i", filepath.as_str(), "-profile:v", "baseline", "-level", "3.0", "-start_number", "0", "-hls_time", "10", "-hls_list_size", "0", "-f", "hls", "part.m3u8"])

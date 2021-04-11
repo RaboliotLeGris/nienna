@@ -17,15 +17,9 @@
 * Reverse proxy (caddy) -> 
 
 ## TODOLIST
-
-* backburner -> Do standalone test/package/crates to work on the video processing bits
-* backburner -> fetch video from s3
-* backburner -> check mimetype
-* backburner -> convert it to DASH/HLS
-* backburner -> upload them to minio
 * backburner -> send event with video status
+* Ack or nack the job once it's done (to resubmit it)  
 * backburner -> check worker status
-* backburner -> make workers uncrashable .... HF
 * cliff -> Do view
 
 * Docker -> makefile with hadolint + on other projects

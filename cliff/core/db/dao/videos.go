@@ -32,7 +32,7 @@ func (v *VideoDAO) Get(slug string) (*Video, error) {
 func (v *VideoDAO) GetAll() ([]Video, error) {
 	var videos []Video
 
-	rows, err := v.conn.Query(context.Background(), "SELECT slug, username, title, description, status FROM videos INNER JOIN users ON videos.uploader = users.id;")
+	rows, err := v.conn.Query(context.Background(), "SELECT slug, username, title, description, status FROM videos INNER JOIN users ON videos.uploader = users.id WHERE status='READY';")
 	if err != nil {
 		return nil, err
 	}

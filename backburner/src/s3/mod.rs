@@ -4,7 +4,7 @@ use crate::s3::errors::S3ClientError;
 pub mod client_stub;
 
 pub mod client;
-mod errors;
+pub mod errors;
 
 pub trait TS3Client: Sync + Send {
     /// get: fetch resources on the S3 and write it in the current folder

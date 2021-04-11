@@ -1,3 +1,3 @@
 pub mod job_video_process;
-mod errors;
+pub(crate) mod errors;
 mod helpers;

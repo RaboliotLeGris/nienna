@@ -48,8 +48,8 @@ func (v PostUploadVideoHandler) ServeHTTP(w http.ResponseWriter, r *http.Request
 	}
 
 	slug := randstr.String(10)
-	sourceFilename := "/source" + filepath.Ext(fileheader.Filename)
-	filep := slug + sourceFilename
+	sourceFilename := "source" + filepath.Ext(fileheader.Filename)
+	filep := slug + "/" + sourceFilename
 	// This use a lot of memory due to the "-1" params. See: https://github.com/minio/minio-go/issues/989
 	err = v.Storage.PutObject(context.Background(), filep, file, -1)
 	if err != nil {

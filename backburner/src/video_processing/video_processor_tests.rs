@@ -23,10 +23,9 @@ mod video_processor_tests {
 
         for v in videos_paths {
             let video_path = String::from(v.path);
-            let video_processor = VideoProcessor::new();
 
             // when
-            let mimetype = video_processor.extract_mimetype(video_path).unwrap();
+            let mimetype = VideoProcessor::extract_mimetype(video_path).unwrap();
 
             // then
             let expected_mimetype = String::from(v.mimetype);
@@ -38,8 +37,7 @@ mod video_processor_tests {
     #[serial]
     fn should_fail_to_extract_video_mimetype() {
         let filepath = String::from("some/wrong/path.mp4");
-        let video_processor = VideoProcessor::new();
-        let result = video_processor.extract_mimetype(filepath);
+        let result = VideoProcessor::extract_mimetype(filepath);
         assert!(result.is_err());
     }
 
@@ -48,8 +46,17 @@ mod video_processor_tests {
     fn process_video_to_hls() {
         std::fs::create_dir("workdir");
         std::env::set_current_dir("workdir");
-        let video_processor = VideoProcessor::new();
-        video_processor.process(&String::from("../.dev/samples/SampleVideo_1280x720_30mb.mp4")).unwrap();
+        VideoProcessor::process(&String::from("../.dev/samples/SampleVideo_1280x720_30mb.mp4")).unwrap();
+        std::env::set_current_dir("..");
+        std::fs::remove_dir_all("workdir");
+    }
+
+    #[test]
+    #[serial]
+    fn extract_miniature_from_source() {
+        std::fs::create_dir("workdir");
+        std::env::set_current_dir("workdir");
+        VideoProcessor::extract_miniature(&String::from("../.dev/samples/SampleVideo_1280x720_30mb.mp4")).unwrap();
         std::env::set_current_dir("..");
         std::fs::remove_dir_all("workdir");
     }

@@ -9,14 +9,11 @@ mod video_processor_tests;
 pub struct VideoProcessor {}
 
 impl VideoProcessor {
-    pub fn new() -> Self {
-        VideoProcessor {}
-    }
 
     /// Returns the video mimetype if possible
     ///
     /// Require `file` binary on the system
-    pub fn extract_mimetype(self, filepath: String) -> Result<String, VideoProcessorError> {
+    pub fn extract_mimetype(filepath: String) -> Result<String, VideoProcessorError> {
         let output = Command::new("file")
             .args(&["--mime-type", filepath.as_str()]).output()?.stdout;
         let mut parsed = String::new();
@@ -33,15 +30,25 @@ impl VideoProcessor {
         return Err(VideoProcessorError::FailExtractMimetype);
     }
 
-    pub fn process(self, filepath: &String) -> Result<(), VideoProcessorError> {
+    pub fn process(filepath: &String) -> Result<(), VideoProcessorError> {
         // ffmpeg -i .dev/samples/SampleVideo_1280x720_30mb.mp4 -profile:v baseline -level 3.0 -s 640x360 -start_number 0 -hls_time 10 -hls_list_size 0 -f hls part.m3u8
         let output = Command::new("ffmpeg")
             .args(&["-i", filepath.as_str(), "-profile:v", "baseline", "-level", "3.0", "-start_number", "0", "-hls_time", "10", "-hls_list_size", "0", "-f", "hls", "part.m3u8"])
             .output()?;
-        println!("{:?}", output);
         if !output.status.success() {
             return Err(VideoProcessorError::FailProcessVideo);
         }
         Ok(())
+    }
+
+    pub fn extract_miniature(filepath: &String) -> Result<String, VideoProcessorError> {
+        // ffmpeg -i input.mp4 -ss 00:00:01.000 -vframes 1 miniature.png
+        let output = Command::new("ffmpeg")
+            .args(&["-i", filepath.as_str(), "-ss", "00:00:01.000", "-vframes", "1", "miniature.jpeg"])
+            .output()?;
+        if !output.status.success() {
+            return Err(VideoProcessorError::FailProcessVideo);
+        }
+        Ok(String::from("miniature.jpeg"))
     }
 }

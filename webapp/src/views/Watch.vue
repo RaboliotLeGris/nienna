@@ -27,9 +27,7 @@ export default {
     if (Hls.isSupported()) {
       const video = document.getElementById('video');
       const hls = new Hls();
-      hls.loadSource(`/api/videos/streams/${this.$route.params.slug}/SampleVideo_1280x720_30mb.mp4.m3u8`);
-      // WANTED
-      // hls.loadSource('/api/videos/streams/${VIDEOSLUG}/part.m3u8');
+      hls.loadSource(`/api/videos/streams/${this.$route.params.slug}/part.m3u8`);
       hls.attachMedia(video);
       hls.on(Hls.Events.MANIFEST_PARSED, () => {
         console.log('PARSED');

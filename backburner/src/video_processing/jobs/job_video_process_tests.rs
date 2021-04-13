@@ -1,9 +1,10 @@
 #[cfg(test)]
 mod job_video_process_tests {
-    use crate::jobs::job_video_process::job_process_video;
-    use crate::amqp::serialization::EventSerialization;
     use std::sync::Arc;
-    use crate::s3::client::S3Client;
+
+    use crate::clients::amqp::serialization::EventSerialization;
+    use crate::clients::s3::client::S3Client;
+    use crate::video_processing::jobs::job_video_process::job_process_video;
 
     #[test]
     fn should_job_video_to_dash() {

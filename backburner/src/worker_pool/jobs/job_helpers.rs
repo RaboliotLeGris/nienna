@@ -1,11 +1,12 @@
 use std::path::PathBuf;
 
 use nanoid::nanoid;
-use crate::jobs::errors::JobsError;
+
+use crate::worker_pool::jobs::job_errors::JobsError;
 
 #[cfg(test)]
-#[path = "./helpers_tests.rs"]
-mod helpers_tests;
+#[path = "./job_helpers_tests.rs"]
+mod job_helpers_tests;
 
 pub fn go_to_working_directory() -> Result<PathBuf, JobsError> {
     let mut working_dir = std::env::temp_dir();

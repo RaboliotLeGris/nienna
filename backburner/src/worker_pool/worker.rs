@@ -17,12 +17,12 @@ impl Worker {
             match job {
                 Ok(Message::Terminate) => break,
                 Ok(Message::NewJob(job)) => {
-                    debug!("[{:?}][Worker {}] received a job; executing.", Instant::now(), id);
+                    debug!("[{:?}][Worker {}] received a jobs; executing.", Instant::now(), id);
                     job();
-                    debug!("[{:?}][Worker {}]: job finished", Instant::now(), id)
+                    debug!("[{:?}][Worker {}]: jobs finished", Instant::now(), id)
                 }
                 Err(e) => {
-                    error!("unable to get a job {}", e);
+                    error!("unable to get a jobs {}", e);
                     break;
                 }
             };

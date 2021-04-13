@@ -1,36 +1,35 @@
-use crate::s3::TS3Client;
-use crate::s3::errors::S3ClientError;
-
-use rust_s3::region::Region;
-use rust_s3::creds::Credentials;
-use rust_s3::bucket::Bucket;
 use std::fs::File;
-use std::io::Write;
 
+use rust_s3::bucket::Bucket;
+use rust_s3::creds::Credentials;
+use rust_s3::region::Region;
+
+use crate::clients::s3::errors::S3ClientError;
+use crate::clients::s3::TS3Client;
 
 #[cfg(test)]
 #[path = "./client_tests.rs"]
 mod client_tests;
 
+#[derive(Clone)]
 pub struct S3Client {
     region: Region,
     credentials: Credentials,
     bucket: String,
-
 }
 
 impl S3Client {
     pub fn new(endpoint: String, bucket_name: String, access_key: String, secret_key: String) -> Self {
-        S3Client{
+        S3Client {
             region: Region::Custom {
                 region: "eu-west-1".into(),
-                endpoint
+                endpoint,
             },
             credentials: Credentials {
                 access_key: Some(access_key),
                 secret_key: Some(secret_key),
                 security_token: None,
-                session_token: None
+                session_token: None,
             },
             bucket: bucket_name,
         }

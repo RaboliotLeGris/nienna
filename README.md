@@ -19,7 +19,7 @@
 ## TODOLIST
 * backburner -> send event with video status
 * Ack or nack the job once it's done (to resubmit it)  
-* backburner -> check worker status
+* backburner -> check worker status -> Heartbeat (not doable yet)
 * cliff -> Do view
 
 * Docker -> makefile with hadolint + on other projects

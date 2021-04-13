@@ -1,4 +1,4 @@
-use crate::s3::errors::S3ClientError;
+use crate::clients::s3::errors::S3ClientError;
 
 #[cfg(test)]
 pub mod client_stub;

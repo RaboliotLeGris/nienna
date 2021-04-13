@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod serialization_tests {
-    use crate::amqp::serialization::EventSerialization;
+    use crate::clients::amqp::serialization::EventSerialization;
 
     #[test]
     fn should_parse_json_to_event_serialization_struct() {
@@ -16,7 +16,7 @@ mod serialization_tests {
         let e: EventSerialization = serde_json::from_str(given).unwrap();
 
         // expect
-        let expected = EventSerialization { event: String::from("EventVideoReadyForProcessing"), slug: String::from("randomstring"), filename: String::from("randomefilename.mp4") };
+        let expected = EventSerialization::new(String::from("EventVideoReadyForProcessing"), String::from("randomstring"), String::from("randomefilename.mp4"));
 
         assert_eq!(expected, e)
     }

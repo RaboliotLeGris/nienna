@@ -1,10 +1,10 @@
 use std::io::Error;
-use crate::jobs::errors::JobsError;
-use crate::s3::errors::S3ClientError;
 
+use crate::clients::s3::errors::S3ClientError;
+use crate::worker_pool::jobs::job_errors::JobsError;
 
 #[derive(Debug)]
-pub enum VideoProcessorError{
+pub enum VideoProcessorError {
     FailExtractMimetype,
     FailProcessVideo,
     FailExtractMiniature,
@@ -31,13 +31,13 @@ impl From<std::io::Error> for VideoProcessorError {
 }
 
 impl From<JobsError> for VideoProcessorError {
-    fn from(e: JobsError) -> Self {
-       VideoProcessorError::FailProcessVideo
+    fn from(_e: JobsError) -> Self {
+        VideoProcessorError::FailProcessVideo
     }
 }
 
 impl From<S3ClientError> for VideoProcessorError {
-    fn from(e: S3ClientError) -> Self {
-       VideoProcessorError::FailProcessVideo
+    fn from(_e: S3ClientError) -> Self {
+        VideoProcessorError::FailProcessVideo
     }
 }

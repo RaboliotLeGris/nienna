@@ -14,11 +14,11 @@ mod video_processor_tests {
         }
 
         let videos_paths = vec![
-            TestVideosPath{ path: ".dev/samples/SampleVideo_1280x720_2mb.mp4", mimetype: "video/mp4"},
-            TestVideosPath{ path: ".dev/samples/SampleVideo_1280x720_30mb.mp4", mimetype: "video/mp4"},
-            TestVideosPath{ path: ".dev/samples/sample_960x400_ocean_with_audio.flv", mimetype: "video/x-flv"},
-            TestVideosPath{ path: ".dev/samples/sample_960x400_ocean_with_audio.avi", mimetype: "video/x-msvideo"},
-            TestVideosPath{ path: ".dev/samples/sample_960x400_ocean_with_audio.mkv", mimetype: "video/x-matroska"},
+            TestVideosPath { path: ".dev/samples/SampleVideo_1280x720_2mb.mp4", mimetype: "video/mp4" },
+            TestVideosPath { path: ".dev/samples/SampleVideo_1280x720_30mb.mp4", mimetype: "video/mp4" },
+            TestVideosPath { path: ".dev/samples/sample_960x400_ocean_with_audio.flv", mimetype: "video/x-flv" },
+            TestVideosPath { path: ".dev/samples/sample_960x400_ocean_with_audio.avi", mimetype: "video/x-msvideo" },
+            TestVideosPath { path: ".dev/samples/sample_960x400_ocean_with_audio.mkv", mimetype: "video/x-matroska" },
         ];
 
         for v in videos_paths {

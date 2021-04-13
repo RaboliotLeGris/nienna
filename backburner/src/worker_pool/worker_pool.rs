@@ -1,12 +1,11 @@
 use std::sync::{Arc, mpsc, Mutex};
 
 use crate::worker_pool::worker::Worker;
+use crate::worker_pool::jobs::job::Job;
 
 #[cfg(test)]
 #[path = "./worker_pool_tests.rs"]
 mod worker_pool_tests;
-
-pub type Job = Box<dyn FnOnce() + Send + 'static>;
 
 pub enum Message {
     NewJob(Job),

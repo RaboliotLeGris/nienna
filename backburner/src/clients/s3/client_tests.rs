@@ -1,7 +1,6 @@
 #[cfg(test)]
 mod client_tests {
-    use crate::s3::client::S3Client;
-    use crate::s3::TS3Client;
+    use crate::clients::s3::client::S3Client;
 
     #[test]
     #[ignore]

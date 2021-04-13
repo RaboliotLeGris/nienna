@@ -6,7 +6,7 @@ RUN cargo build --release
 
 FROM debian:10.8-slim@sha256:13f0764262a064b2dd9f8a828bbaab29bdb1a1a0ac6adc8610a0a5f37e514955
 
-RUN apt-get update && apt-get install -y ffmpeg libavutil-dev libavformat-dev libavfilter-dev libavdevice-dev libclang-dev
+RUN apt-get update && apt-get install -y ffmpeg 
 
 WORKDIR /backburner
 COPY --from=builder /usr/src/backburner/target/release/backburner /backburner

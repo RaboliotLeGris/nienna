@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 use serde_json::error;
-use crate::amqp::errors::AmqpError;
+use crate::clients::amqp::errors::AmqpError;
 
 #[cfg(test)]
 #[path = "./serialization_tests.rs"]

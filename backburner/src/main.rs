@@ -1,18 +1,19 @@
 #[macro_use]
 extern crate log;
+extern crate s3 as rust_s3;
 #[cfg(test)]
 #[macro_use]
 extern crate serial_test;
-extern crate s3 as rust_s3;
 
-use crate::amqp::client::AMQP;
-use crate::s3::client::S3Client;
 use std::sync::Arc;
+use std::thread;
 
-mod amqp;
+use crate::clients::amqp::client::AMQP;
+use crate::clients::s3::client::S3Client;
+use crate::video_processing::jobs::job_video_process::job_process_video;
+
+mod clients;
 mod worker_pool;
-mod jobs;
-mod s3;
 mod video_processing;
 
 fn main() {
@@ -23,21 +24,22 @@ fn main() {
 
     info!("Starting Backburner service");
 
-    debug!("Creating WorkerPool");
+    info!("Create WorkerPool");
     let worker_count: usize = std::env::var("BACKBURNER_WORKER_COUNT").unwrap_or(String::from("10")).parse::<usize>().expect("BACKBURNER_WORKER_COUNT must be a valid NON NULL and POSITIVE integer");
     let worker_pool = worker_pool::worker_pool::WorkerPool::new(worker_count);
 
-    debug!("Fetching S3Client credentials");
-    let s3_endpoint = std::env::var("S3_URI").unwrap();
-    let s3_access_key = std::env::var("S3_ACCESS_KEY").unwrap();
-    let s3_secret_key= std::env::var("S3_SECRET_KEY").unwrap();
+    debug!("Create S3Client");
+    let s3_client = S3Client::new(std::env::var("S3_URI").unwrap(), "nienna-1".into(), std::env::var("S3_ACCESS_KEY").unwrap(), std::env::var("S3_SECRET_KEY").unwrap());
 
+    debug!("Create event publisher");
     let addr = std::env::var("RABBITMQ_URI").unwrap();
+    // thread::spawn(|| {});
+
     async_global_executor::block_on(async {
-        let mut amqp_client: AMQP = AMQP::new(addr).await;
+        let mut amqp_client: AMQP = AMQP::new(addr, String::from("nienna_backburner")).await;
         while let Ok(event) = amqp_client.next().await {
             match event.event.as_str() {
-                "EventVideoReadyForProcessing" => worker_pool.submit(jobs::job_video_process::job_process_video(event, Arc::new(Box::new(S3Client::new(s3_endpoint.clone(), "nienna-1".into(), s3_access_key.clone(), s3_secret_key.clone()))))),
+                "EventVideoReadyForProcessing" => worker_pool.submit(job_process_video(event, Arc::new(Box::new(s3_client.clone())))),
                 _ => {}
             }
         }

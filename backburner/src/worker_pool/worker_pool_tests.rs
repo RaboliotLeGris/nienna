@@ -1,9 +1,10 @@
 #[cfg(test)]
 mod worker_pool_tests {
-    use crate::worker_pool::worker_pool::WorkerPool;
-    use std::sync::{Mutex, Arc};
     use std::{thread, time};
+    use std::sync::{Arc, Mutex};
     use std::time::Instant;
+
+    use crate::worker_pool::worker_pool::WorkerPool;
 
     #[test]
     fn should_create_5_worker_and_execute_a_simple_job() {
@@ -36,7 +37,7 @@ mod worker_pool_tests {
         for _ in 0..worker_count {
             let w = Arc::clone(&w);
             worker_pool.submit(move || {
-                // really long running job
+                // really long running jobs
                 thread::sleep(time::Duration::from_secs(5));
                 let mut count = w.lock().unwrap();
                 *count -= 1;

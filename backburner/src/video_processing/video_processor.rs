@@ -1,6 +1,7 @@
-use std::process::Command;
-use crate::video_processing::errors::VideoProcessorError;
 use std::io::Read;
+use std::process::Command;
+
+use crate::video_processing::errors::VideoProcessorError;
 
 #[cfg(test)]
 #[path = "./video_processor_tests.rs"]
@@ -9,7 +10,6 @@ mod video_processor_tests;
 pub struct VideoProcessor {}
 
 impl VideoProcessor {
-
     /// Returns the video mimetype if possible
     ///
     /// Require `file` binary on the system
@@ -22,7 +22,7 @@ impl VideoProcessor {
             let collected_split: Vec<&str> = stripped_output.split_whitespace().collect();
             if let Some(mimetype) = collected_split.get(1) {
                 if *mimetype == "cannot" {
-                    return Err(VideoProcessorError::FailExtractMimetype)
+                    return Err(VideoProcessorError::FailExtractMimetype);
                 }
                 return Ok(String::from(*mimetype));
             }

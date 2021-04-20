@@ -65,7 +65,7 @@ func (v PostUploadVideoHandler) ServeHTTP(w http.ResponseWriter, r *http.Request
 	}
 
 	// Send message to backburner
-	err = v.Msgbus.Publish(msgbus.QUEUE_BACKBURNER, &msgbus.EventSerialization{Event: msgbus.EventVideoReadyForProcessing, Slug: slug, Filename: sourceFilename})
+	err = v.Msgbus.Publish(msgbus.QUEUE_BACKBURNER, &msgbus.EventSerialization{Event: msgbus.EventVideoReadyForProcessing, Slug: slug, Content: sourceFilename})
 	if err != nil {
 		http.Error(w, "unable to publish video event", http.StatusInternalServerError)
 		return

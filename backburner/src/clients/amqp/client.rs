@@ -1,12 +1,14 @@
-use lapin::{Connection, ConnectionProperties, options::*, types::FieldTable, Channel, Consumer};
 use futures_lite::StreamExt;
-use crate::clients::amqp::serialization::EventSerialization;
+use lapin::{Channel, Connection, ConnectionProperties, Consumer, options::*, types::FieldTable, BasicProperties};
+
 use crate::clients::amqp::errors::AmqpError;
+use crate::clients::amqp::serialization::EventSerialization;
 
 pub struct AMQP {
     conn: Connection,
     channel: Channel,
     consumer: Consumer,
+    queue: String,
 }
 
 impl AMQP {
@@ -43,7 +45,8 @@ impl AMQP {
         AMQP {
             conn,
             channel,
-            consumer
+            consumer,
+            queue,
         }
     }
 
@@ -57,11 +60,10 @@ impl AMQP {
         Err(AmqpError::FailFetchEvent)
     }
 
-    // pub fn publish(&mut self) -> Result<(), AmqpError> {
-    //     self.channel.basic_publish()
-    //
-    //     Ok(())
-    // }
-
-    
+    pub async fn publish(&mut self, payload: Vec<u8>) -> Result<(), AmqpError> {
+        if self.channel.basic_publish("", self.queue.as_str(), BasicPublishOptions::default(), payload, BasicProperties::default()).await.is_ok() {
+            return Ok(())
+        }
+        Err(AmqpError::FailPublishEvent)
+    }
 }

@@ -38,10 +38,15 @@ fn main() {
 
     async_global_executor::block_on(async {
         let mut amqp_client: AMQP = AMQP::new(addr, String::from("nienna_backburner")).await;
-        while let Ok(event) = amqp_client.next().await {
-            match event.event.as_str() {
-                "EventVideoReadyForProcessing" => worker_pool.submit(job_process_video(event, Arc::new(Box::new(s3_client.clone())), sender.clone())),
-                _ => {}
+        loop {
+            match amqp_client.next().await {
+                Ok(event) => {
+                    match event.event.as_str() {
+                        "EventVideoReadyForProcessing" => worker_pool.submit(job_process_video(event, Arc::new(Box::new(s3_client.clone())), sender.clone())),
+                        _ => {}
+                    }
+                },
+                Err(e) => error!("Failed to deserialize event with err: {:?}", e)
             }
         }
     })

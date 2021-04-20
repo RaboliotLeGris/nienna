@@ -22,8 +22,7 @@ impl Worker {
                     debug!("[{:?}][Worker {}]: jobs finished", Instant::now(), id)
                 }
                 Err(e) => {
-                    error!("unable to get a jobs {}", e);
-                    break;
+                    error!("unable to get a jobs with error: {}", e);
                 }
             };
         });

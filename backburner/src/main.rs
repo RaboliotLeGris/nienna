@@ -15,6 +15,7 @@ use crate::video_processing::jobs::job_video_process::job_process_video;
 mod clients;
 mod worker_pool;
 mod video_processing;
+mod event_publisher;
 
 fn main() {
     if std::env::var("RUST_LOG").is_err() {
@@ -23,9 +24,9 @@ fn main() {
     env_logger::init();
 
     info!("Starting Backburner service");
-
     info!("Create WorkerPool");
     let worker_count: usize = std::env::var("BACKBURNER_WORKER_COUNT").unwrap_or(String::from("10")).parse::<usize>().expect("BACKBURNER_WORKER_COUNT must be a valid NON NULL and POSITIVE integer");
+    println!("WORKER_COUNT {}", worker_count);
     let worker_pool = worker_pool::worker_pool::WorkerPool::new(worker_count);
 
     debug!("Create S3Client");
@@ -33,13 +34,13 @@ fn main() {
 
     debug!("Create event publisher");
     let addr = std::env::var("RABBITMQ_URI").unwrap();
-    // thread::spawn(|| {});
+    let sender = event_publisher::launch_job_event_publisher(addr.clone());
 
     async_global_executor::block_on(async {
         let mut amqp_client: AMQP = AMQP::new(addr, String::from("nienna_backburner")).await;
         while let Ok(event) = amqp_client.next().await {
             match event.event.as_str() {
-                "EventVideoReadyForProcessing" => worker_pool.submit(job_process_video(event, Arc::new(Box::new(s3_client.clone())))),
+                "EventVideoReadyForProcessing" => worker_pool.submit(job_process_video(event, Arc::new(Box::new(s3_client.clone())), sender.clone())),
                 _ => {}
             }
         }

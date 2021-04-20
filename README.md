@@ -17,11 +17,10 @@
 * Reverse proxy (caddy) -> 
 
 ## TODOLIST
-* backburner -> send event with video status
-* Ack or nack the job once it's done (to resubmit it)  
-* backburner -> check worker status -> Heartbeat (not doable yet)
-* cliff -> Do view
+* backburner -> fix channel close issue
+* cliff -> add worker to update video status in db
 
+* backburner -> check worker status -> Heartbeat (not doable yet)
 * Docker -> makefile with hadolint + on other projects
 * cliff -> fix memory usage when uploading file to minio (another client or some tweaks)
 * cliff -> Lock database when initializing database

@@ -53,7 +53,7 @@ impl AMQP {
     pub async fn next(&mut self) -> Result<EventSerialization, AmqpError> {
         if let Some(delivery) = self.consumer.next().await {
             if let Ok(delivery) = delivery {
-                delivery.1.ack(BasicAckOptions::default());
+                delivery.0.basic_ack(delivery.1.delivery_tag, BasicAckOptions::default()).await;
                 return EventSerialization::from(delivery.1.data);
             }
         }
@@ -62,6 +62,13 @@ impl AMQP {
 
     pub async fn publish(&mut self, payload: Vec<u8>) -> Result<(), AmqpError> {
         if self.channel.basic_publish("", self.queue.as_str(), BasicPublishOptions::default(), payload, BasicProperties::default()).await.is_ok() {
+            return Ok(())
+        }
+        Err(AmqpError::FailPublishEvent)
+    }
+
+    pub async fn ack(&mut self, delivery_tag: u64) -> Result<(), AmqpError> {
+        if self.channel.basic_ack(delivery_tag, BasicAckOptions::default()).await.is_ok() {
             return Ok(())
         }
         Err(AmqpError::FailPublishEvent)

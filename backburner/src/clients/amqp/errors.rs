@@ -4,6 +4,8 @@ pub enum AmqpError{
     FailDeserialization,
     FailSerialization,
     FailPublishEvent,
+    FailAckEvent,
+    FailNAckEvent,
     UnrecognizedEvent,
 }
 
@@ -17,6 +19,8 @@ impl std::fmt::Display for AmqpError {
             AmqpError::FailFetchEvent => write!(f, "Failed to fetch an event"),
             AmqpError::FailPublishEvent => write!(f, "Failed publish an event"),
             AmqpError::UnrecognizedEvent => write!(f, "Unable to recognize event"),
+            AmqpError::FailAckEvent => write!(f, "Failed to ack an event"),
+            AmqpError::FailNAckEvent => write!(f, "Failed to nack an event")
         }
     }
 }

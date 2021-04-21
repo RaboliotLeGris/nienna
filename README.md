@@ -17,9 +17,9 @@
 * Reverse proxy (caddy) -> 
 
 ## TODOLIST
-* backburner -> fix channel close issue
 * cliff -> add worker to update video status in db
 
+* Doc -> flow
 * backburner -> check worker status -> Heartbeat (not doable yet)
 * Docker -> makefile with hadolint + on other projects
 * cliff -> fix memory usage when uploading file to minio (another client or some tweaks)

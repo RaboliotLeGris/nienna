@@ -1,4 +1,3 @@
-
 .PHONY: build test d_launch
 
 d_launch:
@@ -15,6 +14,9 @@ d_backburner:
 
 d_cliff:
 	docker exec -ti `docker ps -aqf "name=nienna_cliff"` bash
+
+d_pulsar:
+	docker exec -ti `docker ps -aqf "name=nienna_pulsar"` bash
 
 d_db:
 	docker exec -ti `docker ps -aqf "name=nienna_db"` psql --user nienna
@@ -37,7 +39,7 @@ build_cliff:
 test_webapp:
 	echo 'TODO'
 test_backburner:
-	echo 'TODO'
+	(cd backburner && make test)
 test_cliff:
 	(cd cliff && make test)
 

@@ -7,3 +7,5 @@ cliff/build
 
 webapp/dist
 webapp/node_modules
+
+venv

@@ -6,6 +6,7 @@ pub enum AmqpError{
     FailPublishEvent,
     FailAckEvent,
     FailNAckEvent,
+    ConsumerIsNone,
     UnrecognizedEvent,
 }
 
@@ -20,7 +21,8 @@ impl std::fmt::Display for AmqpError {
             AmqpError::FailPublishEvent => write!(f, "Failed publish an event"),
             AmqpError::UnrecognizedEvent => write!(f, "Unable to recognize event"),
             AmqpError::FailAckEvent => write!(f, "Failed to ack an event"),
-            AmqpError::FailNAckEvent => write!(f, "Failed to nack an event")
+            AmqpError::FailNAckEvent => write!(f, "Failed to nack an event"),
+            AmqpError::ConsumerIsNone => write!(f, "No consumer created")
         }
     }
 }

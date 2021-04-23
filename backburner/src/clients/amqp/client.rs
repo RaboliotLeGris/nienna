@@ -7,12 +7,12 @@ use crate::clients::amqp::serialization::EventSerialization;
 pub struct AMQP {
     conn: Connection,
     channel: Channel,
-    consumer: Consumer,
+    consumer: Option<Consumer>,
     queue: String,
 }
 
 impl AMQP {
-    pub async fn new(uri: String, queue: String) -> Self {
+    pub async fn new(uri: String, queue: String, enable_consumer: bool) -> Self {
         let conn = Connection::connect(uri.as_str(), ConnectionProperties::default())
             .await
             .expect("connection error");
@@ -31,16 +31,19 @@ impl AMQP {
             .await
             .expect("queue_declare");
 
-        debug!("Create consumer for queue: \"{}\"", queue);
-        let consumer = channel
-            .basic_consume(
-                queue.as_str(),
-                "backburner",
-                BasicConsumeOptions::default(),
-                FieldTable::default(),
-            )
-            .await
-            .expect("basic_consume");
+        let mut consumer = None;
+        if enable_consumer {
+            debug!("Create consumer for queue: \"{}\"", queue);
+            consumer = Some(channel
+                .basic_consume(
+                    queue.as_str(),
+                    "backburner",
+                    BasicConsumeOptions::default(),
+                    FieldTable::default(),
+                )
+                .await
+                .expect("basic_consume"));
+        }
 
         AMQP {
             conn,
@@ -51,7 +54,10 @@ impl AMQP {
     }
 
     pub async fn next(&mut self) -> Result<EventSerialization, AmqpError> {
-        if let Some(delivery) = self.consumer.next().await {
+        if self.consumer.is_none() {
+            return Err(AmqpError::ConsumerIsNone);
+        }
+        if let Some(delivery) = self.consumer.as_mut().unwrap().next().await {
             if let Ok(delivery) = delivery {
                 delivery.0.basic_ack(delivery.1.delivery_tag, BasicAckOptions::default()).await;
                 return EventSerialization::from(delivery.1.data);
@@ -62,14 +68,14 @@ impl AMQP {
 
     pub async fn publish(&mut self, payload: Vec<u8>) -> Result<(), AmqpError> {
         if self.channel.basic_publish("", self.queue.as_str(), BasicPublishOptions::default(), payload, BasicProperties::default()).await.is_ok() {
-            return Ok(())
+            return Ok(());
         }
         Err(AmqpError::FailPublishEvent)
     }
 
     pub async fn ack(&mut self, delivery_tag: u64) -> Result<(), AmqpError> {
         if self.channel.basic_ack(delivery_tag, BasicAckOptions::default()).await.is_ok() {
-            return Ok(())
+            return Ok(());
         }
         Err(AmqpError::FailPublishEvent)
     }

@@ -1,4 +1,7 @@
-.PHONY: build build-release test
+.PHONY: run build build-release test
+
+run:
+	cargo run
 
 build:
 	cargo build

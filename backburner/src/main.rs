@@ -36,7 +36,7 @@ pub async fn main() -> Result<(), ()> {
     let addr = std::env::var("RABBITMQ_URI").unwrap();
     let sender = event_publisher::launch_job_event_publisher(addr.clone());
 
-    let mut amqp_client: AMQP = AMQP::new(addr, String::from("nienna_backburner")).await;
+    let mut amqp_client: AMQP = AMQP::new(addr, String::from("nienna_backburner"), true).await;
     loop {
         match amqp_client.next().await {
             Ok(event) => {

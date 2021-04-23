@@ -16,7 +16,7 @@ pub fn launch_job_event_publisher(amqp_addr: String) -> mpsc::Sender<JobEventRes
 
     thread::spawn(move || {
         tokio::runtime::Runtime::new().expect("To create a Tokio runtime").block_on(async {
-                let mut amqp_client: AMQP = AMQP::new(amqp_addr, String::from("nienna_jobs_result")).await;
+                let mut amqp_client: AMQP = AMQP::new(amqp_addr, String::from("nienna_jobs_result"), false).await;
                 loop {
                     if let Ok(event) = receiver.recv() {
                         let job_event = match event {

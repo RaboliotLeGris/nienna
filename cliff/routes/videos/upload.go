@@ -40,6 +40,12 @@ func (v PostUploadVideoHandler) ServeHTTP(w http.ResponseWriter, r *http.Request
 	}
 
 	// TODO check mimetype video
+	title := r.FormValue("title")
+	if title == "" {
+		log.Debug("Missing video title")
+		http.Error(w, "missing video title", http.StatusBadRequest)
+		return
+	}
 
 	file, fileheader, err := r.FormFile("video")
 	if err != nil {
@@ -58,7 +64,7 @@ func (v PostUploadVideoHandler) ServeHTTP(w http.ResponseWriter, r *http.Request
 	}
 
 	// Save into database new video
-	video, err := dao.NewVideoDAO(v.Pool).Create(slug, user, "WIP title", "WIP description")
+	video, err := dao.NewVideoDAO(v.Pool).Create(slug, user, title, "WIP description")
 	if err != nil {
 		http.Error(w, "unable to register the video", http.StatusInternalServerError)
 		return

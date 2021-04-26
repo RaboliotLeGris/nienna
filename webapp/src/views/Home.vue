@@ -5,7 +5,7 @@
     </div>
     <div v-else>
       <div class="miniature_container" v-for="(video, index) in videos" :key="index">
-        <Miniature :titre="video.titre" :miniature-u-r-l="video.Slug" :video-slug="video.Slug" />
+        <Miniature :titre=video.Title :video-slug="video.Slug" />
       </div>
     </div>
   </div>
@@ -37,6 +37,7 @@ export default {
         .then((response) => {
           this.loading = false;
           this.videos = response.data;
+          console.log(this.videos);
         })
         .catch((err) => {
           console.log('ERROR: GETHOMEVIDEO', err);

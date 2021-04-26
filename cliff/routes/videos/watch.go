@@ -29,9 +29,35 @@ func (v GetStreamVideoHandler) ServeHTTP(w http.ResponseWriter, r *http.Request)
 		http.Error(w, "empty filename name provided", http.StatusBadRequest)
 		return
 	}
-	// log.Debug("FILE REQUESTED FILENAME ", filename, " WITH SLUG ", slug)
 
 	filepath := fmt.Sprintf("%s/HLS/%s", slug, filename)
+	object, err := v.Storage.GetObject(context.Background(), filepath)
+	if err != nil {
+		http.Error(w, "fail to get requested file", http.StatusNotFound)
+		return
+	}
+
+	_, err = io.Copy(w, object)
+	if err != nil {
+		http.Error(w, "fail to copy file", http.StatusInternalServerError)
+		return
+	}
+}
+
+type GetMiniatureVideoHandler struct {
+	Storage *objectStorage.ObjectStorage
+}
+
+func (v GetMiniatureVideoHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	log.Debug("Request Get /api/videos/miniature/{slug}.jpeg")
+
+	slug, found := mux.Vars(r)["slug"]
+	if !found || slug == "" {
+		http.Error(w, "empty slug name provided", http.StatusBadRequest)
+		return
+	}
+
+	filepath := fmt.Sprintf("%s/miniature.jpeg", slug)
 	object, err := v.Storage.GetObject(context.Background(), filepath)
 	if err != nil {
 		http.Error(w, "fail to get requested file", http.StatusNotFound)

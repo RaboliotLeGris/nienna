@@ -1,4 +1,7 @@
-.PHONY: build test lint fmt
+.PHONY: run build test lint fmt
+
+run:
+	go run main.go
 
 build: fmt
 	go build -o build/cliff

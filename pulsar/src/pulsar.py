@@ -16,12 +16,12 @@ def create_queues(ch, pool):
                 VideoDAO(conn).update_status(slug, "READY")
                 conn.commit()
                 ch.basic_ack(message.delivery_tag)
-            if payload["event"] == "EventVideoProcessingFail":
+            elif payload["event"] == "EventVideoProcessingFail":
                 VideoDAO(conn).update_status(slug, "FAILURE")
                 conn.commit()
                 ch.basic_ack(message.delivery_tag)
             else:
-                ch.basic_nack(message.delivery_tag)
+                ch.basic_reject(message.delivery_tag)
 
     ch.basic_consume(consumer_tag='pulsar', queue='nienna_jobs_result', callback=on_jobs_result_message)
 

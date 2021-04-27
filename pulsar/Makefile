@@ -1,6 +1,6 @@
 .PHONY: run
 
-run:
+run: install
 	python3 src/pulsar.py
 
 install:

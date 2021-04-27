@@ -4,6 +4,7 @@ const routes = {
   postCheck: '/api/users/check',
   getAllVideos: '/api/videos/all',
   getOneVideo: '/api/videos/',
+  getStatusVideo: '/api/videos/status/',
   postVideo: '/api/videos/upload',
 };
 

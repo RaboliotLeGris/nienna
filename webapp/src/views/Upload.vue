@@ -10,13 +10,10 @@
         </label>
         <button v-on:click="submitFile()">Submit</button>
       </div>
-      <div v-else-if="this.status === 'Uploading'">
-        <h5>Uploading</h5>
+      <div v-else>
+        <h5>{{ this.status }}</h5>
       </div>
-      <div v-else-if="this.status === 'Uploaded'">
-        <h5>Uploaded</h5>
-      </div>
-      </div>
+    </div>
   </div>
 </template>
 
@@ -46,10 +43,13 @@ export default {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
-        }).then((res) => {
-        console.log('SUCCESS!!', res);
-        this.status = 'Uploaded';
-      })
+        })
+        .then((res) => {
+          this.status = 'Uploaded';
+          setInterval(() => {
+            this.pollStatus(res.data.Slug);
+          }, 5000);
+        })
         .catch((err) => {
           console.log('FAILURE!!', err);
         });
@@ -60,6 +60,16 @@ export default {
     },
     handleFileTitle() {
       this.title = this.$refs.title.value;
+    },
+    pollStatus(slug) {
+      axios.get(routes.getStatusVideo + slug)
+        .then((response) => {
+          this.status = response.data.status;
+        })
+        .catch((err) => {
+          console.log('ERROR: GETSTATUSVIDEO', err);
+          // TODO display error message
+        });
     },
   },
 };

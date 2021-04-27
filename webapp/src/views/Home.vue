@@ -37,7 +37,6 @@ export default {
         .then((response) => {
           this.loading = false;
           this.videos = response.data;
-          console.log(this.videos);
         })
         .catch((err) => {
           console.log('ERROR: GETHOMEVIDEO', err);

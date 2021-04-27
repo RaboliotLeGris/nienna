@@ -32,3 +32,18 @@ services:
     depends_on:
       - s3
       - rabbitmq
+
+  pulsar:
+    build: ../pulsar
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    environment:
+      LOG_LEVEL: "debug"
+      DB_URI: "postgresql://db/nienna?user=nienna&password=nienna"
+      AMQP_URI: "amqp://nienna:nienna123@rabbitmq:5672"
+    volumes:
+      - $PWD/pulsar:/pulsar
+    depends_on:
+      - rabbitmq
+      - db

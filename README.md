@@ -31,7 +31,7 @@ It starts all the containers but it also mount each services without launching t
 * Webapp (Vue) -> Allow to upload, watch video and watch livestream
 * Cliff (Go) -> serve webapp, and serve http request (handle uploaded file and watching)
 * Backburner (Rust) -> Process uploaded video into HLS
-* Pulsar -> Save event from videos
+* Pulsar (Python) -> Save event from videos
 * River -> handle incoming livestream and save them (done later)
 
 ### Tiers
@@ -42,8 +42,8 @@ It starts all the containers but it also mount each services without launching t
 * Reverse proxy (Caddy) -> https://hub.docker.com/_/caddy
 
 ## TODOLIST
-
-* Pulsar -> add worker to update video status in db
+* Webapp: Use real video player
+* slim down backburner image
 * Doc -> flow
 * Backburner -> check worker status -> Heartbeat (not doable yet)
 * Docker -> makefile with hadolint + on other projects

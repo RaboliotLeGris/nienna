@@ -1,39 +1,29 @@
 <template>
   <div class="Watch">
     <h1>This is an watch page</h1>
-    <button v-on:click="play()">play</button>
-    <button v-on:click="pause()">pause</button>
-    <video id="video"></video>
+    <video id="video-player" class="video-js vjs-theme-forest" controls>
+      <source :src="'/api/videos/streams/'+this.$route.params.slug+'/part.m3u8'" type="application/x-mpegURL">
+    </video>
   </div>
 </template>
 
 <script>
-import Hls from 'hls.js';
+import videojs from 'video.js';
+import 'video.js/dist/video-js.css';
+import '@videojs/themes/dist/forest/index.css';
 
 export default {
   name: 'Watch',
-  methods: {
-    play() {
-      const video = document.getElementById('video');
-      video.play();
-    },
-    pause() {
-      const video = document.getElementById('video');
-      video.pause();
-    },
-  },
   mounted() {
-    console.log('CREATED');
-    if (Hls.isSupported()) {
-      const video = document.getElementById('video');
-      const hls = new Hls();
-      hls.loadSource(`/api/videos/streams/${this.$route.params.slug}/part.m3u8`);
-      hls.attachMedia(video);
-      hls.on(Hls.Events.MANIFEST_PARSED, () => {
-        console.log('PARSED');
-        video.play();
-      });
-    }
+    videojs('video-player');
   },
 };
 </script>
+
+<style>
+ #video-player {
+   display: block;
+   margin-left: auto;
+   margin-right: auto;
+ }
+</style>

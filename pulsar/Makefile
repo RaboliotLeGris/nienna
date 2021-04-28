@@ -1,5 +1,8 @@
 .PHONY: run
 
+build_image:
+	docker build -t pulsar:latest .
+
 run: install
 	python3 src/pulsar.py
 

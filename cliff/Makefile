@@ -6,6 +6,10 @@ run:
 build: fmt
 	go build -o build/cliff
 
+build_image:
+	# TODO UPDATE webapp
+	docker build -t cliff:latest .
+
 test: lint
 	echo "TODO"
 

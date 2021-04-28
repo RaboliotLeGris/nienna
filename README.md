@@ -42,15 +42,14 @@ It starts all the containers but it also mount each services without launching t
 * Reverse proxy (Caddy) -> https://hub.docker.com/_/caddy
 
 ## TODOLIST
+* cliff -> Test Cliff
 * cliff -> fix return of struct to remove first letter with Uppercase
 * Doc -> flow
 * Backburner -> check worker status -> Heartbeat (not doable yet)
 * Docker -> makefile with hadolint + on other projects
 * cliff -> fix memory usage when uploading file to minio (another client or some tweaks)
-* slim down backburner image
 * cliff -> Lock database when initializing database
 * cliff -> Do not crash when db is not ready
 * cliff -> Use resumable ?
-* cliff -> Test Cliff
 * cliff -> Prevent SQL injection (OMG)
 * cliff -> add password

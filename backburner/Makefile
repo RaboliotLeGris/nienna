@@ -9,8 +9,8 @@ build:
 build-release:
 	cargo build --release
 
+build_image:
+	docker build -t backburner .
+
 test:
 	RUST_LOG=DEBUG cargo test -- --nocapture
-
-d:
-	docker build -t dev-backburner .dev && docker run -ti --rm --env RUST_LOG=DEBUG -v $$PWD:/usr/src/backburner dev-backburner

@@ -1,9 +1,8 @@
 .PHONY: build test d_launch
 
-d_launch:
+d_launch: clean
 	docker-compose -f .docker/docker-compose.app.yml -f .docker/docker-compose.services.yml -p nienna up --build --remove-orphans
-
-d_dev:
+d_dev: clean
 	docker-compose -f .docker/docker-compose.app.dev.yml -f .docker/docker-compose.services.yml -p nienna up --build --remove-orphans
 
 d_launch_services:
@@ -23,6 +22,9 @@ d_db:
 
 d_redis:
 	docker exec -ti `docker ps -aqf "name=nienna_redis"` redis-cli
+
+clean:
+	rm -rf backburner/target
 
 build: build_cliff build_backburner build_webapp
 

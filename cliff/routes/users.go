@@ -18,7 +18,7 @@ type registerUserHandler struct {
 }
 
 type registerUserBody struct {
-	Username string `json:'username'`
+	Username string `json:"username"`
 }
 
 func (s registerUserHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -48,7 +48,7 @@ func (s registerUserHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	s.sessionStore.Set(r, w, "userID", id)
+	err = s.sessionStore.Set(r, w, "userID", id)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -87,7 +87,7 @@ func (s loginUserHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	s.sessionStore.Set(r, w, "userID", id)
+	err = s.sessionStore.Set(r, w, "userID", id)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -98,10 +98,6 @@ func (s loginUserHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 type checkSessionHandler struct {
 	sessionStore *session.SessionStore
-}
-
-type checkSerialized struct {
-	Ok bool `json:"ok"`
 }
 
 func (s checkSessionHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {

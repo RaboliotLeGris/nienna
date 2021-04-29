@@ -7,10 +7,6 @@ use rust_s3::region::Region;
 use crate::clients::s3::errors::S3ClientError;
 use crate::clients::s3::TS3Client;
 
-#[cfg(test)]
-#[path = "./client_tests.rs"]
-mod client_tests;
-
 #[derive(Clone)]
 pub struct S3Client {
     region: Region,

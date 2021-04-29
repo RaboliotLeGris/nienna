@@ -11,7 +11,6 @@ build_image:
 	docker build -t cliff:latest .
 
 test: lint
-	echo "TODO"
 
 lint: fmt
 	docker run --rm -v $(PWD):/app -w /app golangci/golangci-lint:v1.38.0 golangci-lint run -v

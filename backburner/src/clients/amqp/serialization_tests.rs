@@ -9,7 +9,7 @@ mod serialization_tests {
         {
             "event": "EventVideoReadyForProcessing",
             "slug": "randomstring",
-            "filename": "randomefilename.mp4"
+            "content": "randomefilename.mp4"
         }"#;
 
         // then
@@ -29,7 +29,7 @@ mod serialization_tests {
         {
             event: "EventVideoReadyForProcessing",
             slug: "randomstring",
-            filename: "filename.mp4",
+            content: "filename.mp4",
         }"#;
 
         // then
@@ -46,7 +46,7 @@ mod serialization_tests {
         {
             "event": "UnrecognizedEvent",
             "slug": "randomstring",
-            "filename": "randomfilename.mp4"
+            "content": "randomfilename.mp4"
         }"#;
         let e: serde_json::error::Result<EventSerialization> = serde_json::from_str(given);
 

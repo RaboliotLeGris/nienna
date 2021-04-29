@@ -6,7 +6,6 @@ extern crate s3 as rust_s3;
 extern crate serial_test;
 
 use std::sync::Arc;
-use std::thread;
 
 use crate::clients::amqp::client::AMQP;
 use crate::clients::s3::client::S3Client;

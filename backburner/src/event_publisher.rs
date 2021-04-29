@@ -1,8 +1,9 @@
-use std::sync::{mpsc, Arc};
+use std::sync::mpsc;
 use std::thread;
 use crate::clients::amqp::client::AMQP;
 use crate::clients::amqp::serialization::EventSerialization;
 
+#[derive(PartialEq, Debug)]
 pub enum JobEventResult {
     Success(String),
     Failure(String, String),

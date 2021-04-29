@@ -29,7 +29,10 @@ func NewStorageClient(uri, accessKey, secretKey, bucketName string, ssl bool) (*
 	}
 
 	// Checking connection with bucket by ensuring the bucker exists
-	storage.EnsureBuckerExist(bucketName)
+	if err = storage.EnsureBuckerExist(bucketName); err != nil {
+		return nil, err
+	}
+
 	return &storage, nil
 }
 

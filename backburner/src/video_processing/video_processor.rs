@@ -2,6 +2,7 @@ use std::io::Read;
 use std::process::Command;
 
 use crate::video_processing::errors::VideoProcessorError;
+use std::env;
 
 #[cfg(test)]
 #[path = "./video_processor_tests.rs"]

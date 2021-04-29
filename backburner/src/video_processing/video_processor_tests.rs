@@ -1,7 +1,5 @@
 #[cfg(test)]
 mod video_processor_tests {
-    use std::path::Path;
-
     use crate::video_processing::video_processor::VideoProcessor;
 
     #[test]

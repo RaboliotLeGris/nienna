@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod job_helpers_tests {
-    use crate::jobs::helpers::go_to_working_directory;
+    use crate::worker_pool::jobs::job_helpers::go_to_working_directory;
 
     #[test]
     #[serial]

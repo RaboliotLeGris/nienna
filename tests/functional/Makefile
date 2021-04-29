@@ -10,9 +10,13 @@ stop_env:
 	docker stop $$(docker ps -q)
 	# TODO: DELETE ALL VOLUMES
 
+exec_test:
+	go test -v ./... -count=1
+
 run:
 	echo "RUNNING functional tests"
-	go test ./... -count=1
+	docker build . -t nienna-functional
+	docker run --rm --network nienna_default --env DB_URI="postgresql://db/nienna?user=nienna&password=nienna" --env CLIFF_HOST="http://cliff:8000" nienna-functional 
 
 test: start_env run #stop_env
 	

@@ -4,6 +4,8 @@ services:
   db:
     build: ../../.docker/services/postgresql
     restart: unless-stopped
+    ports: 
+      - "1486:1486"
     environment:
       POSTGRES_DB: "nienna"
       POSTGRES_USER: "nienna"

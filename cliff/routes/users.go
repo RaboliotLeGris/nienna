@@ -17,7 +17,7 @@ type registerUserHandler struct {
 }
 
 type registerUserBody struct {
-	Username string
+	Username string `json:'username'`
 }
 
 func (s registerUserHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -32,7 +32,7 @@ func (s registerUserHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	userDAO := dao.NewUserDAO(s.pool)
 	id, err := userDAO.Create(body.Username)
 	if err != nil {
-		w.WriteHeader(500)
+		w.WriteHeader(403)
 		return
 	}
 

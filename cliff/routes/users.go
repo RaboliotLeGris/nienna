@@ -3,6 +3,7 @@ package routes
 import (
 	"encoding/json"
 	"net/http"
+	"os"
 
 	"github.com/jackc/pgx/v4/pgxpool"
 	log "github.com/sirupsen/logrus"
@@ -25,7 +26,13 @@ func (s registerUserHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	var body registerUserBody
 	err := json.NewDecoder(r.Body).Decode(&body)
 	if err != nil {
-		w.WriteHeader(500)
+		w.WriteHeader(400)
+		return
+	}
+
+	if os.Getenv("NIENNA_REGISTER") == "DISABLE" {
+		log.Info("Register attempt but register is disabled")
+		w.WriteHeader(403)
 		return
 	}
 

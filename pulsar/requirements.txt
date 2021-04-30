@@ -1,5 +1,5 @@
 amqp==5.0.6
-greenlet==0.4.17
+greenlet==1.0.0
 msgpack==1.0.0
 psycopg2==2.8.6
 pynvim==0.4.2

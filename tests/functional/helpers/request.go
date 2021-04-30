@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"io/ioutil"
+	"mime/multipart"
 	"net/http"
 	"net/http/cookiejar"
 )
@@ -42,8 +44,12 @@ func (s *Session) Logout() {
 	s.client.Jar = emptyJar
 }
 
-func (s *Session) Get(path string) error {
-	return nil
+func (s *Session) Get(path string) (int, io.Reader, error) {
+	resp, err := s.client.Get(s.host + path)
+	if err != nil {
+		return 0, nil, err
+	}
+	return resp.StatusCode, resp.Body, nil
 }
 
 func (s *Session) Post(path string, payload interface{}) (int, io.Reader, error) {
@@ -53,5 +59,41 @@ func (s *Session) Post(path string, payload interface{}) (int, io.Reader, error)
 	if err != nil {
 		return 0, nil, err
 	}
+	return resp.StatusCode, resp.Body, nil
+}
+
+func (s *Session) PostVideo(path string, videoPath string, title string) (int, io.Reader, error) {
+	body := &bytes.Buffer{}
+	writer := multipart.NewWriter(body)
+
+	// Title
+	if err := writer.WriteField("title", title); err != nil {
+		return 0, nil, err
+	}
+
+	// Video
+	fileWriter, _ := writer.CreateFormFile("video", videoPath)
+	mediaData, err := ioutil.ReadFile(videoPath)
+	if err != nil {
+		return 0, nil, err
+	}
+	io.Copy(fileWriter, bytes.NewReader(mediaData))
+
+	if err := writer.Close(); err != nil {
+		return 0, nil, err
+	}
+
+	contentType := fmt.Sprintf("multipart/form-data; boundary=%s", writer.Boundary())
+	r, err := http.NewRequest(http.MethodPost, s.host+path, bytes.NewReader(body.Bytes()))
+	if err != nil {
+		return 0, nil, err
+	}
+	r.Header.Set("Content-Type", contentType)
+
+	resp, err := s.client.Do(r)
+	if err != nil {
+		return 0, nil, err
+	}
+
 	return resp.StatusCode, resp.Body, nil
 }

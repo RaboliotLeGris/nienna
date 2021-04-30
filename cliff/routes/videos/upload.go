@@ -49,6 +49,7 @@ func (v PostUploadVideoHandler) ServeHTTP(w http.ResponseWriter, r *http.Request
 
 	file, fileheader, err := r.FormFile("video")
 	if err != nil {
+		log.Debug("Missing video part")
 		http.Error(w, "fail to get multipart file", http.StatusBadRequest)
 		return
 	}
@@ -59,6 +60,7 @@ func (v PostUploadVideoHandler) ServeHTTP(w http.ResponseWriter, r *http.Request
 	// This use a lot of memory due to the "-1" params. See: https://github.com/minio/minio-go/issues/989
 	err = v.Storage.PutObject(context.Background(), filep, file, -1)
 	if err != nil {
+		log.Debug("Upload fail")
 		http.Error(w, "Failed to upload video", http.StatusInternalServerError)
 		return
 	}
@@ -66,6 +68,7 @@ func (v PostUploadVideoHandler) ServeHTTP(w http.ResponseWriter, r *http.Request
 	// Save into database new video
 	video, err := dao.NewVideoDAO(v.Pool).Create(slug, user, title, "WIP description")
 	if err != nil {
+		log.Debug("Video creation in database fail")
 		http.Error(w, "unable to register the video", http.StatusInternalServerError)
 		return
 	}
@@ -73,6 +76,7 @@ func (v PostUploadVideoHandler) ServeHTTP(w http.ResponseWriter, r *http.Request
 	// Send message to backburner
 	err = v.Msgbus.Publish(msgbus.QUEUE_BACKBURNER, &msgbus.EventSerialization{Event: msgbus.EventVideoReadyForProcessing, Slug: slug, Content: sourceFilename})
 	if err != nil {
+		log.Debug("Event publishing failed")
 		http.Error(w, "unable to publish video event", http.StatusInternalServerError)
 		return
 	}

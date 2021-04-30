@@ -48,7 +48,7 @@ func Create(pool *pgxpool.Pool, sessionStore *session.SessionStore, storage *obj
 	log.Debug("router - Adding api/health route")
 	r.HandleFunc("/api/health", func(w http.ResponseWriter, r *http.Request) {
 		_ = json.NewEncoder(w).Encode(map[string]bool{"ok": true})
-	})
+	}).Methods("GET")
 
 	log.Debug("router - Adding users routes")
 	r.PathPrefix("/api/users/register").Handler(registerUserHandler{pool, sessionStore}).Methods("POST")

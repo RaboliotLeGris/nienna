@@ -19,7 +19,7 @@ exec_test:
 run:
 	echo "RUNNING functional tests"
 	docker build . -t nienna-functional
-	docker run --rm --network nienna_default --env DB_URI="postgresql://db/nienna?user=nienna&password=nienna" --env CLIFF_HOST="http://cliff:8000" nienna-functional 
+	docker run --rm --network nienna_default --env DB_URI="postgresql://db/nienna?user=nienna&password=nienna" -v $$PWD/../samples:/go/src/cliff/samples --env CLIFF_HOST="http://cliff:8000" nienna-functional 
 
 test:
 	make -s start_env

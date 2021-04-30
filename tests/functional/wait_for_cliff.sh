@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-CLIFF_HOST="http://localhost"
+CLIFF_HOST="${CLIFF_HOST:-"http://localhost"}"
 CLIFF_ROUTE="/api/health"
 TRIES=0
 
@@ -10,3 +10,9 @@ do
   echo "Waiting for Cliff to start up. Tries: $TRIES/8"
   sleep 5
 done
+
+if [ $TRIES -ge 8 ]
+then
+  echo "Failed to access cliff"
+  exit 1
+fi

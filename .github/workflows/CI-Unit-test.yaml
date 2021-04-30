@@ -1,0 +1,11 @@
+name: CI
+
+on: [push]
+
+jobs:
+  CI-unit-Testing:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - run: make test_cliff
+      - run: make test_backburner

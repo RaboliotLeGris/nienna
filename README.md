@@ -42,6 +42,7 @@ It starts all the containers but it also mount each services without launching t
 * Reverse proxy (Caddy) -> https://hub.docker.com/_/caddy
 
 ## TODOLIST
+* Run tests on github CI
 * cliff -> Test Cliff
 * cliff -> fix return of struct to remove first letter with Uppercase
 * Doc -> flow

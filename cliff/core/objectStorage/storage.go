@@ -2,7 +2,6 @@ package objectStorage
 
 import (
 	"context"
-	"errors"
 	"io"
 
 	"github.com/minio/minio-go/v7"
@@ -47,7 +46,7 @@ func (s *ObjectStorage) EnsureBuckerExist(bucketName string) error {
 			return err
 		}
 	}
-	return errors.New("unable to create bucker")
+	return nil
 }
 
 func (s *ObjectStorage) PutObject(ctx context.Context, objectName string, reader io.Reader, objectSize int64) error {

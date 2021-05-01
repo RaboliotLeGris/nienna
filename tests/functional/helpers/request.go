@@ -9,6 +9,7 @@ import (
 	"mime/multipart"
 	"net/http"
 	"net/http/cookiejar"
+	"time"
 )
 
 type Session struct {
@@ -96,4 +97,33 @@ func (s *Session) PostVideo(path string, videoPath string, title string) (int, i
 	}
 
 	return resp.StatusCode, resp.Body, nil
+}
+
+func (s *Session) WaitForProcessing(path string) error {
+	status := "PROCESSING"
+	for status == "UPLOADED" || status == "PROCESSING" {
+		time.Sleep(2 * time.Second)
+		statusCode, body, err := s.Get(path)
+		if err != nil {
+			return err
+		}
+		if statusCode != 200 {
+			return fmt.Errorf("status code is different from 200 %d", statusCode)
+		}
+
+		rawBody, err := ioutil.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		var statusResp StatusSerialized
+		if err = json.Unmarshal(rawBody, &statusResp); err != nil {
+			return err
+		}
+
+		status = statusResp.Status
+	}
+	if status != "READY" {
+		return fmt.Errorf("status is different from READY: %s", status)
+	}
+	return nil
 }

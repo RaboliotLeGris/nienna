@@ -11,11 +11,11 @@ build_image:
 
 test: lint
 
-lint: ci-fm
+lint: ci-fmt
 	docker run --rm -v $(PWD):/app -w /app golangci/golangci-lint:v1.38.0 golangci-lint run -v
 
 ci-fmt:
-	docker run --rm -v $(PWD):/data cytopia/gofmt --ci
+	docker run --rm -v $(PWD):/data cytopia/gofmt --ci .
 
 fmt:
 	docker run --rm -v $(PWD):/data cytopia/gofmt -s -w .

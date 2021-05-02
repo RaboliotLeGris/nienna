@@ -66,6 +66,7 @@ func (v GetMiniatureVideoHandler) ServeHTTP(w http.ResponseWriter, r *http.Reque
 
 	_, err = io.Copy(w, object)
 	if err != nil {
+		log.Debug("Failed to copy miniature with error: %v", err)
 		http.Error(w, "fail to copy file", http.StatusInternalServerError)
 		return
 	}

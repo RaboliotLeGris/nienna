@@ -10,6 +10,8 @@ import (
 	"net/http"
 	"net/http/cookiejar"
 	"time"
+
+	"nienna_test/serialization"
 )
 
 type Session struct {
@@ -23,7 +25,7 @@ func NewSession(host string) Session {
 }
 
 func (s *Session) Login(user string) error {
-	statusCode, _, err := s.Post("/api/users/login", UserLogin{Username: user})
+	statusCode, _, err := s.Post("/api/users/login", serialization.UserLogin{Username: user})
 	if err != nil {
 		return err
 	}
@@ -115,7 +117,7 @@ func (s *Session) WaitForProcessing(path string) error {
 		if err != nil {
 			return err
 		}
-		var statusResp StatusSerialized
+		var statusResp serialization.StatusSerialized
 		if err = json.Unmarshal(rawBody, &statusResp); err != nil {
 			return err
 		}

@@ -43,7 +43,7 @@ func (v GetInfoVideoHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	video, err := dao.NewVideoDAO(v.Pool).Get(slug)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 

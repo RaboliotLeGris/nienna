@@ -32,36 +32,37 @@ func (s registerUserHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if os.Getenv("NIENNA_REGISTER") == "DISABLE" {
-		log.Info("Register attempt but register is disabled")
+		log.Info("Register attempt but is disabled")
 		w.WriteHeader(403)
 		return
 	}
 
 	if userData.Username == "" {
-		log.Debug("Missing username")
+		log.Debug("Register: missing username")
 		w.WriteHeader(403)
 		return
 	}
 	if userData.Password == "" {
-		log.Debug("Missing password")
+		log.Debug("Register: missing password")
 		w.WriteHeader(403)
 		return
 	}
 
-	userDAO := dao.NewUserDAO(s.pool)
-	id, err := userDAO.Create(userData.Username, userData.Password)
+	id, err := dao.NewUserDAO(s.pool).Create(userData.Username, userData.Password)
 	if err != nil {
+		log.Debug("Register: missing password")
 		w.WriteHeader(403)
 		return
 	}
 
-	err = s.sessionStore.Set(r, w, "username", userData.Username)
-	if err != nil {
+	if err = s.sessionStore.Set(r, w, "username", userData.Username); err != nil {
+		log.Debug("Register: failed to set username as cookie")
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	err = s.sessionStore.Set(r, w, "userID", id)
-	if err != nil {
+
+	if err = s.sessionStore.Set(r, w, "userID", id); err != nil {
+		log.Debug("Register: failed to set userID as cookie")
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -82,8 +83,7 @@ type loginUserBody struct {
 func (s loginUserHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	log.Debug("Request POST /api/users/login")
 	var body loginUserBody
-	err := json.NewDecoder(r.Body).Decode(&body)
-	if err != nil {
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
 		log.Error("Fail to deserialize user login struct")
 		w.WriteHeader(400)
 		return
@@ -102,13 +102,13 @@ func (s loginUserHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = s.sessionStore.Set(r, w, "username", body.Username)
-	if err != nil {
+	if err = s.sessionStore.Set(r, w, "username", body.Username); err != nil {
+		log.Debug("Register: failed to set username as cookie")
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	err = s.sessionStore.Set(r, w, "userID", id)
-	if err != nil {
+	if err = s.sessionStore.Set(r, w, "userID", id); err != nil {
+		log.Debug("Register: failed to set userID as cookie")
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}

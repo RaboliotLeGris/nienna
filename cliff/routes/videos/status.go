@@ -26,17 +26,20 @@ func (v GetVideoStatusHandler) ServeHTTP(w http.ResponseWriter, r *http.Request)
 
 	slug, found := mux.Vars(r)["slug"]
 	if !found || slug == "" {
+		log.Debug("Missing video title")
 		http.Error(w, "empty video slug provided", http.StatusBadRequest)
 		return
 	}
 
 	if !v.SessionStore.IsAuth(r) {
+		log.Debug("Failed to auth the user")
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 		return
 	}
 
 	status, err := dao.NewVideoDAO(v.Pool).GetStatus(v.SessionStore.Get(r, "userID").(int), slug)
 	if err != nil {
+		log.Debug("Failed to get status ", err)
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}

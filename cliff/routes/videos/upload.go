@@ -28,13 +28,14 @@ func (v PostUploadVideoHandler) ServeHTTP(w http.ResponseWriter, r *http.Request
 
 	// Checking user is logged
 	if !v.SessionStore.IsAuth(r) {
+		log.Debug("Failed to auth the user")
 		http.Error(w, "unauthorized video upload", http.StatusUnauthorized)
 		return
 	}
 
 	user, err := dao.NewUserDAO(v.Pool).Get(v.SessionStore.Get(r, "username").(string))
 	if err != nil {
-		log.Debug("Error", err)
+		log.Debug("Failed to get user with error: ", err)
 		http.Error(w, "unable to fetch user", http.StatusUnauthorized)
 		return
 	}
@@ -49,7 +50,7 @@ func (v PostUploadVideoHandler) ServeHTTP(w http.ResponseWriter, r *http.Request
 
 	file, fileheader, err := r.FormFile("video")
 	if err != nil {
-		log.Debug("Missing video part")
+		log.Debug("Missing video part", err)
 		http.Error(w, "fail to get multipart file", http.StatusBadRequest)
 		return
 	}
@@ -58,9 +59,8 @@ func (v PostUploadVideoHandler) ServeHTTP(w http.ResponseWriter, r *http.Request
 	sourceFilename := "source" + filepath.Ext(fileheader.Filename)
 	filep := slug + "/" + sourceFilename
 	// This use a lot of memory due to the "-1" params. See: https://github.com/minio/minio-go/issues/989
-	err = v.Storage.PutObject(context.Background(), filep, file, -1)
-	if err != nil {
-		log.Debug("Upload fail")
+	if err = v.Storage.PutObject(context.Background(), filep, file, -1); err != nil {
+		log.Debug("Upload fail", err)
 		http.Error(w, "Failed to upload video", http.StatusInternalServerError)
 		return
 	}
@@ -68,15 +68,14 @@ func (v PostUploadVideoHandler) ServeHTTP(w http.ResponseWriter, r *http.Request
 	// Save into database new video
 	video, err := dao.NewVideoDAO(v.Pool).Create(slug, user, title, "WIP description")
 	if err != nil {
-		log.Debug("Video creation in database fail")
+		log.Debug("Video creation in database fail", err)
 		http.Error(w, "unable to register the video", http.StatusInternalServerError)
 		return
 	}
 
 	// Send message to backburner
-	err = v.Msgbus.Publish(msgbus.QUEUE_BACKBURNER, &msgbus.EventSerialization{Event: msgbus.EventVideoReadyForProcessing, Slug: slug, Content: sourceFilename})
-	if err != nil {
-		log.Debug("Event publishing failed")
+	if err = v.Msgbus.Publish(msgbus.QUEUE_BACKBURNER, &msgbus.EventSerialization{Event: msgbus.EventVideoReadyForProcessing, Slug: slug, Content: sourceFilename}); err != nil {
+		log.Debug("Event publishing failed", err)
 		http.Error(w, "unable to publish video event", http.StatusInternalServerError)
 		return
 	}

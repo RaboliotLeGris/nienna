@@ -20,6 +20,7 @@ func (v GetAllVideoHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	videos, err := dao.NewVideoDAO(v.Pool).GetAll()
 	if err != nil {
+		log.Debug("Failed to get all videos ", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -37,12 +38,14 @@ func (v GetInfoVideoHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	slug, found := mux.Vars(r)["slug"]
 	if !found || slug == "" {
+		log.Debug("Missing slug")
 		http.Error(w, "empty slug name provided", http.StatusBadRequest)
 		return
 	}
 
 	video, err := dao.NewVideoDAO(v.Pool).Get(slug)
 	if err != nil {
+		log.Debug("Failed to get video ", err)
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}

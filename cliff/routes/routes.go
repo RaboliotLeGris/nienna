@@ -25,7 +25,8 @@ func (r router) Launch() error {
 
 	// To ease development, we disable CORS
 	var handler http.Handler
-	if isDev := os.Getenv("NIENNA_DEV"); isDev == "true" {
+	if os.Getenv("NIENNA_DEV") == "true" {
+		log.Debug("[DEV MOD] allowing all cors")
 		handler = cors.AllowAll().Handler(r.router)
 	} else {
 		handler = r.router

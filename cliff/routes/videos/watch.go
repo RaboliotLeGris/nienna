@@ -21,11 +21,13 @@ func (v GetStreamVideoHandler) ServeHTTP(w http.ResponseWriter, r *http.Request)
 
 	slug, found := mux.Vars(r)["slug"]
 	if !found || slug == "" {
+		log.Debug("Serve: missing slug")
 		http.Error(w, "empty slug name provided", http.StatusBadRequest)
 		return
 	}
 	filename, found := mux.Vars(r)["filename"]
 	if !found || filename == "" {
+		log.Debug("Serve: missing filename")
 		http.Error(w, "empty filename name provided", http.StatusBadRequest)
 		return
 	}
@@ -33,12 +35,13 @@ func (v GetStreamVideoHandler) ServeHTTP(w http.ResponseWriter, r *http.Request)
 	filepath := fmt.Sprintf("%s/HLS/%s", slug, filename)
 	object, err := v.Storage.GetObject(context.Background(), filepath)
 	if err != nil {
+		log.Debug("Serve: failed to get object with ", filepath)
 		http.Error(w, "fail to get requested file", http.StatusNotFound)
 		return
 	}
 
-	_, err = io.Copy(w, object)
-	if err != nil {
+	if _, err = io.Copy(w, object); err != nil {
+		log.Debug("Serve: fail to copy a file")
 		http.Error(w, "fail to copy file", http.StatusInternalServerError)
 		return
 	}
@@ -53,6 +56,7 @@ func (v GetMiniatureVideoHandler) ServeHTTP(w http.ResponseWriter, r *http.Reque
 
 	slug, found := mux.Vars(r)["slug"]
 	if !found || slug == "" {
+		log.Debug("Serve: missing slug")
 		http.Error(w, "empty slug name provided", http.StatusBadRequest)
 		return
 	}
@@ -60,12 +64,12 @@ func (v GetMiniatureVideoHandler) ServeHTTP(w http.ResponseWriter, r *http.Reque
 	filepath := fmt.Sprintf("%s/miniature.jpeg", slug)
 	object, err := v.Storage.GetObject(context.Background(), filepath)
 	if err != nil {
+		log.Debug("Serve: failed to get object with ", filepath)
 		http.Error(w, "fail to get requested file", http.StatusNotFound)
 		return
 	}
 
-	_, err = io.Copy(w, object)
-	if err != nil {
+	if _, err = io.Copy(w, object); err != nil {
 		log.Debug("Failed to copy miniature with error", err)
 		http.Error(w, "fail to copy file", http.StatusInternalServerError)
 		return

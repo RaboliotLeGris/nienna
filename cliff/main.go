@@ -44,7 +44,7 @@ func main() {
 	}
 
 	// Init Object Storage buckets
-	storage, err := objectStorage.NewStorageClient(os.Getenv("S3_URI"), os.Getenv("S3_ACCESS_KEY"), os.Getenv("S3_SECRET_KEY"), "nienna-1", os.Getenv("NIENNA_DEV") != "true")
+	storage, err := objectStorage.NewStorageClient(os.Getenv("S3_URI"), os.Getenv("S3_ACCESS_KEY"), os.Getenv("S3_SECRET_KEY"), "nienna-1", !(os.Getenv("S3_DISABLE_TLS") == "true"))
 	if err != nil {
 		log.Fatal("failed to create Object Storage client: ", err)
 	}

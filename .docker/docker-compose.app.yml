@@ -8,6 +8,7 @@ services:
       DB_URI: "postgresql://db/nienna?user=nienna&password=nienna"
       REDIS_URI: "redis:6379"
       S3_URI: "s3:9000"
+      S3_DISABLE_TLS: "true"
       S3_ACCESS_KEY: "minio"
       S3_SECRET_KEY: "minio123" # Yes
       RABBITMQ_URI: "amqp://nienna:nienna123@rabbitmq:5672"

@@ -51,5 +51,4 @@ It starts all the containers but it also mount each services without launching t
 * cliff -> Do not crash when db is not ready
 * cliff -> Use resumable ?
 * cliff -> Prevent SQL injection (OMG)
-* cliff -> add password
 * Check -> https://github.com/dhall-lang/dhall-lang/blob/master/README.md

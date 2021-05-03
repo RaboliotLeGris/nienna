@@ -24,8 +24,8 @@ func NewSession(host string) Session {
 	return Session{host: host, client: &http.Client{Jar: jar}}
 }
 
-func (s *Session) Login(user string) error {
-	statusCode, _, err := s.Post("/api/users/login", serialization.UserLogin{Username: user})
+func (s *Session) Login(user, password string) error {
+	statusCode, _, err := s.Post("/api/users/login", serialization.UserLogin{Username: user, Password: password})
 	if err != nil {
 		return err
 	}

@@ -19,12 +19,13 @@ type registerUserHandler struct {
 
 type registerUserBody struct {
 	Username string `json:"username"`
+	Password string `json:"password"`
 }
 
 func (s registerUserHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	log.Debug("Request POST /api/users/register")
-	var body registerUserBody
-	err := json.NewDecoder(r.Body).Decode(&body)
+	var userData registerUserBody
+	err := json.NewDecoder(r.Body).Decode(&userData)
 	if err != nil {
 		w.WriteHeader(400)
 		return
@@ -36,14 +37,25 @@ func (s registerUserHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if userData.Username == "" {
+		log.Debug("Missing username")
+		w.WriteHeader(403)
+		return
+	}
+	if userData.Password == "" {
+		log.Debug("Missing password")
+		w.WriteHeader(403)
+		return
+	}
+
 	userDAO := dao.NewUserDAO(s.pool)
-	id, err := userDAO.Create(body.Username)
+	id, err := userDAO.Create(userData.Username, userData.Password)
 	if err != nil {
 		w.WriteHeader(403)
 		return
 	}
 
-	err = s.sessionStore.Set(r, w, "username", body.Username)
+	err = s.sessionStore.Set(r, w, "username", userData.Username)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -64,6 +76,7 @@ type loginUserHandler struct {
 
 type loginUserBody struct {
 	Username string `json:"username"`
+	Password string `json:"password"`
 }
 
 func (s loginUserHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -71,11 +84,18 @@ func (s loginUserHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	var body loginUserBody
 	err := json.NewDecoder(r.Body).Decode(&body)
 	if err != nil {
-		w.WriteHeader(500)
+		log.Error("Fail to deserialize user login struct")
+		w.WriteHeader(400)
 		return
 	}
 
-	id, err := dao.NewUserDAO(s.pool).Login(body.Username)
+	if body.Username == "" || body.Password == "" {
+		log.Error("Empty username or password")
+		w.WriteHeader(400)
+		return
+	}
+
+	id, err := dao.NewUserDAO(s.pool).Login(body.Username, body.Password)
 	if err != nil {
 		log.Error("Failed to login user: ", body.Username, " - ", err)
 		w.WriteHeader(400)

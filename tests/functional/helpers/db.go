@@ -48,7 +48,7 @@ func (d DBHelper) clean(tx pgx.Tx) error {
 
 func (d DBHelper) init(tx pgx.Tx) error {
 	_, err := tx.Exec(context.Background(), `
-		INSERT INTO users (username, hashpass) VALUES ('admin', '$2y$10$XcWmOIgAuT90XB/7cSwK5e1PTEUeJgXcO47Zgjx6RHh2phZVFqc/C');
+		INSERT INTO users (username, hashpass) VALUES ('admin', '$2y$10$gXkbidnOSdZoydtOpvnsyeXpG1ZKXJ79gmn10MmsQIKpTi.hg9wfa');
 	`)
 	return err
 }

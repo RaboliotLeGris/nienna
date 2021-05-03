@@ -16,6 +16,12 @@ func Test_Users(t *testing.T) {
 
 	g.Describe("User >", func() {
 		g.Describe("Login >", func() {
+			g.BeforeEach(func() {
+				err := helpers.NewDBHelper(os.Getenv("DB_URI")).Reset()
+				if err != nil {
+					g.Fail(err)
+				}
+			})
 			g.It("With user 'admin'", func() {
 				session := helpers.NewSession(host)
 				g.Assert(session.Login("admin", "admin")).IsNil()

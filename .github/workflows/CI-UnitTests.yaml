@@ -1,15 +1,15 @@
-name: CI-cliff-UnitTests
+name: CI-UnitTests
 
 on: [push]
 
 jobs:
-  CI-cliff-UnitTests:
+  CI-Cliff-UnitTests:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - run: make test_cliff
 
-  CI-backburner-UnitTests:
+  CI-Backburner-UnitTests:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2

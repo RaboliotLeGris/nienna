@@ -19,3 +19,6 @@ ci-fmt:
 
 fmt:
 	docker run --rm -v $(PWD):/data cytopia/gofmt -s -w .
+
+test_functional:
+	(cd tests && make test)

@@ -45,4 +45,4 @@ test_cliff:
 	(cd cliff && make test)
 
 test_functional:
-	(cd tests/functional && make -k test)
+	(cd cliff && make -k test_functional)

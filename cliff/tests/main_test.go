@@ -1,4 +1,4 @@
-package functional_tests
+package nienna_test
 
 import (
 	"io/ioutil"

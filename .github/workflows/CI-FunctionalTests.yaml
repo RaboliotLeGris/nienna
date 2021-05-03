@@ -1,4 +1,4 @@
-name: CI-functional-tests
+name: CI-cliff-functional-tests
 
 on: [push]
 

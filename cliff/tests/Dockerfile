@@ -5,4 +5,6 @@ RUN apt-get update && apt-get install make
 WORKDIR /go/src/cliff
 COPY . .
 
-CMD ["make", "exec_test"]
+WORKDIR /go/src/cliff
+
+CMD ["make", "test_exec"]

@@ -7,11 +7,11 @@ import (
 )
 
 type Video struct {
-	Slug        string
-	Title       string
-	Description string
-	Status      string
-	Uploader    User
+	Slug        string `json:"slug"`
+	Title       string `json:"title"`
+	Description string `json:"description"`
+	Status      string `json:"status"`
+	Uploader    User   `json:"uploaded"`
 }
 
 type VideoDAO struct {

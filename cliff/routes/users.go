@@ -63,7 +63,7 @@ type loginUserHandler struct {
 }
 
 type loginUserBody struct {
-	Username string
+	Username string `json:"username"`
 }
 
 func (s loginUserHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {

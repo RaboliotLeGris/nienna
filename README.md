@@ -43,7 +43,6 @@ It starts all the containers but it also mount each services without launching t
 
 ## TODOLIST
 * Cliff -> if dev and admin pwd not def then -> admin else crash
-* cliff -> fix return of struct to remove first letter with Uppercase
 * Doc -> flow
 * Backburner -> check worker status -> Heartbeat (not doable yet)
 * Docker -> makefile with hadolint + on other projects

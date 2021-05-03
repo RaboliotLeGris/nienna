@@ -8,8 +8,8 @@ import (
 )
 
 type User struct {
-	ID       int
-	Username string
+	ID       int    `json:"id"`
+	Username string `json:"username"`
 }
 
 type UserDAO struct {

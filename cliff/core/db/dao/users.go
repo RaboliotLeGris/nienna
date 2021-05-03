@@ -25,8 +25,7 @@ func NewUserDAO(conn *pgxpool.Pool) *UserDAO {
 func (u *UserDAO) Create(username, password string) (int, error) {
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), 10)
 	if err != nil {
-		return 0, fmt.Errorf("Fail to hash the password")
-
+		return 0, fmt.Errorf("fail to hash the password")
 	}
 
 	commandTag, err := u.conn.Exec(context.Background(), "INSERT INTO users (username, hashpass) VALUES ($1, $2);", username, string(hashedPassword))

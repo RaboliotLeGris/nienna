@@ -31,4 +31,3 @@ CREATE TABLE videos
 -- initial data
 
 INSERT INTO meta_info VALUES (1);
-INSERT INTO users (username, hashpass) VALUES ('admin', '$2y$10$XcWmOIgAuT90XB/7cSwK5e1PTEUeJgXcO47Zgjx6RHh2phZVFqc/C'); -- Default password admin/admin

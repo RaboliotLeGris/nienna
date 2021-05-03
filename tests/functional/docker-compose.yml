@@ -59,6 +59,7 @@ services:
       RABBITMQ_URI: "amqp://nienna:nienna123@rabbitmq:5672"
       # If NIENNA_DEV is defined, debug logs are printed
       NIENNA_DEV: "true"
+      NIENNA_ADMIN_PASSWORD: "adminpassword"
       SESSION_KEY: "95c5a0ae-6bd8-4866-81d3-6f67223f8ff2"
     depends_on:
       - db

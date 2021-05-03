@@ -18,7 +18,7 @@ func Test_Users(t *testing.T) {
 		g.Describe("Login >", func() {
 			g.It("With user 'admin'", func() {
 				session := helpers.NewSession(host)
-				g.Assert(session.Login("admin", "admin")).IsNil()
+				g.Assert(session.Login("admin", "adminpassword")).IsNil()
 			})
 			g.It("With unknown user fail", func() {
 				session := helpers.NewSession(host)

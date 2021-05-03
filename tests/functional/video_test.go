@@ -45,7 +45,7 @@ func Test_Video(t *testing.T) {
 					g.Timeout(2 * time.Minute)
 
 					session := helpers.NewSession(host)
-					session.Login("admin", "admin")
+					session.Login("admin", "adminpassword")
 					title := "Some " + filename + " Title"
 
 					statusCode, body, err := session.PostVideo("/api/videos/upload", rootPath+filename, title)
@@ -66,7 +66,7 @@ func Test_Video(t *testing.T) {
 		g.Describe("Resources generation >", func() {
 			var videoData serialization.Video
 			session := helpers.NewSession(host)
-			session.Login("admin", "admin")
+			session.Login("admin", "adminpassword")
 
 			g.Before(func() {
 				g.Timeout(2 * time.Minute)

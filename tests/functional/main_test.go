@@ -9,6 +9,7 @@ import (
 
 	. "github.com/franela/goblin"
 	"github.com/gabriel-vasile/mimetype"
+	"github.com/ssttevee/m3u8"
 
 	"nienna_test/helpers"
 	"nienna_test/serialization"
@@ -161,7 +162,7 @@ func Test_Main(t *testing.T) {
 				g.Assert(parsedVideoData.Uploader.Username).Equal(videoData.Uploader.Username)
 			})
 
-			g.It("check miniature is jpeg", func() {
+			g.It("check miniature is available and is jpeg", func() {
 				statusCode, body, err := session.Get("/api/videos/miniature/" + videoData.Slug + "/miniature.jpeg")
 				g.Assert(err).IsNil()
 				g.Assert(statusCode).Equal(200)
@@ -171,8 +172,26 @@ func Test_Main(t *testing.T) {
 				g.Assert(mime.String()).Equal("image/jpeg")
 
 			})
-			g.Xit("manifest", func() {
 
+			g.It("check manifest is valid", func() {
+				statusCode, body, err := session.Get("/api/videos/streams/" + videoData.Slug + "/part.m3u8")
+				g.Assert(err).IsNil()
+				g.Assert(statusCode).Equal(200)
+
+				plist, err := m3u8.NewDecoder(body).Decode()
+				g.Assert(err).IsNil()
+
+				g.Assert(plist.Type()).Equal(m3u8.Media)
+			})
+
+			g.It("Check one chunk of video", func() {
+				statusCode, body, err := session.Get("/api/videos/streams/" + videoData.Slug + "/part0.ts")
+				g.Assert(err).IsNil()
+				g.Assert(statusCode).Equal(200)
+
+				mime, err := mimetype.DetectReader(body)
+				g.Assert(err).IsNil()
+				g.Assert(mime.String()).Equal("application/octet-stream")
 			})
 		})
 

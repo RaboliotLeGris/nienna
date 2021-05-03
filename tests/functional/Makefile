@@ -11,7 +11,8 @@ wait_for_cliff:
 stop_env:
 	echo "Stopping testing env"
 	docker stop $$(docker ps -q)
-	# TODO: DELETE ALL VOLUMES
+	docker container rm $$(docker container ls -aq)
+	docker volume rm -f $$(docker volume ls -q)
 
 exec_test:
 	go test -v ./... -count=1

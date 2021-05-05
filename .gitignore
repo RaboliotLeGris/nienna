@@ -2,6 +2,8 @@
 
 backburner/target
 backburner/.dev/samples/workdir
+backburner/.package-cache
+backburner/github.com*
 
 cliff/build
 

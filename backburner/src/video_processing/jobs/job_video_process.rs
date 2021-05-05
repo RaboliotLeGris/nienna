@@ -3,7 +3,7 @@ use std::sync::{Arc, mpsc};
 use crate::clients::amqp::serialization::EventSerialization;
 use crate::clients::s3::TS3Client;
 use crate::video_processing::{errors::VideoProcessorError, video_processor::VideoProcessor};
-use crate::worker_pool::jobs::{job::Job, job_errors::JobsError, job_helpers};
+use crate::worker_pool::jobs::{job::Job, job_helpers};
 use crate::event_publisher::JobEventResult;
 
 #[cfg(test)]
@@ -14,7 +14,7 @@ mod job_video_process_tests;
 pub fn job_process_video(event: EventSerialization, s3_client: Arc<Box<dyn TS3Client>>, status_publisher: mpsc::Sender<JobEventResult>) -> Job {
     let shared_s3_client = s3_client.clone();
     Box::new(move || {
-        match wrapper(&event, shared_s3_client) {
+        let _ = match wrapper(&event, shared_s3_client) {
             Ok(_) => {
                 status_publisher.send(JobEventResult::Success(event.slug.clone()))
             }

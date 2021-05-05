@@ -4,7 +4,7 @@ mod worker_pool_tests {
     use std::sync::{Arc, Mutex};
     use std::time::Instant;
 
-    use crate::worker_pool::worker_pool::WorkerPool;
+    use crate::worker_pool::pool::WorkerPool;
 
     #[test]
     fn should_create_5_worker_and_execute_a_simple_job() {

@@ -2,13 +2,12 @@ use std::sync::{Arc, mpsc, Mutex};
 use std::thread;
 use std::time::Instant;
 
-use crate::worker_pool::worker_pool::Message;
+use crate::worker_pool::pool::Message;
 
 pub struct Worker {
-    id: usize,
-    thread: thread::JoinHandle<()>,
+    _id: usize,
+    _thread: thread::JoinHandle<()>,
 }
-
 
 impl Worker {
     pub fn new(id: usize, receiver: Arc<Mutex<mpsc::Receiver<Message>>>) -> Worker {
@@ -28,8 +27,8 @@ impl Worker {
         });
 
         Worker {
-            id,
-            thread,
+            _id: id,
+            _thread: thread,
         }
     }
 }

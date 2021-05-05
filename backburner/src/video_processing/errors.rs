@@ -4,6 +4,7 @@ use crate::clients::s3::errors::S3ClientError;
 use crate::worker_pool::jobs::job_errors::JobsError;
 
 #[derive(Debug)]
+#[allow(dead_code)]
 pub enum VideoProcessorError {
     FailExtractMimetype,
     FailProcessVideo,

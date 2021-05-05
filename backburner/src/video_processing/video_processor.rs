@@ -2,7 +2,6 @@ use std::io::Read;
 use std::process::Command;
 
 use crate::video_processing::errors::VideoProcessorError;
-use std::env;
 
 #[cfg(test)]
 #[path = "./video_processor_tests.rs"]
@@ -28,7 +27,7 @@ impl VideoProcessor {
                 return Ok(String::from(*mimetype));
             }
         }
-        return Err(VideoProcessorError::FailExtractMimetype);
+        Err(VideoProcessorError::FailExtractMimetype)
     }
 
     pub fn process(filepath: &String) -> Result<(), VideoProcessorError> {
@@ -42,13 +41,14 @@ impl VideoProcessor {
         Ok(())
     }
 
+    #[allow(dead_code)]
     pub fn extract_miniature(filepath: &String) -> Result<String, VideoProcessorError> {
         // ffmpeg -i input.mp4 -ss 00:00:01.000 -vframes 1 miniature.png
         let output = Command::new("ffmpeg")
             .args(&["-i", filepath.as_str(), "-ss", "00:00:01.000", "-vframes", "1", "miniature.jpeg"])
             .output()?;
         if !output.status.success() {
-            return Err(VideoProcessorError::FailProcessVideo);
+            return Err(VideoProcessorError::FailExtractMiniature);
         }
         Ok(String::from("miniature.jpeg"))
     }

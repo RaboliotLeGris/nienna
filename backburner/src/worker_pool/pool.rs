@@ -4,17 +4,18 @@ use crate::worker_pool::worker::Worker;
 use crate::worker_pool::jobs::job::Job;
 
 #[cfg(test)]
-#[path = "./worker_pool_tests.rs"]
-mod worker_pool_tests;
+#[path = "./pool_tests.rs"]
+mod pool_tests;
 
+#[allow(dead_code)]
 pub enum Message {
     NewJob(Job),
     Terminate,
 }
 
 pub struct WorkerPool {
-    worker_count: usize,
-    workers: Vec<Worker>,
+    _worker_count: usize,
+    _workers: Vec<Worker>,
     sender: mpsc::Sender<Message>,
 }
 
@@ -31,8 +32,8 @@ impl WorkerPool {
         }
 
         WorkerPool {
-            worker_count,
-            workers,
+            _worker_count: worker_count,
+            _workers: workers,
             sender,
         }
     }
@@ -43,11 +44,12 @@ impl WorkerPool {
     {
         let job = Box::new(f);
 
-        self.sender.send(Message::NewJob(job)).unwrap();
+        let _ = self.sender.send(Message::NewJob(job)).unwrap();
     }
 
+    #[allow(dead_code)]
     pub fn terminate_all(&self) {
-        self.sender.send(Message::Terminate);
+        let _ = self.sender.send(Message::Terminate);
     }
 }
 

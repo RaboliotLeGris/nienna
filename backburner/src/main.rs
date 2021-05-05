@@ -25,8 +25,8 @@ pub async fn main() -> Result<(), ()> {
 
     info!("Starting Backburner service");
     info!("Create WorkerPool");
-    let worker_count: usize = std::env::var("BACKBURNER_WORKER_COUNT").unwrap_or(String::from("10")).parse::<usize>().expect("BACKBURNER_WORKER_COUNT must be a valid NON NULL and POSITIVE integer");
-    let worker_pool = worker_pool::worker_pool::WorkerPool::new(worker_count);
+    let worker_count: usize = std::env::var("BACKBURNER_WORKER_COUNT").unwrap_or_else(|_| String::from("10")).parse::<usize>().expect("BACKBURNER_WORKER_COUNT must be a valid NON NULL and POSITIVE integer");
+    let worker_pool = worker_pool::pool::WorkerPool::new(worker_count);
 
     debug!("Create S3Client");
     let s3_client = S3Client::new(std::env::var("S3_URI").unwrap(), "nienna-1".into(), std::env::var("S3_ACCESS_KEY").unwrap(), std::env::var("S3_SECRET_KEY").unwrap());

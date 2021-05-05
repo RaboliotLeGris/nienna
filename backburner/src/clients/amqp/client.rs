@@ -5,7 +5,7 @@ use crate::clients::amqp::errors::AmqpError;
 use crate::clients::amqp::serialization::EventSerialization;
 
 pub struct AMQP {
-    conn: Connection,
+    _conn: Connection,
     channel: Channel,
     consumer: Option<Consumer>,
     queue: String,
@@ -46,7 +46,7 @@ impl AMQP {
         }
 
         AMQP {
-            conn,
+            _conn: conn,
             channel,
             consumer,
             queue,
@@ -57,11 +57,9 @@ impl AMQP {
         if self.consumer.is_none() {
             return Err(AmqpError::ConsumerIsNone);
         }
-        if let Some(delivery) = self.consumer.as_mut().unwrap().next().await {
-            if let Ok(delivery) = delivery {
-                delivery.0.basic_ack(delivery.1.delivery_tag, BasicAckOptions::default()).await;
+        if let Some(Ok(delivery)) = self.consumer.as_mut().unwrap().next().await {
+                let _ = delivery.0.basic_ack(delivery.1.delivery_tag, BasicAckOptions::default()).await;
                 return EventSerialization::from(delivery.1.data);
-            }
         }
         Err(AmqpError::FailFetchEvent)
     }

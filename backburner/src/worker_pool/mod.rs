@@ -1,3 +1,3 @@
-pub mod worker_pool;
+pub mod pool;
 mod worker;
 pub mod jobs;

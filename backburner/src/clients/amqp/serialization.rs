@@ -32,7 +32,7 @@ impl EventSerialization {
         if !EventSerialization::check_event(&event) {
             return Err(AmqpError::UnrecognizedEvent);
         }
-        return Ok(event);
+        Ok(event)
     }
 
     pub fn to_json(&self) -> Result<Vec<u8>, AmqpError> {

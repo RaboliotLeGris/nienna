@@ -50,7 +50,7 @@ func main() {
 	}
 
 	// RabbitMQ event bus
-	msgbus, err := msgbus.NewMsgbus(os.Getenv("RABBITMQ_URI"), msgbus.QUEUE_BACKBURNER)
+	msgbus, err := msgbus.NewMsgbus(os.Getenv("AMQP_URI"), msgbus.QUEUE_BACKBURNER)
 	if err != nil {
 		log.Fatal("failed to create MessageBus client: ", err)
 	}

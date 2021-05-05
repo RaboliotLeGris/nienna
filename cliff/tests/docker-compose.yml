@@ -57,7 +57,7 @@ services:
       S3_DISABLE_TLS: "true"
       S3_ACCESS_KEY: "minio"
       S3_SECRET_KEY: "minio123" # Yes
-      RABBITMQ_URI: "amqp://nienna:nienna123@rabbitmq:5672"
+      AMQP_URI: "amqp://nienna:nienna123@rabbitmq:5672"
       # If NIENNA_DEV is defined, debug logs are printed
       NIENNA_DEV: "true"
       NIENNA_ADMIN_PASSWORD: "adminpassword"
@@ -76,7 +76,7 @@ services:
       S3_URI: "http://s3:9000"
       S3_ACCESS_KEY: "minio"
       S3_SECRET_KEY: "minio123" # Yes
-      RABBITMQ_URI: "amqp://nienna:nienna123@rabbitmq:5672"
+      AMQP_URI: "amqp://nienna:nienna123@rabbitmq:5672"
     depends_on:
       - s3
       - rabbitmq

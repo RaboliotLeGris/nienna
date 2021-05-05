@@ -32,7 +32,7 @@ pub async fn main() -> Result<(), ()> {
     let s3_client = S3Client::new(std::env::var("S3_URI").unwrap(), "nienna-1".into(), std::env::var("S3_ACCESS_KEY").unwrap(), std::env::var("S3_SECRET_KEY").unwrap());
 
     debug!("Create event publisher");
-    let addr = std::env::var("RABBITMQ_URI").unwrap();
+    let addr = std::env::var("AMQP_URI").unwrap();
     let sender = event_publisher::launch_job_event_publisher(addr.clone());
 
     let mut amqp_client: AMQP = AMQP::new(addr, String::from("nienna_backburner"), true).await;

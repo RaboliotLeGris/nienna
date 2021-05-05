@@ -45,6 +45,7 @@ It starts all the containers but it also mount each services without launching t
 * pulsar: rework a bit
 * backburner: more tests 
 * Doc -> flow
+* Backburner -> Adaptive HLS
 * Backburner -> check worker status -> Heartbeat (not doable yet)
 * Docker -> makefile with hadolint + on other projects
 * cliff -> fix memory usage when uploading file to minio (another client or some tweaks)
@@ -52,4 +53,4 @@ It starts all the containers but it also mount each services without launching t
 * cliff -> Do not crash when db is not ready
 * cliff -> Use resumable ?
 * cliff -> Prevent SQL injection (OMG)
-* Check -> https://github.com/dhall-lang/dhall-lang/blob/master/README.md
+* Check -> https://github.com/dhall-lang/dhall-lang/blob/master/README.md - YAML A M L

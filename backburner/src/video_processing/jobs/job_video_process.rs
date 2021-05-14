@@ -3,7 +3,7 @@ use std::sync::{Arc, mpsc};
 use crate::clients::amqp::serialization::EventSerialization;
 use crate::clients::s3::TS3Client;
 use crate::video_processing::{errors::VideoProcessorError, video_processor::VideoProcessor};
-use crate::worker_pool::jobs::{job::Job, job_helpers};
+use crate::worker_pool::jobs::{Job, job_helpers};
 use crate::event_publisher::JobEventResult;
 
 #[cfg(test)]

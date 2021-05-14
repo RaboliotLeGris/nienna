@@ -1,7 +1,7 @@
 use std::sync::{Arc, mpsc, Mutex};
 
 use crate::worker_pool::worker::Worker;
-use crate::worker_pool::jobs::job::Job;
+use crate::worker_pool::jobs::Job;
 
 #[cfg(test)]
 #[path = "./pool_tests.rs"]

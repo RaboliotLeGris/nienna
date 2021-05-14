@@ -42,7 +42,11 @@ It starts all the containers but it also mount each services without launching t
 * Reverse proxy (Caddy) -> https://hub.docker.com/_/caddy
 
 ## TODOLIST
-* pulsar: rework a bit
+* All -> survive reboot/crash of tiers
+* pulsar -> rework a bit
+* pulsar -> fail when db restart (no auto reco)
+* pulsar -> fail when rabbit restart (no auto reco)
+* backburner -> rmq no auto reco
 * backburner: more tests 
 * Doc -> flow
 * Backburner -> Adaptive HLS
@@ -54,3 +58,4 @@ It starts all the containers but it also mount each services without launching t
 * cliff -> Use resumable ?
 * cliff -> Prevent SQL injection (OMG)
 * Check -> https://github.com/dhall-lang/dhall-lang/blob/master/README.md - YAML A M L
+* RMQ -> configure

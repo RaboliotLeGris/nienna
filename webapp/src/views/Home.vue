@@ -5,7 +5,7 @@
     </div>
     <div v-else>
       <div class="miniature_container" v-for="(video, index) in videos" :key="index">
-        <Miniature :titre=video.Title :video-slug="video.Slug" />
+        <Miniature :titre=video.title :video-slug="video.slug" />
       </div>
     </div>
   </div>

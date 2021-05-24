@@ -48,4 +48,4 @@ test_functional:
 	(cd cliff && make -k test_functional)
 
 test_dockerfiles:
-	(cd .docker && make lint)
+	(cd .docker && chmod +x hadolint.sh && make lint)

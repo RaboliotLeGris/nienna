@@ -50,7 +50,6 @@ It starts all the containers but it also mount each services without launching t
 * Doc -> flow
 * Backburner -> Adaptive HLS
 * Backburner -> check worker status -> Heartbeat (not doable yet)
-* Docker -> makefile with hadolint + on other projects
 * cliff -> fix memory usage when uploading file to minio (another client or some tweaks)
 * cliff -> Lock database when initializing database
 * cliff -> Do not crash when db is not ready

@@ -46,3 +46,6 @@ test_cliff:
 
 test_functional:
 	(cd cliff && make -k test_functional)
+
+test_dockerfiles:
+	(cd .docker && make lint)

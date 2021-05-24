@@ -46,7 +46,6 @@ It starts all the containers but it also mount each services without launching t
 * pulsar -> rework a bit
 * pulsar -> fail when db restart (no auto reco)
 * pulsar -> fail when rabbit restart (no auto reco)
-* backburner -> rmq no auto reco
 * backburner: more tests 
 * Doc -> flow
 * Backburner -> Adaptive HLS

@@ -9,6 +9,8 @@ pub enum VideoProcessorError {
     FailExtractMimetype,
     FailProcessVideo,
     FailExtractMiniature,
+    FailVideoTooSmall,
+    FailExtractResolution
 }
 
 impl std::error::Error for VideoProcessorError {}
@@ -18,7 +20,9 @@ impl std::fmt::Display for VideoProcessorError {
         match self {
             VideoProcessorError::FailExtractMimetype => write!(f, "Fail to extract mimetype"),
             VideoProcessorError::FailProcessVideo => write!(f, "Fail to process video"),
-            VideoProcessorError::FailExtractMiniature => write!(f, "Fail to extract miniature from video")
+            VideoProcessorError::FailExtractMiniature => write!(f, "Fail to extract miniature from video"),
+            VideoProcessorError::FailVideoTooSmall => write!(f, "Fail video is too small"),
+            VideoProcessorError::FailExtractResolution => write!(f, "Fail to extract video resolution")
         }
     }
 }

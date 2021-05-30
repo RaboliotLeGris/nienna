@@ -2,7 +2,7 @@
 
 Nienna is a solution to upload and watch videos. It converts uploaded videos to HLS and serve it on demand.
 
-It later aim to allow streaming.
+It later aims to allow streaming.
 
 ## Name origin:
 
@@ -42,14 +42,14 @@ It starts all the containers but it also mount each services without launching t
 * Reverse proxy (Caddy) -> https://hub.docker.com/_/caddy
 
 ## TODOLIST
-* All -> survive reboot/crash of tiers
 * pulsar -> rework a bit
 * pulsar -> fail when db restart (no auto reco)
 * pulsar -> fail when rabbit restart (no auto reco)
 * backburner: more tests 
 * Doc -> flow
-* Backburner -> Adaptive HLS
+* Backburner -> Adaptive HLS -> Change cliff routes/ Implem ffmpeg cmd in backburner / generate command on the fly
 * Backburner -> check worker status -> Heartbeat (not doable yet)
+* Backburner -> Add work in progress count  
 * cliff -> fix memory usage when uploading file to minio (another client or some tweaks)
 * cliff -> Lock database when initializing database
 * cliff -> Do not crash when db is not ready

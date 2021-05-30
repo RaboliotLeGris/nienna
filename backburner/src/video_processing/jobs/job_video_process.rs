@@ -34,7 +34,20 @@ fn wrapper(event: &EventSerialization, s3_client: Arc<Box<dyn TS3Client>>) -> Re
     VideoProcessor::process(&event.content)?;
     let paths = std::fs::read_dir(".")?;
     for path in paths {
-        let filename = path?.path().to_str().unwrap().to_string();
+        let path = path?.path();
+
+        if path.is_dir() {
+            let subdir = std::fs::read_dir(&path)?;
+            for subpath in subdir {
+                println!("Subfilename {:?}", subpath);
+                let sub_filename = subpath?.path().to_str().unwrap().to_string();
+                if sub_filename.ends_with(".ts") || sub_filename.ends_with(".m3u8") {
+                    s3_client.put(&sub_filename, &event.slug, &format!("HLS/{}", &sub_filename))?;
+                }
+            }
+        }
+
+        let filename = path.to_str().unwrap().to_string();
         if filename.ends_with(".ts") || filename.ends_with(".m3u8") {
             s3_client.put(&filename, &event.slug, &format!("HLS/{}", &filename))?;
         }

@@ -1,9 +1,11 @@
 .idea
 
+backburner/.cargo
 backburner/target
 backburner/.dev/samples/workdir
 backburner/.package-cache
 backburner/github.com*
+backburner/.dev/samples/4K-10bit-bkp.mkv
 
 cliff/build
 

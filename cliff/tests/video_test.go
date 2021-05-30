@@ -42,7 +42,7 @@ func Test_Video(t *testing.T) {
 				filename := file
 				g.It(filename+" video", func() {
 					// To allow the video processing on the CI
-					g.Timeout(2 * time.Minute)
+					g.Timeout(5 * time.Minute)
 
 					session := helpers.NewSession(host)
 					session.Login("admin", "admin")
@@ -122,8 +122,19 @@ func Test_Video(t *testing.T) {
 
 			})
 
-			g.It("check manifest is valid", func() {
-				statusCode, body, err := session.Get("/api/videos/streams/" + videoData.Slug + "/part.m3u8")
+			g.It("check master manifest is valid", func() {
+				statusCode, body, err := session.Get("/api/videos/streams/" + videoData.Slug + "/master.m3u8")
+				g.Assert(err).IsNil()
+				g.Assert(statusCode).Equal(200)
+
+				plist, err := m3u8.NewDecoder(body).Decode()
+				g.Assert(err).IsNil()
+
+				g.Assert(plist.Type()).Equal(m3u8.Master)
+			})
+
+			g.It("check sub manifest is valid", func() {
+				statusCode, body, err := session.Get("/api/videos/streams/" + videoData.Slug + "/v1/part_index.m3u8")
 				g.Assert(err).IsNil()
 				g.Assert(statusCode).Equal(200)
 
@@ -134,7 +145,7 @@ func Test_Video(t *testing.T) {
 			})
 
 			g.It("check one chunk of video", func() {
-				statusCode, body, err := session.Get("/api/videos/streams/" + videoData.Slug + "/part0.ts")
+				statusCode, body, err := session.Get("/api/videos/streams/" + videoData.Slug + "/v1/part0.ts")
 				g.Assert(err).IsNil()
 				g.Assert(statusCode).Equal(200)
 

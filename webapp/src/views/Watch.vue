@@ -1,10 +1,10 @@
 <template>
   <div class="Watch">
     <video id="video-player" class="video-js vjs-theme-forest" controls>
-      <source :src="'/api/videos/streams/'+this.$route.params.slug+'/part.m3u8'" type="application/x-mpegURL">
+      <source :src="'/api/videos/streams/'+this.$route.params.slug+'/master.m3u8'" type="application/x-mpegURL">
     </video>
-    <h4>{{this.video.Title}}</h4>
-    <span>{{this.video.Description}}</span>
+    <h4>{{this.video.title}}</h4>
+    <span>{{this.video.description}}</span>
   </div>
 </template>
 
@@ -15,6 +15,8 @@ import axios from 'axios';
 import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
 import '@videojs/themes/dist/forest/index.css';
+import qualitySelector from 'videojs-hls-quality-selector';
+import qualityLevels from 'videojs-contrib-quality-levels';
 
 export default {
   name: 'Watch',
@@ -27,7 +29,12 @@ export default {
     this.getVideos();
   },
   mounted() {
-    videojs('video-player');
+    videojs.registerPlugin('qualityLevels', qualityLevels);
+    videojs.registerPlugin('hlsQualitySelector', qualitySelector);
+    const player = videojs('video-player');
+    player.hlsQualitySelector({
+      displayCurrentQuality: true,
+    });
   },
   methods: {
     getVideos() {

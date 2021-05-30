@@ -9,7 +9,6 @@ pub enum AmqpError {
     ConsumerIsNone,
     UnrecognizedEvent,
     ConnectionFailed,
-    QueueCreationFailed
 }
 
 impl std::error::Error for AmqpError {}
@@ -24,7 +23,6 @@ impl std::fmt::Display for AmqpError {
             AmqpError::UnrecognizedEvent => write!(f, "Unable to recognize event"),
             AmqpError::ConsumerIsNone => write!(f, "No consumer created"),
             AmqpError::ConnectionFailed => write!(f, "Connection failed"),
-            AmqpError::QueueCreationFailed => write!(f, "Failed to create a queue"),
         }
     }
 }

@@ -60,7 +60,8 @@ func Create(pool *pgxpool.Pool, sessionStore *session.SessionStore, storage *obj
 	r.PathPrefix("/api/videos/all").Handler(videos.GetAllVideoHandler{Pool: pool}).Methods("GET")
 	r.PathPrefix("/api/videos/upload").Handler(videos.PostUploadVideoHandler{Pool: pool, SessionStore: sessionStore, Storage: storage, Msgbus: msgbus}).Methods("POST")
 	r.PathPrefix("/api/videos/status/{slug}").Handler(videos.GetVideoStatusHandler{Pool: pool, SessionStore: sessionStore}).Methods("GET")
-	r.PathPrefix("/api/videos/streams/{slug}/{filename}").Handler(videos.GetStreamVideoHandler{Storage: storage}).Methods("GET")
+	r.PathPrefix("/api/videos/streams/{slug}/master.m3u8").Handler(videos.GetStreamMasterVideoHandler{Storage: storage}).Methods("GET")
+	r.PathPrefix("/api/videos/streams/{slug}/{quality}/{filename}").Handler(videos.GetStreamPartVideoHandler{Storage: storage}).Methods("GET")
 	r.PathPrefix("/api/videos/miniature/{slug}/miniature.jpeg").Handler(videos.GetMiniatureVideoHandler{Storage: storage}).Methods("GET")
 	r.PathPrefix("/api/videos/{slug}").Handler(videos.GetInfoVideoHandler{Pool: pool}).Methods("GET")
 

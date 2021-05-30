@@ -15,6 +15,8 @@
     "hls.js": "^1.0.3",
     "js-cookie": "3.0.0-rc.1",
     "video.js": "^7.11.8",
+    "videojs-contrib-quality-levels": "^2.1.0",
+    "videojs-hls-quality-selector": "^1.1.4",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0"

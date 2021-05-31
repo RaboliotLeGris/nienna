@@ -20,6 +20,11 @@ updates:
     schedule:
       interval: "weekly"
 
+  - package-ecosystem: "gomod"
+    directory: "/cliff/tests"
+    schedule:
+      interval: "weekly"
+
   - package-ecosystem: "pip"
     directory: "/pulsar"
     schedule:

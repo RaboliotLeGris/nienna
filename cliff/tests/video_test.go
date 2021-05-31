@@ -21,8 +21,6 @@ func Test_Video(t *testing.T) {
 	g.Describe("Video >", func() {
 		rootPath := "samples/"
 		g.Describe("Upload >", func() {
-			// To allow the video processing on the CI
-			g.Timeout(20 * time.Minute)
 			g.It("Without being logged should fail", func() {
 				session := helpers.NewSession(host)
 				title := "Some FLV Title"
@@ -43,6 +41,9 @@ func Test_Video(t *testing.T) {
 			for _, file := range files {
 				filename := file
 				g.It(filename+" video", func() {
+					// To allow the video processing on the CI
+					g.Timeout(10 * time.Minute)
+
 					session := helpers.NewSession(host)
 					session.Login("admin", "admin")
 					title := "Some " + filename + " Title"
@@ -68,6 +69,9 @@ func Test_Video(t *testing.T) {
 			session.Login("admin", "admin")
 
 			g.Before(func() {
+				// To allow the video processing on the CI
+				g.Timeout(10 * time.Minute)
+
 				statusCode, body, err := session.PostVideo("/api/videos/upload", rootPath+"SampleVideo_1280x720_30mb.mp4", "Resources generation test")
 				g.Assert(err).IsNil()
 				g.Assert(statusCode).Equal(200)

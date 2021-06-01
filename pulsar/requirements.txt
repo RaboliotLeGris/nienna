@@ -1,6 +1,0 @@
-amqp==5.0.6
-greenlet==1.1.0
-msgpack==1.0.2
-psycopg2==2.8.6
-pynvim==0.4.3
-vine==5.0.0

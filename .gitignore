@@ -12,5 +12,9 @@ cliff/build
 webapp/dist
 webapp/node_modules
 
+bin
+obj
+*.user
+
 venv
 __pycache__

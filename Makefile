@@ -22,7 +22,7 @@ clean:
 	rm -rf backburner/target
 
 build: build_cliff build_backburner build_webapp
-test: test_cliff test_backburner test_webapp
+test: test_cliff test_backburner test_webapp test_pulsar test_functional test_dockerfiles
 
 build_images: build_webapp
 	(cd backburner && make build_image)
@@ -45,9 +45,7 @@ test_cliff:
 	(cd cliff && make test)
 test_pulsar:
 	(cd pulsar && make test)
-
 test_functional:
 	(cd cliff && make -k test_functional)
-
 test_dockerfiles:
 	(cd .docker && chmod +x hadolint.sh && make lint)

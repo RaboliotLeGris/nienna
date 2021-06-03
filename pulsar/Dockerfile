@@ -16,4 +16,4 @@ RUN dotnet publish "pulsar.csproj" -c Release -o /pulsar/publish
 FROM base AS final
 WORKDIR /pulsar
 COPY --from=publish /pulsar/publish .
-ENTRYPOINT ["dotnet", "publish/pulsar.dll"]
+ENTRYPOINT ["dotnet", "pulsar.dll"]

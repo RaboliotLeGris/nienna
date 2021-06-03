@@ -3,12 +3,13 @@
 run:
 	(cd pulsar && dotnet run)
 
-build:
-	echo "TODO"
-
 build_image:
-	echo "TODO"
+	docker build -t pulsar .
 
-test:
-	echo "TODO"
+build_dev:
+	docker build .dev -t nienna_pulsar_test
+
+test: build_dev
+	docker run --rm -v $$PWD:/pulsar --env RUST_LOG="DEBUG" nienna_pulsar_test dotnet test
+
 

@@ -2,13 +2,16 @@
 
 namespace pulsar
 {
-    class Pulsar
+    class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
             Config config = new Config();
             Console.WriteLine(config.getDBURI());
+            while (true)
+            {
+                // noop
+            }
         }
     }
 }

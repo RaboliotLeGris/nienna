@@ -43,6 +43,8 @@ test_backburner:
 	(cd backburner && make test)
 test_cliff:
 	(cd cliff && make test)
+test_pulsar:
+	(cd pulsar && make test)
 
 test_functional:
 	(cd cliff && make -k test_functional)

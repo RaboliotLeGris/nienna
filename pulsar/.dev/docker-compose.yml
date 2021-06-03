@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  db:
+    build: ../../.docker/services/postgresql
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: "nienna"
+      POSTGRES_USER: "nienna"
+      POSTGRES_PASSWORD: "nienna"
+    volumes:
+      - db:/var/lib/postgresql/data
+
+  rabbitmq:
+    build: ../../.docker/services/rabbitmq
+    ports:
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: "nienna"
+      RABBITMQ_DEFAULT_PASS: "nienna123"
+    volumes:
+      - rabbitmq:/var/lib/rabbitmq
+
+volumes:
+  db:
+  rabbitmq:

@@ -31,7 +31,7 @@ It starts all the containers but it also mount each services without launching t
 * Webapp (Vue) -> Allow to upload, watch video and watch livestream
 * Cliff (Go) -> serve webapp, and serve http request (handle uploaded file and watching)
 * Backburner (Rust) -> Process uploaded video into HLS
-* Pulsar (Python) -> Save event from videos
+* Pulsar (.Net) -> Save event from videos
 * River -> handle incoming livestream and save them (done later)
 
 ### Tiers
@@ -42,12 +42,9 @@ It starts all the containers but it also mount each services without launching t
 * Reverse proxy (Caddy) -> https://hub.docker.com/_/caddy
 
 ## TODOLIST
-* pulsar -> rework a bit
-* pulsar -> fail when db restart (no auto reco)
-* pulsar -> fail when rabbit restart (no auto reco)
+* pulsar -> rewrite it in .Net
 * backburner: more tests 
 * Doc -> flow
-* Backburner -> check worker status -> Heartbeat (not doable yet)
 * Backburner -> Add work in progress count  
 * cliff -> fix memory usage when uploading file to minio (another client or some tweaks)
 * cliff -> Lock database when initializing database
@@ -55,4 +52,5 @@ It starts all the containers but it also mount each services without launching t
 * cliff -> Use resumable ?
 * cliff -> Prevent SQL injection (OMG)
 * Check -> https://github.com/dhall-lang/dhall-lang/blob/master/README.md - YAML A M L
+* DB -> Single source to init it
 * RMQ -> configure

@@ -4,6 +4,8 @@ services:
   db:
     build: ../../.docker/services/postgresql
     restart: unless-stopped
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_DB: "nienna"
       POSTGRES_USER: "nienna"
@@ -15,6 +17,7 @@ services:
     build: ../../.docker/services/rabbitmq
     ports:
       - "15672:15672"
+      - "5672:5672"
     environment:
       RABBITMQ_DEFAULT_USER: "nienna"
       RABBITMQ_DEFAULT_PASS: "nienna123"

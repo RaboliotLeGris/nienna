@@ -18,7 +18,7 @@ test_setup_env:
 	sleep 30
 
 test_run:
-	docker run --network nienna_default --rm -v $$PWD:/pulsar nienna_pulsar_test dotnet test
+	docker run --env TEST_IN_DOCKER=true --network nienna_default --rm -v $$PWD:/pulsar nienna_pulsar_test dotnet test
 
 test_stop_env:
 	echo "Stopping testing env"

@@ -8,9 +8,9 @@ namespace pulsar
         private const string DB_URI_KEY = "DB_URI";
         private const string AMQP_URI_KEY = "AMQP_URI";
         
-        private String logLevel;
-        private String dbURI;
-        private String amqpURI;
+        private string logLevel;
+        private string dbURI;
+        private string amqpURI;
 
 
         public Config()
@@ -32,17 +32,17 @@ namespace pulsar
             }
         }
 
-        public String getLogLevel()
+        public string GetLogLevel()
         {
             return this.logLevel;
         }
 
-        public String getDBURI()
+        public string GetDbUri()
         {
             return this.dbURI;
         }
 
-        public String getAMQPURI()
+        public string GetAmqpuri()
         {
             return this.amqpURI;
         }

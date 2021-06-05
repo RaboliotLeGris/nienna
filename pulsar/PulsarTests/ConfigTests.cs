@@ -23,9 +23,9 @@ namespace PulsarTests
 
             Config config = new Config();
 
-            Assert.That(config.getLogLevel(), Is.EqualTo("log_level"));
-            Assert.That(config.getDBURI(), Is.EqualTo("db_uri"));
-            Assert.That(config.getAMQPURI(), Is.EqualTo("amqp_uri"));
+            Assert.That(config.GetLogLevel(), Is.EqualTo("log_level"));
+            Assert.That(config.GetDbUri(), Is.EqualTo("db_uri"));
+            Assert.That(config.GetAmqpuri(), Is.EqualTo("amqp_uri"));
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace PulsarTests
             Environment.SetEnvironmentVariable("LOG_LEVEL", "log_level");
             Environment.SetEnvironmentVariable("DB_URI", "db_uri");
 
-            ArgumentException ex = Assert.Throws<ArgumentException>(delegate { new Config(); });
+            var ex = Assert.Throws<ArgumentException>(delegate { new Config(); });
             Assert.That(ex.Message, Is.EqualTo("Env var AMQP_URI must not be null"));
         }
 
@@ -43,7 +43,7 @@ namespace PulsarTests
         {
             Environment.SetEnvironmentVariable("LOG_LEVEL", "log_level");
 
-            ArgumentException ex = Assert.Throws<ArgumentException>(delegate { new Config(); });
+            var ex = Assert.Throws<ArgumentException>(delegate { new Config(); });
             Assert.That(ex.Message, Is.EqualTo("Env var DB_URI must not be null"));
 
         }
@@ -51,7 +51,7 @@ namespace PulsarTests
         [Test]
         public void MissingLogLevel()
         {
-            ArgumentException ex = Assert.Throws<ArgumentException>(delegate { new Config(); });
+            var ex = Assert.Throws<ArgumentException>(delegate { new Config(); });
             Assert.That(ex.Message, Is.EqualTo("Env var LOG_LEVEL must not be null"));
         }
     }

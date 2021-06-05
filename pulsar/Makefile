@@ -9,13 +9,14 @@ build_image:
 build_dev:
 	docker build .dev -t nienna_pulsar_test
 
-test: build_dev test_setup_env
-	docker run --network nienna_default --rm -v $$PWD:/pulsar nienna_pulsar_test dotnet test
+test: build_dev
+	make test_setup_env
+	make test_run
 	make test_stop_env
 
 test_setup_env:
 	docker-compose -f .dev/docker-compose.yml -p nienna up -d --build --remove-orphans
-	sleep 30
+	sleep 20
 
 test_run:
 	docker run --env TEST_IN_DOCKER=true --network nienna_default --rm -v $$PWD:/pulsar nienna_pulsar_test dotnet test

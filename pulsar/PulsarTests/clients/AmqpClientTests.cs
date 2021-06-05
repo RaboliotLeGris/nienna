@@ -9,7 +9,7 @@ namespace PulsarTests.clients
 {
     public class AmqpClientTests
     {
-        private static string _amqpUri = "amqp://nienna:nienna123@rabbitmq:5672";
+        private static string _amqpUri;
 
         [OneTimeSetUp]
         public void SetAmqpUri()
@@ -17,6 +17,7 @@ namespace PulsarTests.clients
             _amqpUri = Environment.GetEnvironmentVariable("TEST_IN_DOCKER") != null
                 ? "amqp://nienna:nienna123@rabbitmq:5672"
                 : "amqp://nienna:nienna123@localhost:5672";
+            Console.WriteLine();
         }
 
         [Test]

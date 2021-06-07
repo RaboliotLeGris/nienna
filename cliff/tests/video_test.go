@@ -70,7 +70,7 @@ func Test_Video(t *testing.T) {
 
 			g.Before(func() {
 				// To allow the video processing on the CI
-				g.Timeout(15 * time.Minute)
+				g.Timeout(20 * time.Minute)
 
 				statusCode, body, err := session.PostVideo("/api/videos/upload", rootPath+"SampleVideo_1280x720_30mb.mp4", "Resources generation test")
 				g.Assert(err).IsNil()

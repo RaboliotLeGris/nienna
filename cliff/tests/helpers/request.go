@@ -123,6 +123,7 @@ func (s *Session) WaitForProcessing(path string) error {
 		}
 
 		status = statusResp.Status
+		fmt.Println("Status: ", status)
 	}
 	if status != "READY" {
 		return fmt.Errorf("status is different from READY: %s", status)

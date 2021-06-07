@@ -45,7 +45,7 @@ namespace pulsar.clients
         {
             foreach (string queue in queues)
             {
-                this._channel.QueueDeclare(queue, true, false, false, null);
+                this._channel.QueueDeclare(queue, false, false, false, null);
             }
         }
 

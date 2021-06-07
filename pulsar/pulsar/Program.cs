@@ -10,12 +10,12 @@ namespace pulsar
         static void Main(string[] args)
         {
             Config config = new Config();
-
-
-            AmqpClient amqpClient = new AmqpClient(config.GetAmqpuri()).Connect();
             
+            Console.WriteLine("Pulsar starting");
+            Console.WriteLine("CONFIG - " + config.GetAmqpuri() + " | " + config.GetDbUri() + " | " + config.GetLogLevel());
+            
+            AmqpClient amqpClient = new AmqpClient(config.GetAmqpuri()).Connect();
             amqpClient.DeclareQueues("nienna_jobs_result");
-
             amqpClient.AddConsumer("nienna_jobs_result", (sender, ea) =>
             {
                 Console.WriteLine("EVENT: " + Encoding.UTF8.GetString(ea.Body.ToArray()));

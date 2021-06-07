@@ -2,6 +2,7 @@
 using System.Text;
 using System.Threading;
 using pulsar.clients;
+using pulsar.events;
 
 namespace pulsar
 {
@@ -18,7 +19,8 @@ namespace pulsar
             amqpClient.DeclareQueues("nienna_jobs_result");
             amqpClient.AddConsumer("nienna_jobs_result", (sender, ea) =>
             {
-                Console.WriteLine("EVENT: " + Encoding.UTF8.GetString(ea.Body.ToArray()));
+                Event e = EventParser.Parse(Encoding.UTF8.GetString(ea.Body.ToArray()));
+                Console.WriteLine("EVENT: " + e.Type);
             });
             
             while (true)

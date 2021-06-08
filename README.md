@@ -47,7 +47,6 @@ It starts all the containers but it also mount each services without launching t
 * pulsar -> fail when rabbit restart (no auto reco)
 * backburner: more tests 
 * Doc -> flow
-* Backburner -> Adaptive HLS -> Change cliff routes/ Implem ffmpeg cmd in backburner / generate command on the fly
 * Backburner -> check worker status -> Heartbeat (not doable yet)
 * Backburner -> Add work in progress count  
 * cliff -> fix memory usage when uploading file to minio (another client or some tweaks)

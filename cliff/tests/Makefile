@@ -12,7 +12,7 @@ test_stop_env:
 	docker volume rm -f $$(docker volume ls -q)
 
 test_exec:
-	go test -v ./... -count=1
+	go test -timeout 1800s -v ./... -count=1
 
 test_run:
 	echo "RUNNING functional tests"

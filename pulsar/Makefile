@@ -16,6 +16,7 @@ test: build_dev
 
 test_setup_env:
 	docker-compose -f .dev/docker-compose.yml -p nienna up -d --build --remove-orphans
+	echo "PULSAR - WAITING FOR RABBITMQ TO BE UP"
 	sleep 20
 
 test_run:

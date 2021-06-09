@@ -5,7 +5,7 @@ using RabbitMQ.Client.Events;
 
 namespace pulsar.clients
 {
-    public class AmqpClient
+    public class AmqpClient : IAmqpClient
     {
         private readonly string _uri;
         private IConnection _conn;
@@ -27,7 +27,7 @@ namespace pulsar.clients
             this._conn.Close();
         }
 
-        public AmqpClient Connect()
+        public IAmqpClient Connect()
         {
             ConnectionFactory factory = new ConnectionFactory();
             factory.Uri = new Uri(this._uri);

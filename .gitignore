@@ -1,5 +1,7 @@
+# IDE
 .idea
 
+# Backburner / Rust
 backburner/.cargo
 backburner/target
 backburner/.dev/samples/workdir
@@ -7,10 +9,15 @@ backburner/.package-cache
 backburner/github.com*
 backburner/.dev/samples/4K-10bit-bkp.mkv
 
+# Cliff / Go
 cliff/build
 
+# Webapp / NodeJS
 webapp/dist
 webapp/node_modules
 
-venv
-__pycache__
+# Pulsar / C# .Net
+bin
+obj
+*.user
+pulsar/publish

@@ -42,10 +42,8 @@ services:
     tty: true
     environment:
       LOG_LEVEL: "debug"
-      DB_URI: "postgresql://db/nienna?user=nienna&password=nienna"
+      DB_URI: "Host=db;Username=nienna;Password=nienna;Database=nienna"
       AMQP_URI: "amqp://nienna:nienna123@rabbitmq:5672"
-    volumes:
-      - $PWD/pulsar:/pulsar
     depends_on:
       - rabbitmq
       - db

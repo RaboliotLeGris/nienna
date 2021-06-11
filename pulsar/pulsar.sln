@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pulsar", "pulsar\pulsar.csproj", "{84E8BA8D-A851-4D3E-97B4-E86636DC00ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PulsarTests", "PulsarTests\PulsarTests.csproj", "{7C83B072-6663-465F-90E0-4F845B496D62}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{84E8BA8D-A851-4D3E-97B4-E86636DC00ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84E8BA8D-A851-4D3E-97B4-E86636DC00ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84E8BA8D-A851-4D3E-97B4-E86636DC00ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84E8BA8D-A851-4D3E-97B4-E86636DC00ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C83B072-6663-465F-90E0-4F845B496D62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C83B072-6663-465F-90E0-4F845B496D62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C83B072-6663-465F-90E0-4F845B496D62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C83B072-6663-465F-90E0-4F845B496D62}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

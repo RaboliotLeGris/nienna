@@ -17,7 +17,7 @@
     "video.js": "^7.11.8",
     "videojs-contrib-quality-levels": "^2.1.0",
     "videojs-hls-quality-selector": "^1.1.4",
-    "vue": "^2.6.13",
+    "vue": "^2.6.14",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0"
   },
@@ -32,6 +32,6 @@
     "eslint": "^7.28.0",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-vue": "^7.11.0",
-    "vue-template-compiler": "^2.6.13"
+    "vue-template-compiler": "^2.6.14"
   }
 }

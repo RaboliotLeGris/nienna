@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 

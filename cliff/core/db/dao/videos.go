@@ -56,6 +56,6 @@ func (v *VideoDAO) Create(slug string, uploader *User, title string, description
 
 func (v *VideoDAO) GetStatus(userID int, slug string) (string, error) {
 	var status string
-	err := v.conn.QueryRow(context.Background(), "SELECT status FROM videos WHERE uploader=$1 AND slug=$2 ", userID, slug).Scan(&status)
+	err := v.conn.QueryRow(context.Background(), "SELECT status FROM videos WHERE uploader=$1 AND slug=$2;", userID, slug).Scan(&status)
 	return status, err
 }

@@ -12,7 +12,6 @@ namespace PulsarTests.daos
         private string _uri;
         private NpgsqlConnection _conn;
         private DatabaseHelper dbHelper;
-        private ISqlClient sqlClient;
 
         [OneTimeSetUp]
         public void SetupDb()
@@ -22,12 +21,11 @@ namespace PulsarTests.daos
                 : "Host=localhost;Username=nienna;Password=nienna;Database=nienna";
             this._conn = new NpgsqlConnection(this._uri);
             this._conn.Open();
-            this.sqlClient = new SqlClient(this._uri).Connect();
             this.dbHelper = new DatabaseHelper(this._uri);
         }
 
         [SetUp]
-        public void ResetDb()
+        public void BeforeEach()
         {
             this.dbHelper.Reset();
         }
@@ -54,6 +52,7 @@ namespace PulsarTests.daos
 
             res.Read();
             Assert.AreEqual(res[0], "READY");
+            res.Close();
         }
 
         [Test]
@@ -61,7 +60,7 @@ namespace PulsarTests.daos
         {
             var insertOneVideoCmd =
                 new NpgsqlCommand(
-                    "INSERT INTO videos (slug, uploader, title, description, status) VALUES ('SomeSlug', 1, 'Un titre', 'description', 'PROCESSING');",
+                    "INSERT INTO videos (slug, uploader, title, description, status) VALUES ('SomeSlug', 2, 'Un titre', 'description', 'PROCESSING');",
                     this._conn);
             insertOneVideoCmd.ExecuteNonQuery();
 

@@ -2,6 +2,7 @@
 using System.Text;
 using System.Threading;
 using pulsar.clients;
+using pulsar.daos;
 using pulsar.events;
 
 namespace pulsar
@@ -11,13 +12,18 @@ namespace pulsar
         static void Main(string[] args)
         {
             Config config = new Config();
-            
+
             Console.WriteLine("Pulsar starting");
-            Console.WriteLine("CONFIG - " + config.GetAmqpuri() + " | " + config.GetDbUri() + " | " + config.GetLogLevel());
+            if (config.GetLogLevel() == "DEBUG")
+            {
+                Console.WriteLine("CONFIG - " + config.GetAmqpuri() + " | " + config.GetDbUri() + " | " + config.GetLogLevel());
+            }
+                              
 
             AmqpClient amqpClient = new AmqpClient(config.GetAmqpuri());
-            
-            Launch(config, amqpClient, null, Loop);
+            ISqlClient sqlClient = new SqlClient(config.GetDbUri()).Connect();
+
+            Launch(config, amqpClient, sqlClient, Loop);
         }
 
         static void Launch(Config config, IAmqpClient amqpClient, ISqlClient sqlClient, Action loop)
@@ -26,8 +32,27 @@ namespace pulsar
             amqpClient.DeclareQueues("nienna_jobs_result");
             amqpClient.AddConsumer("nienna_jobs_result", (sender, ea) =>
             {
-                Event e = EventParser.Parse(Encoding.UTF8.GetString(ea.Body.ToArray()));
-                Console.WriteLine("EVENT: " + e.Type);
+                try
+                {
+                    Event e = EventParser.Parse(Encoding.UTF8.GetString(ea.Body.ToArray()));
+                    VideoDao videoDao = new VideoDao(sqlClient);
+                    switch (e.Type)
+                    {
+                        case "EventVideoProcessingSucceed":
+                            videoDao.UpdateStatus(e.Slug, "READY");
+                            break;
+                        case "EventVideoProcessingFail":
+                            videoDao.UpdateStatus(e.Slug, "FAILURE");
+                            break;
+                        default:
+                            Console.WriteLine("Unrecognized event " + e.Type);
+                            break;
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine("Got exception while handling events: " + exception);
+                }
             });
 
             loop();

@@ -30,7 +30,7 @@ namespace PulsarTests.helpers
                 ", this._conn);
                 deleteTablesCmd.ExecuteNonQuery();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // noop
             }

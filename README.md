@@ -42,7 +42,6 @@ It starts all the containers but it also mount each services without launching t
 * Reverse proxy (Caddy) -> https://hub.docker.com/_/caddy
 
 ## TODOLIST
-* pulsar -> rewrite it in .Net
 * backburner: more tests 
 * Doc -> flow
 * Backburner -> Add work in progress count  

@@ -42,6 +42,7 @@ It starts all the containers but it also mount each services without launching t
 * Reverse proxy (Caddy) -> https://hub.docker.com/_/caddy
 
 ## TODOLIST
+* DB -> Single source to init it
 * backburner: more tests 
 * Doc -> flow
 * Backburner -> Add work in progress count  
@@ -51,5 +52,4 @@ It starts all the containers but it also mount each services without launching t
 * cliff -> Use resumable ?
 * cliff -> Prevent SQL injection (OMG)
 * Check -> https://github.com/dhall-lang/dhall-lang/blob/master/README.md - YAML A M L
-* DB -> Single source to init it
 * RMQ -> configure

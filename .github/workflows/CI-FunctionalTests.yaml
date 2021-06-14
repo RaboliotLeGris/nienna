@@ -3,7 +3,7 @@ name: CI-cliff-functional-tests
 on: [push]
 
 jobs:
-  CI-Cliff-Functional-tests:
+  CI-Cliff-Functional-Tests:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2

@@ -3,7 +3,7 @@ name: CI-Dockerfile-linting-tests
 on: [push]
 
 jobs:
-  CI-Dockerfile-linting-tests:
+  CI-Dockerfile-Linting-Rests:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2

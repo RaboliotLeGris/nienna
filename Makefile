@@ -49,3 +49,5 @@ test_functional:
 	(cd cliff && make -k test_functional)
 test_dockerfiles:
 	(cd .docker && chmod +x hadolint.sh && make lint)
+test_schema:
+	(cd db && make test)

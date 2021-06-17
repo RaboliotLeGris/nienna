@@ -22,8 +22,8 @@ namespace pulsar.clients
 
         ~AmqpClient()
         {
-            this._channel.Close();
-            this._conn.Close();
+            _channel?.Close();
+            _conn?.Close();
         }
 
         public IAmqpClient Connect()

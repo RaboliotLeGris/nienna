@@ -1,7 +1,7 @@
 version: "3.9"
 
 services:
-  db:
+  pg:
     build: ../../.docker/services/postgresql
     restart: unless-stopped
     ports: 
@@ -11,7 +11,7 @@ services:
       POSTGRES_USER: "nienna"
       POSTGRES_PASSWORD: "nienna"
     volumes:
-      - db:/var/lib/postgresql/data
+      - pg:/var/lib/postgresql/data
 
   redis:
     build: ../../.docker/services/redis
@@ -93,6 +93,6 @@ services:
       - db
 
 volumes:
-  db:
+  pg:
   rabbitmq:
   s3:

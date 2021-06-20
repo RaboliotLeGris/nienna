@@ -1,7 +1,7 @@
 version: "3.9"
 
 services:
-  db:
+  pg:
     build: services/postgresql
     restart: unless-stopped
     environment:
@@ -9,7 +9,7 @@ services:
       POSTGRES_USER: "nienna"
       POSTGRES_PASSWORD: "nienna"
     volumes:
-      - db:/var/lib/postgresql/data
+      - pg:/var/lib/postgresql/data
 
   redis:
     build: services/redis
@@ -51,6 +51,6 @@ services:
       - $PWD/.docker/services/caddy/Caddyfile:/etc/caddy/Caddyfile
 
 volumes:
-  db:
+  pg:
   rabbitmq:
   s3:

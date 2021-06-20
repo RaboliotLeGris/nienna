@@ -13,8 +13,8 @@ d_cliff:
 	docker exec -ti `docker ps -aqf "name=nienna_cliff"` bash
 d_pulsar:
 	docker exec -ti `docker ps -aqf "name=nienna_pulsar"` bash
-d_db:
-	docker exec -ti `docker ps -aqf "name=nienna_db"` psql --user nienna
+d_pg:
+	docker exec -ti `docker ps -aqf "name=nienna_pg"` psql --user nienna
 d_redis:
 	docker exec -ti `docker ps -aqf "name=nienna_redis"` redis-cli
 
@@ -22,7 +22,7 @@ clean:
 	rm -rf backburner/target
 
 build: build_cliff build_backburner build_webapp
-test: test_cliff test_backburner test_webapp test_pulsar test_functional test_dockerfiles
+test: test_cliff test_backburner test_pulsar test_functional test_dockerfiles
 
 build_images: build_webapp
 	(cd backburner && make build_image)
@@ -37,8 +37,6 @@ build_backburner:
 build_cliff:
 	(cd cliff && make build)
 
-test_webapp:
-	echo 'TODO'
 test_backburner:
 	(cd backburner && make test)
 test_cliff:

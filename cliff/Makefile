@@ -3,7 +3,7 @@
 run:
 	go run main.go
 
-build: fmt
+build:
 	go build -o build/cliff
 
 build_image:

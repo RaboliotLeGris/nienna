@@ -31,7 +31,7 @@ my $data = read_file("misc/schema_users.json");
 my $json = JSON->new;
 my $parsed = $json->decode($data);
 
-my $root_sql = read_file("src/schema.sql");
+my $root_sql = read_file("schema.sql");
 my $root_sha = get_sha256($root_sql);
 print "root sha: $root_sha\n";
 

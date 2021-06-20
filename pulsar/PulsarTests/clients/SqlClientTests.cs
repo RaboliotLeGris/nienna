@@ -13,7 +13,7 @@ namespace PulsarTests.clients
         public void SetSqlUri()
         {
             this._sqlUri = Environment.GetEnvironmentVariable("TEST_IN_DOCKER") != null
-                ? "Host=db;Username=nienna;Password=nienna;Database=nienna"
+                ? "Host=pg;Username=nienna;Password=nienna;Database=nienna"
                 : "Host=localhost;Username=nienna;Password=nienna;Database=nienna";
             // Setup database
             DatabaseHelper databaseHelper = new DatabaseHelper(this._sqlUri);

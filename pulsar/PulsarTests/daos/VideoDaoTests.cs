@@ -17,7 +17,7 @@ namespace PulsarTests.daos
         public void SetupDb()
         {
             this._uri = Environment.GetEnvironmentVariable("TEST_IN_DOCKER") != null
-                ? "Host=db;Username=nienna;Password=nienna;Database=nienna"
+                ? "Host=pg;Username=nienna;Password=nienna;Database=nienna"
                 : "Host=localhost;Username=nienna;Password=nienna;Database=nienna";
             this._conn = new NpgsqlConnection(this._uri);
             this._conn.Open();

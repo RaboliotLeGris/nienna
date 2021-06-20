@@ -19,7 +19,7 @@ func parseConfig() (Config, error) {
 
 	return Config{
 		db_uri:    db_uri,
-		admin_pwd: os.Getenv("DB_URI"),
-		dev_mod:   os.Getenv("DB_URI") == "true",
+		admin_pwd: os.Getenv("NIENNA_ADMIN_PASSWORD"),
+		dev_mod:   os.Getenv("NIENNA_DEV") == "true",
 	}, nil
 }

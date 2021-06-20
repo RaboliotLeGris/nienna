@@ -51,7 +51,7 @@ services:
     ports:
       - "80:8000"
     environment:
-      DB_URI: "postgresql://db/nienna?user=nienna&password=nienna"
+      DB_URI: "postgresql://pg/nienna?user=nienna&password=nienna"
       REDIS_URI: "redis:6379"
       S3_URI: "s3:9000"
       S3_DISABLE_TLS: "true"
@@ -60,7 +60,6 @@ services:
       AMQP_URI: "amqp://nienna:nienna123@rabbitmq:5672"
       # If NIENNA_DEV is defined, debug logs are printed
       NIENNA_DEV: "true"
-      NIENNA_ADMIN_PASSWORD: "adminpassword"
       SESSION_KEY: "95c5a0ae-6bd8-4866-81d3-6f67223f8ff2"
     depends_on:
       - db
@@ -86,11 +85,21 @@ services:
     restart: unless-stopped
     environment:
       LOG_LEVEL: "debug"
-      DB_URI: "Host=db;Username=nienna;Password=nienna;Database=nienna"
+      DB_URI: "Host=pg;Username=nienna;Password=nienna;Database=nienna"
       AMQP_URI: "amqp://nienna:nienna123@rabbitmq:5672"
     depends_on:
       - rabbitmq
       - db
+
+  db:
+    build: ../../db
+    restart: on-failure
+    environment:
+      DB_URI: "postgresql://pg/nienna?user=nienna&password=nienna"
+      NIENNA_DEV: "true"
+      NIENNA_ADMIN_PASSWORD: "adminpassword"
+    depends_on:
+      - pg
 
 volumes:
   pg:

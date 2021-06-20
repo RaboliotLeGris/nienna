@@ -19,7 +19,9 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	InitDB(config)
+	if err := InitDB(config); err != nil {
+		log.Fatal(err)
+	}
 }
 
 func InitDB(config Config) error {

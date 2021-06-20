@@ -9,6 +9,12 @@ jobs:
       - uses: actions/checkout@v2
       - run: make test_cliff
 
+  CI-Db-UnitTests:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - run: make test_db
+
   CI-Backburner-UnitTests:
     runs-on: ubuntu-20.04
     steps:

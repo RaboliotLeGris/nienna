@@ -25,6 +25,6 @@ my $parsed = $json->decode($data);
 
 foreach (@{$parsed})
 {
-    print "[COPY] src/misc/schema_users.json to $_ \n";
-    copy("src/schema.sql","../$_") or die "Copy failed: $!";
+    print "[COPY] misc/schema_users.json to $_ \n";
+    copy("schema.sql","../$_") or die "Copy failed: $!";
 }

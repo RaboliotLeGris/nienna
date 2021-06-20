@@ -52,7 +52,7 @@ services:
     build: ../db
     restart: on-failure
     environment:
-      LOG_LEVEL: "debug"
       DB_URI: "postgresql://pg/nienna?user=nienna&password=nienna"
+      NIENNA_ADMIN_PASSWORD: "adminpassword"
     depends_on:
       - pg

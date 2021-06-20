@@ -25,7 +25,7 @@ sub get_sha256 {
     return $sha;
 }
 
-my $data = read_file("src/misc/schema_users.json");
+my $data = read_file("misc/schema_users.json");
 
 # Parsing json
 my $json = JSON->new;

@@ -3,12 +3,10 @@ package main
 import (
 	"context"
 	"os"
-	"time"
 
 	"github.com/jackc/pgx/v4/pgxpool"
 	log "github.com/sirupsen/logrus"
 
-	"nienna/core/db"
 	"nienna/core/msgbus"
 	"nienna/core/objectStorage"
 	"nienna/core/session"
@@ -21,15 +19,6 @@ func main() {
 	}
 
 	log.Info("Starting Cliff - Nienna API")
-
-	// FIXME wait for services (db & ObjectStorage) to be up
-	time.Sleep(2 * time.Second)
-
-	// initializing database with nienna schema
-	err := db.InitDB()
-	if err != nil {
-		log.Fatal("Failed to init db with error: ", err)
-	}
 
 	// Database connection pool
 	pool, err := pgxpool.Connect(context.Background(), os.Getenv("DB_URI"))

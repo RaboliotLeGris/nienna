@@ -1,4 +1,3 @@
 [
-  "cliff/core/db/schema.sql",
   "pulsar/PulsarTests/helpers/schema.sql"
 ]

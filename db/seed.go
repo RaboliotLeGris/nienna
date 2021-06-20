@@ -1,4 +1,4 @@
-package db
+package main
 
 import (
 	"context"
@@ -10,9 +10,21 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func InitDB() error {
-	log.Info("DB - init - Checking database status")
-	conn, err := pgx.Connect(context.Background(), os.Getenv("DB_URI"))
+func main() {
+	if os.Getenv("NIENNA_DEV") == "true" {
+		log.SetLevel(log.DebugLevel)
+	}
+
+	config, err := parseConfig()
+	if err != nil {
+		log.Fatal(err)
+	}
+	InitDB(config)
+}
+
+func InitDB(config Config) error {
+	log.Info("DB - initDB - Checking database status")
+	conn, err := pgx.Connect(context.Background(), config.db_uri)
 	if err != nil {
 		return err
 	}
@@ -24,7 +36,7 @@ func InitDB() error {
 	}
 
 	if needInit {
-		log.Info("DB - init - Initializing database")
+		log.Info("DB - initDB - Initializing database")
 		tx, err := conn.Begin(context.Background())
 		if err != nil {
 			return err
@@ -37,16 +49,16 @@ func InitDB() error {
 
 		// Set default value in DB
 		var adminPassword string
-		if os.Getenv("NIENNA_ADMIN_PASSWORD") != "" {
-			hashedPassword, err := bcrypt.GenerateFromPassword([]byte(os.Getenv("NIENNA_ADMIN_PASSWORD")), 10)
+		if config.admin_pwd != "" {
+			hashedPassword, err := bcrypt.GenerateFromPassword([]byte(config.admin_pwd), 10)
 			if err != nil {
 				return fmt.Errorf("fail to hash the password")
 			}
 			adminPassword = string(hashedPassword)
-		} else if os.Getenv("NIENNA_DEV") == "true" {
+		} else if config.dev_mod {
 			adminPassword = "$2y$10$XcWmOIgAuT90XB/7cSwK5e1PTEUeJgXcO47Zgjx6RHh2phZVFqc/C"
 		} else {
-			return fmt.Errorf("no admin password provided (env: %s)", os.Getenv("NIENNA_DEV"))
+			return fmt.Errorf("no admin password provided (env: %v)", config.dev_mod)
 		}
 
 		if _, err = tx.Exec(context.Background(), "INSERT INTO users (username, hashpass) VALUES ('admin', $1);", adminPassword); err != nil {

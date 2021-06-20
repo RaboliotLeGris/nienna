@@ -25,6 +25,11 @@ updates:
     schedule:
       interval: "weekly"
 
+  - package-ecosystem: "gomod"
+    directory: "/db"
+    schedule:
+      interval: "weekly"
+
   - package-ecosystem: "nuget"
     directory: "/pulsar"
     schedule:

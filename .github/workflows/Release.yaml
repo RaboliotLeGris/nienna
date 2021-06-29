@@ -1,0 +1,32 @@
+---
+name: Release
+
+on:
+  workflow_run:
+    workflows:
+    - CI
+    types: [ completed ]
+
+jobs:
+  Release-Webapp:
+    runs-on: ubuntu-20.04
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '15'
+      - name: Install packages
+        run: npm i
+      - name: Build webapp
+        run: make build_webapp
+      - name: Zip release
+        run: cd webapp/dist && zip -r webapp.zip *
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: false
+          title: "Webapp"
+          files: |
+            webapp/dist/webapp.zip

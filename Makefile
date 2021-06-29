@@ -31,11 +31,12 @@ build_images: build_webapp
 
 build_webapp:
 	(cd webapp && make build)
-	(rm -rf cliff/static/*; cp -r webapp/dist/* cliff/static/)
 build_backburner:
 	(cd backburner && make build)
 build_cliff:
 	(cd cliff && make build)
+build_include_webapp: build_webapp
+	(rm -rf cliff/static/*; cp -r webapp/dist/* cliff/static/)
 
 test_backburner:
 	(cd backburner && make test)

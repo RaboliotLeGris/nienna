@@ -16,7 +16,7 @@ were destroyed. She was in favour of releasing Melkor after his sentence, not be
 To run it locally, the easiest way is to use docker and execute `make d_launch`. 
 
 ## How to develop
-It can be difficult, specially if you use Windows. You will need to have installed on your system `Node`, `Go`, `ffmpeg`, `Rust`, `Python3`, `RabbitMQ`, `PostgreSQL` and `Minio`. You might also run into some troubles with CORS.
+It can be difficult, specially if you use Windows. You will need to have installed on your system `Node`, `Go`, `ffmpeg`, `Rust`, `.Net`, `RabbitMQ`, `PostgreSQL` and `Minio`. You might also run into some troubles with CORS.
 
 Or you can run: `make d_dev` in one terminal and while in `webapp` dir, `npm run serve`. 
 

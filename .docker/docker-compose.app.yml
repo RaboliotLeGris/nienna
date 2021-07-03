@@ -56,3 +56,11 @@ services:
       NIENNA_ADMIN_PASSWORD: "adminpassword"
     depends_on:
       - pg
+
+  webapp:
+    build: ../webapp
+    restart: unless-stopped
+    volumes:
+      - $PWD/.docker/services/caddy/Caddyfile:/etc/caddy/Caddyfile
+    depends_on:
+      - loadbalancer

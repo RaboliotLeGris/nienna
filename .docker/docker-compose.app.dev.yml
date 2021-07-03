@@ -1,6 +1,16 @@
 version: "3.9"
 
 services:
+  webapp:
+    build: ../webapp/.dev
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    volumes:
+      - $PWD/webapp/.dev/Caddyfile:/etc/caddy/Caddyfile
+    depends_on:
+      - loadbalancer
+
   cliff:
     build: ../cliff/.dev
     restart: unless-stopped

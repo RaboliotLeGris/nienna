@@ -47,7 +47,7 @@ export default {
         .then((res) => {
           this.status = 'Uploaded';
           setInterval(() => {
-            this.pollStatus(res.data.Slug);
+            this.pollStatus(res.data.slug);
           }, 5000);
         })
         .catch((err) => {

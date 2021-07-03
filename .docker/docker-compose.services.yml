@@ -17,6 +17,7 @@ services:
 
   rabbitmq:
     build: services/rabbitmq
+    restart: unless-stopped
     ports:
       - "15672:15672"
     environment:
@@ -27,6 +28,7 @@ services:
 
   s3:
     build: services/minio
+    restart: unless-stopped
     ports:
       - "9000:9000"
     environment:
@@ -43,12 +45,13 @@ services:
     volumes:
       - s3:/data
 
-  caddy:
-    build: services/caddy
+  loadbalancer:
+    build: services/nginx
+    restart: unless-stopped
     ports:
       - "80:80"
     volumes:
-      - $PWD/.docker/services/caddy/Caddyfile:/etc/caddy/Caddyfile
+      - $PWD/.docker/services/nginx/nginx.conf:/etc/nginx/nginx.conf
 
 volumes:
   pg:

@@ -9,6 +9,5 @@ FROM debian:10.8-slim@sha256:13f0764262a064b2dd9f8a828bbaab29bdb1a1a0ac6adc8610a
 
 WORKDIR /cliff
 COPY --from=builder /go/src/cliff/build/cliff /cliff
-COPY --from=builder /go/src/cliff/static /cliff/static
 
 CMD ["./cliff"]

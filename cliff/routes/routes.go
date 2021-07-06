@@ -67,9 +67,6 @@ func Create(config *core.Config, pool *pgxpool.Pool, sessionStore *session.Sessi
 	r.PathPrefix("/api/videos/miniature/{slug}/miniature.jpeg").Handler(videos.GetMiniatureVideoHandler{Storage: storage}).Methods("GET")
 	r.PathPrefix("/api/videos/{slug}").Handler(videos.GetInfoVideoHandler{Pool: pool}).Methods("GET")
 
-	log.Debug("router - Adding static folder routes")
-	r.PathPrefix("/").Handler(staticHandler{staticPath: "static", indexPath: "index.html"})
-
 	return router{
 		config: config,
 		router: r,

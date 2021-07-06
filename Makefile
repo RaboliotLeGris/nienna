@@ -30,11 +30,7 @@ build_images: build_webapp
 	(cd pulsar && make build_image)
 
 publish_images:
-	(cd backburner && make publish_image)
-	(cd cliff && make publish_image)
-	(cd pulsar && make publish_image)
-	(cd webapp && make publish_image)
-	(cd db && make publish_image)
+	go run .deploy/publish_images.go
 
 build_webapp:
 	(cd webapp && make build)
@@ -42,8 +38,6 @@ build_backburner:
 	(cd backburner && make build)
 build_cliff:
 	(cd cliff && make build)
-build_include_webapp: build_webapp
-	(rm -rf cliff/static/*; cp -r webapp/dist/* cliff/static/)
 
 test_backburner:
 	(cd backburner && make test)

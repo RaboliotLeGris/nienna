@@ -3,16 +3,17 @@ package routes
 import (
 	"encoding/json"
 	"net/http"
-	"os"
 
 	"github.com/jackc/pgx/v4/pgxpool"
 	log "github.com/sirupsen/logrus"
 
+	"nienna/core"
 	"nienna/core/db/dao"
 	"nienna/core/session"
 )
 
 type registerUserHandler struct {
+	config       *core.Config
 	pool         *pgxpool.Pool
 	sessionStore *session.SessionStore
 }
@@ -31,7 +32,7 @@ func (s registerUserHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if os.Getenv("NIENNA_REGISTER") == "DISABLE" {
+	if s.config.Disable_register {
 		log.Info("Register attempt but is disabled")
 		w.WriteHeader(403)
 		return

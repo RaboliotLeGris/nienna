@@ -29,6 +29,13 @@ build_images: build_webapp
 	(cd cliff && make build_image)
 	(cd pulsar && make build_image)
 
+publish_images:
+	(cd backburner && make publish_image)
+	(cd cliff && make publish_image)
+	(cd pulsar && make publish_image)
+	(cd webapp && make publish_image)
+	(cd db && make publish_image)
+
 build_webapp:
 	(cd webapp && make build)
 build_backburner:

@@ -2,14 +2,15 @@ package routes
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
-	"os"
 
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/rs/cors"
 	log "github.com/sirupsen/logrus"
 
+	"nienna/core"
 	"nienna/core/msgbus"
 	"nienna/core/objectStorage"
 	"nienna/core/session"
@@ -17,6 +18,7 @@ import (
 )
 
 type router struct {
+	config *core.Config
 	router *mux.Router
 }
 
@@ -25,8 +27,8 @@ func (r router) Launch() error {
 
 	// To ease development, we disable CORS
 	var handler http.Handler
-	if os.Getenv("NIENNA_DEV") == "true" {
-		log.Debug("[DEV MOD] allowing all cors")
+	if r.config.Dev_mode {
+		log.Debug("[DEV MODE] allowing all cors")
 		handler = cors.AllowAll().Handler(r.router)
 	} else {
 		handler = r.router
@@ -34,13 +36,13 @@ func (r router) Launch() error {
 
 	srv := &http.Server{
 		Handler: handler,
-		Addr:    "0.0.0.0:8000",
+		Addr:    fmt.Sprintf("0.0.0.0:%v", r.config.Port),
 	}
 
 	return srv.ListenAndServe()
 }
 
-func Create(pool *pgxpool.Pool, sessionStore *session.SessionStore, storage *objectStorage.ObjectStorage, msgbus *msgbus.Msgbus) router {
+func Create(config *core.Config, pool *pgxpool.Pool, sessionStore *session.SessionStore, storage *objectStorage.ObjectStorage, msgbus *msgbus.Msgbus) router {
 	log.Info("router - Creating routers")
 
 	// Routes order creation matter. Static route must be last or it will match all routes
@@ -52,7 +54,7 @@ func Create(pool *pgxpool.Pool, sessionStore *session.SessionStore, storage *obj
 	}).Methods("GET")
 
 	log.Debug("router - Adding users routes")
-	r.PathPrefix("/api/users/register").Handler(registerUserHandler{pool, sessionStore}).Methods("POST")
+	r.PathPrefix("/api/users/register").Handler(registerUserHandler{config, pool, sessionStore}).Methods("POST")
 	r.PathPrefix("/api/users/login").Handler(loginUserHandler{pool, sessionStore}).Methods("POST")
 	r.PathPrefix("/api/users/check").Handler(checkSessionHandler{sessionStore}).Methods("POST")
 
@@ -69,6 +71,7 @@ func Create(pool *pgxpool.Pool, sessionStore *session.SessionStore, storage *obj
 	r.PathPrefix("/").Handler(staticHandler{staticPath: "static", indexPath: "index.html"})
 
 	return router{
+		config: config,
 		router: r,
 	}
 }

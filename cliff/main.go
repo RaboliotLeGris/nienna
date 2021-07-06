@@ -2,11 +2,11 @@ package main
 
 import (
 	"context"
-	"os"
 
 	"github.com/jackc/pgx/v4/pgxpool"
 	log "github.com/sirupsen/logrus"
 
+	"nienna/core"
 	"nienna/core/msgbus"
 	"nienna/core/objectStorage"
 	"nienna/core/session"
@@ -14,37 +14,42 @@ import (
 )
 
 func main() {
-	if os.Getenv("NIENNA_DEV") == "true" {
+	config, err := core.ParseConfig()
+	if err != nil {
+		log.Fatal("Failed to read config with error: ", err)
+	}
+
+	if config.Dev_mode {
 		log.SetLevel(log.DebugLevel)
 	}
 
 	log.Info("Starting Cliff - Nienna API")
 
 	// Database connection pool
-	pool, err := pgxpool.Connect(context.Background(), os.Getenv("DB_URI"))
+	pool, err := pgxpool.Connect(context.Background(), config.DB_URI)
 	if err != nil {
 		log.Fatal("Failed to connect to db with error:", err)
 	}
 
 	// State sessionStore
-	sessionStore, err := session.NewSessionStore(os.Getenv("REDIS_URI"), "nienna")
+	sessionStore, err := session.NewSessionStore(config.Redis_URI, "nienna")
 	if err != nil {
 		log.Fatal("failed to create Session Store client: ", err)
 	}
 
 	// Init Object Storage buckets
-	storage, err := objectStorage.NewStorageClient(os.Getenv("S3_URI"), os.Getenv("S3_ACCESS_KEY"), os.Getenv("S3_SECRET_KEY"), "nienna-1", !(os.Getenv("S3_DISABLE_TLS") == "true"))
+	storage, err := objectStorage.NewStorageClient(config.S3_URI, config.S3_access_key, config.S3_secret_key, "nienna-1", !config.S3_disable_tls)
 	if err != nil {
 		log.Fatal("failed to create Object Storage client: ", err)
 	}
 
 	// RabbitMQ event bus
-	msgbus, err := msgbus.NewMsgbus(os.Getenv("AMQP_URI"), msgbus.QUEUE_BACKBURNER)
+	msgbus, err := msgbus.NewMsgbus(config.AMQP_URI, msgbus.QUEUE_BACKBURNER)
 	if err != nil {
 		log.Fatal("failed to create MessageBus client: ", err)
 	}
 
-	err = routes.Create(pool, sessionStore, storage, msgbus).Launch()
+	err = routes.Create(config, pool, sessionStore, storage, msgbus).Launch()
 	if err != nil {
 		log.Fatal("Router exit with error: ", err)
 	}

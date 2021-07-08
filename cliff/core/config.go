@@ -14,6 +14,7 @@ type Config struct {
 	Port             uint32 // default: 8000
 	DB_URI           string // mandatory
 	Redis_URI        string // mandatory
+	Redis_password   string // optional
 	AMQP_URI         string // mandatory
 	S3_URI           string // mandatory
 	S3_access_key    string // mandatory
@@ -36,6 +37,7 @@ func ParseConfig() (*Config, error) {
 	if config.Redis_URI = os.Getenv("REDIS_URI"); config.Redis_URI == "" {
 		return &Config{}, fmt.Errorf("missing mandatory Env param 'REDIS_URI'")
 	}
+	config.Redis_password = os.Getenv("REDIS_PASSWORD")
 	if config.AMQP_URI = os.Getenv("AMQP_URI"); config.AMQP_URI == "" {
 		return &Config{}, fmt.Errorf("missing mandatory Env param 'AMQP_URI'")
 	}

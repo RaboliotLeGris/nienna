@@ -14,9 +14,10 @@ type SessionStore struct {
 	storeName string
 }
 
-func NewSessionStore(uri, storeName string) (*SessionStore, error) {
+func NewSessionStore(uri, password, storeName string) (*SessionStore, error) {
 	store, err := redisstore.NewRedisStore(context.Background(), redis.NewClient(&redis.Options{
-		Addr: uri,
+		Addr:     uri,
+		Password: password,
 	}))
 	if err != nil {
 		return nil, err

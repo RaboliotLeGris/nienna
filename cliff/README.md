@@ -6,6 +6,7 @@
 * DISABLE_NIENNA_REGISTER -> Disallow the creation of new users (default: false)
 * DB_URI -> Postgresql db uri
 * REDIS_URI -> Redis uri
+* REDIS_PASSWORD -> Redis password (optional)
 * AMQP_URI -> AMQP uri
 * S3_URI -> S3 uri
 * S3_ACCESS_KEY -> S3 user key

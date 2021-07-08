@@ -32,7 +32,7 @@ func main() {
 	}
 
 	// State sessionStore
-	sessionStore, err := session.NewSessionStore(config.Redis_URI, "nienna")
+	sessionStore, err := session.NewSessionStore(config.Redis_URI, config.Redis_password, "nienna")
 	if err != nil {
 		log.Fatal("failed to create Session Store client: ", err)
 	}

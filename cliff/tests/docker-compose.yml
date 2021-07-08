@@ -85,7 +85,7 @@ services:
     restart: unless-stopped
     environment:
       LOG_LEVEL: "debug"
-      DB_URI: "Host=pg;Username=nienna;Password=nienna;Database=nienna"
+      DB_PARAMS: "Host=pg;Username=nienna;Password=nienna;Database=nienna"
       AMQP_URI: "amqp://nienna:nienna123@rabbitmq:5672"
     depends_on:
       - rabbitmq

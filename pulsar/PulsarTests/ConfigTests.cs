@@ -10,7 +10,7 @@ namespace PulsarTests
         public void Clean()
         {
             Environment.SetEnvironmentVariable("LOG_LEVEL", null);
-            Environment.SetEnvironmentVariable("DB_URI", null);
+            Environment.SetEnvironmentVariable("DB_PARAMS", null);
             Environment.SetEnvironmentVariable("AMQP_URI", null);
         }
 
@@ -18,7 +18,7 @@ namespace PulsarTests
         public void AllEnvVarSet()
         {
             Environment.SetEnvironmentVariable("LOG_LEVEL", "log_level");
-            Environment.SetEnvironmentVariable("DB_URI", "db_uri");
+            Environment.SetEnvironmentVariable("DB_PARAMS", "db_uri");
             Environment.SetEnvironmentVariable("AMQP_URI", "amqp_uri");
 
             Config config = new Config();
@@ -32,7 +32,7 @@ namespace PulsarTests
         public void MissingAmqpUri()
         {
             Environment.SetEnvironmentVariable("LOG_LEVEL", "log_level");
-            Environment.SetEnvironmentVariable("DB_URI", "db_uri");
+            Environment.SetEnvironmentVariable("DB_PARAMS", "db_uri");
 
             var ex = Assert.Throws<ArgumentException>(delegate { new Config(); });
             Assert.That(ex.Message, Is.EqualTo("Env var AMQP_URI must not be null"));

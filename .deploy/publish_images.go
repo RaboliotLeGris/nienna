@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
@@ -17,7 +18,11 @@ func main() {
 
 	var version string
 	if version = os.Getenv("NIENNA_IMAGE_VERSION"); version == "" {
-		log.Fatal("version is mandatory, please fill 'NIENNA_IMAGE_VERSION'")
+		data, err := ioutil.ReadFile("VERSION")
+		if err != nil {
+			log.Fatal("Fail to get version from file", err)
+		}
+		version = string(data)
 	}
 
 	images_to_publish := []string{"backburner", "cliff", "db", "pulsar", "webapp"}

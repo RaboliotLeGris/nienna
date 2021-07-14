@@ -1,7 +1,9 @@
+FROM node:15.14.0-alpine@sha256:0944bcebe7fb69f2e81080b879d68e93446d5118fb857f029c3516df25d374d9 as builder
+
+WORKDIR /webapp
+COPY . .
+RUN npm i && npm run build
+
 FROM caddy:2.3.0-alpine
 
-RUN apk --no-cache add wget=1.20.3-r1 unzip=6.0-r9 && rm -rf /var/cache/apk/*
-WORKDIR /webapp
-RUN wget --progress=dot:giga https://github.com/RaboliotLeGris/nienna/releases/download/latest/webapp.zip && \
-    unzip webapp.zip && rm webapp.zip && \
-    cp -R -- * /usr/share/caddy/
+COPY --from=builder /webapp/dist/ /usr/share/caddy/

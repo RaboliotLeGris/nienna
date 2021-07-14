@@ -22,3 +22,6 @@ bin
 obj
 *.user
 pulsar/publish
+
+# conf
+.deploy/dedicated

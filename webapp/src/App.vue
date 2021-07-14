@@ -13,10 +13,12 @@
 import Session from '@/components/Session.vue';
 
 export default {
-  title: "Nienna",
   name: 'App',
   components: {
     Session,
+  },
+  created() {
+    document.title = 'Nienna - Watch Videos';
   },
 };
 </script>

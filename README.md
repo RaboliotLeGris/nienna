@@ -20,7 +20,7 @@ It can be difficult, specially if you use Windows. You will need to have install
 
 Or you can run: `make d_dev` in one terminal and while in `webapp` dir, `npm run serve`. 
 
-It starts all the containers but it also mount each services without launching them. This way you can hop into them with `make d_<SERVICE_NAME>` and either launch it while needing it without have to relaunch all the services.
+It starts all the containers, but it also mount each services without launching them. This way you can hop into them with `make d_<SERVICE_NAME>` and either launch it while needing it without have to relaunch all the services.
 
 ## Services:
 
@@ -42,13 +42,11 @@ It starts all the containers but it also mount each services without launching t
 * Reverse proxy (Caddy) -> https://hub.docker.com/_/caddy
 
 ## TODOLIST
-* DB -> Single source to init it
-* backburner: more tests 
+
+* Deploy -> Generate Docker-compose with code
+* Deploy -> Write ansible script to deploy docker-compose to some dedicated server
 * Doc -> flow
-* Backburner -> Add work in progress count  
 * cliff -> fix memory usage when uploading file to minio (another client or some tweaks)
-* cliff -> Lock database when initializing database
-* cliff -> Do not crash when db is not ready
 * cliff -> Use resumable ?
 * cliff -> Prevent SQL injection (OMG)
 * Check -> https://github.com/dhall-lang/dhall-lang/blob/master/README.md - YAML A M L

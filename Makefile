@@ -30,7 +30,9 @@ build_images: build_webapp
 	(cd pulsar && make build_image)
 
 publish_images:
-	go run .deploy/publish_images.go
+	go run .deploy/publish/publish_images.go
+generate_compose:
+	(cd .deploy/generate && go run . && mv docker-compose.yml ../..)
 
 build_webapp:
 	(cd webapp && make build)

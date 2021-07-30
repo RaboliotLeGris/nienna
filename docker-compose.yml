@@ -1,0 +1,103 @@
+version: "3.9"
+services:
+    backburner:
+        build: backburner/.dev
+        restart: unless-stopped
+        command: ""
+        environment:
+            AMQP_URI: amqp://:TODO@rabbitmq:5672
+            S3_ACCESS_KEY: s3_key
+            S3_SECRET_KEY: s3_secret
+            S3_URI: s3_uri
+        volumes:
+            - $PWD/backburner:/usr/src/backburner
+        depends_on:
+            - s3
+            - amqp
+    cliff:
+        build: cliff/.dev
+        restart: unless-stopped
+        command: ""
+        environment:
+            AMQP_URI: amqp://:TODO@rabbitmq:5672
+            DB_URI: postgresql://pg/?user=&password=TODO
+            REDIS_URI: redis
+            S3_ACCESS_KEY: s3_key
+            S3_DISABLE_TLS: "true"
+            S3_SECRET_KEY: s3_secret
+            S3_URI: s3_uri
+            SESSION_KEY: TO GENERATE PROPERLY
+        volumes:
+            - $PWD/cliff:/go/src/cliff
+        depends_on:
+            - db
+            - redis
+            - s3
+            - amqp
+    db:
+        build: db
+        restart: unless-stopped
+        command: ""
+        environment:
+            DB_URI: postgresql://pg/?user=&password=TODO
+        depends_on:
+            - pg
+    loadbalancer:
+        image: nginx:1.21.0@sha256:2f1cd90e00fe2c991e18272bb35d6a8258eeb27785d121aa4cc1ae4235167cfd
+        restart: unless-stopped
+        command: ""
+        volumes:
+            - $PWD/.docker/services/nginx/nginx.conf:/etc/nginx/nginx.conf
+        ports:
+            - 80:80
+    pg:
+        image: postgres:13.2@sha256:868a8ec5f24cce648991c8e41811a43acddebdf55aff0b3aad90fab359f2c518
+        restart: unless-stopped
+        command: ""
+        environment:
+            POSTGRES_DB: ""
+            POSTGRES_PASSWORD: TODO
+            POSTGRES_USER: ""
+    pulsar:
+        build: pulsar/.dev
+        restart: unless-stopped
+        command: ""
+        environment:
+            AMQP_URI: amqp://:TODO@rabbitmq:5672
+            DB_PARAMS: Host=pg;Username=;Password=TODO;Database=
+        volumes:
+            - $PWD/pulsar:/pulsar
+        depends_on:
+            - db
+            - rabbitmq
+    rabbitmq:
+        image: rabbitmq:3.8.14-management@sha256:09bb2f34a383403b7c4a320f9037975d811efb92ecbef728d5760c2ab3fc8ca0
+        restart: unless-stopped
+        command: ""
+        environment:
+            RABBITMQ_DEFAULT_PASS: TODO
+            RABBITMQ_DEFAULT_USER: ""
+        volumes:
+            - rabbitmq:/var/lib/rabbitmq
+    redis:
+        image: redis:6.2.1-buster@sha256:2084204018c52ea78ef43302df2d284f46175e3d6218347b58a09e5b97c6e828
+        restart: unless-stopped
+        command: ""
+    s3:
+        image: minio/minio:RELEASE.2021-07-22T05-23-32Z@sha256:a7ada72685dd94dd63627bf17ccbbff000bc04a978f230084f1156a3e8d9550f
+        restart: unless-stopped
+        command: ""
+        environment:
+            MINIO_ROOT_PASSWORD: s3_secret
+            MINIO_ROOT_USER: s3_key
+        volumes:
+            - s3:/home/shared
+    webapp:
+        build: webapp/.dev
+        restart: unless-stopped
+        command: ""
+        volumes:
+            - $PWD/webapp/.dev/Caddyfile:/etc/caddy/Caddyfile
+        depends_on:
+            - loadbalancer
+volumes: []

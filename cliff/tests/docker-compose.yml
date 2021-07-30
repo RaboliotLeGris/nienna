@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   pg:
-    build: ../../.docker/services/postgresql
+    image: postgres:13.3-buster@sha256:b6df1345afa5990ea32866e5c331eefbf2e30a05f2a715c3a9691a6cb18fa253
     restart: unless-stopped
     ports: 
       - "1486:1486"
@@ -14,21 +14,19 @@ services:
       - pg:/var/lib/postgresql/data
 
   redis:
-    build: ../../.docker/services/redis
+    image: redis:6.2.5-buster@sha256:fc18060a624d55a2f68428955505623471efa5ed0158f9c74f7414fdc0294740
     restart: unless-stopped
 
   rabbitmq:
-    build: ../../.docker/services/rabbitmq
+    image: rabbitmq:3.8.19-management@sha256:e311fdb577539ea7d767058d853a04d39694292993c03c06212155a143fb5e40
     ports:
       - "15672:15672"
     environment:
       RABBITMQ_DEFAULT_USER: "nienna"
       RABBITMQ_DEFAULT_PASS: "nienna123"
-    volumes:
-      - rabbitmq:/var/lib/rabbitmq
 
   s3:
-    build: ../../.docker/services/minio
+    image: minio/minio:RELEASE.2021-07-30T00-02-00Z@sha256:a7b01f7ea0e788466c94dcee588b557377b9b260e51919b0e200daab4ab1777f
     ports:
       - "9000:9000"
     environment:
@@ -103,5 +101,4 @@ services:
 
 volumes:
   pg:
-  rabbitmq:
   s3:

@@ -1,1 +1,0 @@
-FROM postgres:13.2@sha256:868a8ec5f24cce648991c8e41811a43acddebdf55aff0b3aad90fab359f2c518

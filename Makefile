@@ -1,7 +1,7 @@
 .PHONY: build test d_launch
 
 d_launch: clean
-	docker-compose -f .docker/docker-compose.app.yml -f .docker/docker-compose.services.yml -p nienna up --build --remove-orphans
+	docker-compose -f .docker/docker-compose.app.yml -f .docker/docker-compose.services.yml -p nienna up -d --build --remove-orphans
 d_dev: clean
 	docker-compose -f .docker/docker-compose.app.dev.yml -f .docker/docker-compose.services.yml -p nienna up --build --remove-orphans
 

@@ -14,7 +14,7 @@ services:
       - pg:/var/lib/postgresql/data
 
   redis:
-    image: redis:6.2.5-buster@sha256:fc18060a624d55a2f68428955505623471efa5ed0158f9c74f7414fdc0294740
+    image: redis:6.2.1-buster@sha256:2084204018c52ea78ef43302df2d284f46175e3d6218347b58a09e5b97c6e828
     restart: unless-stopped
 
   rabbitmq:

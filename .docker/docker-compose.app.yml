@@ -61,6 +61,6 @@ services:
     build: ../webapp
     restart: unless-stopped
     volumes:
-      - $PWD/.docker/services/caddy/Caddyfile:/etc/caddy/Caddyfile
+      - $PWD/.docker/Caddyfile:/etc/caddy/Caddyfile
     depends_on:
       - loadbalancer

@@ -10,6 +10,7 @@ import (
 	"nienna/core/msgbus"
 	"nienna/core/objectStorage"
 	"nienna/core/session"
+	"nienna/metrics"
 	"nienna/routes"
 )
 
@@ -48,6 +49,9 @@ func main() {
 	if err != nil {
 		log.Fatal("failed to create MessageBus client: ", err)
 	}
+
+	// Export Prometheus Metrics
+	metrics.Export()
 
 	err = routes.Create(config, pool, sessionStore, storage, msgbus).Launch()
 	if err != nil {

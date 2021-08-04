@@ -7,7 +7,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func Export() {
+func LaunchExporter() {
 	log.Println("Launching Prometheus Metric exporter on: 0.0.0.0:2112/metrics")
 	go func() {
 		http.Handle("/metrics", promhttp.Handler())

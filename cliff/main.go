@@ -51,7 +51,7 @@ func main() {
 	}
 
 	// Export Prometheus Metrics
-	metrics.Export()
+	metrics.LaunchExporter()
 
 	err = routes.Create(config, pool, sessionStore, storage, msgbus).Launch()
 	if err != nil {

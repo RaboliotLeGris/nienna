@@ -1,7 +1,6 @@
 package metrics
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -12,6 +11,8 @@ func Export() {
 	log.Println("Launching Prometheus Metric exporter on: 0.0.0.0:2112/metrics")
 	go func() {
 		http.Handle("/metrics", promhttp.Handler())
-		http.ListenAndServe("0.0.0.0:2112", nil)
+		if err := http.ListenAndServe("0.0.0.0:2112", nil); err != nil {
+			log.Error("Failed to start Prometheus Metrics Exporter - 0.0.0.0:2112/metrics")
+		}
 	}()
 }

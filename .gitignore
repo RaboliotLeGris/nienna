@@ -18,8 +18,10 @@ webapp/node_modules
 release.zip
 
 # Pulsar / C# .Net
-bin
-obj
+pulsar/bin
+pulsar/obj
+pulsar/PulsarTests/bin
+pulsar/PulsarTests/obj
 *.user
 pulsar/publish
 

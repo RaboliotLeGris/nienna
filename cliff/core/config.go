@@ -4,22 +4,25 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+
+	log "github.com/sirupsen/logrus"
 )
 
 const default_port = uint32(8000)
 
 type Config struct {
-	Dev_mode         bool   // default: false
-	Disable_register bool   // default: false
-	Port             uint32 // default: 8000
-	DB_URI           string // mandatory
-	Redis_URI        string // mandatory
-	Redis_password   string // optional
-	AMQP_URI         string // mandatory
-	S3_URI           string // mandatory
-	S3_access_key    string // mandatory
-	S3_secret_key    string // mandatory
-	S3_disable_tls   bool   // default: false
+	Dev_mode         bool      // default: false
+	Log_level        log.Level // default: log.InfoLevel
+	Disable_register bool      // default: false
+	Port             uint32    // default: 8000
+	DB_URI           string    // mandatory
+	Redis_URI        string    // mandatory
+	Redis_password   string    // optional
+	AMQP_URI         string    // mandatory
+	S3_URI           string    // mandatory
+	S3_access_key    string    // mandatory
+	S3_secret_key    string    // mandatory
+	S3_disable_tls   bool      // default: false
 }
 
 func ParseConfig() (*Config, error) {
@@ -27,6 +30,9 @@ func ParseConfig() (*Config, error) {
 	var err error
 
 	config.Dev_mode = os.Getenv("NIENNA_DEV") == "true"
+	if config.Log_level, err = getLogLevel(); err != nil {
+		return &Config{}, err
+	}
 	config.Disable_register = os.Getenv("DISABLE_NIENNA_REGISTER") == "true"
 	if config.Port, err = getPort(); err != nil {
 		return &Config{}, err
@@ -65,4 +71,12 @@ func getPort() (uint32, error) {
 		return default_port, err
 	}
 	return uint32(parsedPort), nil
+}
+
+func getLogLevel() (log.Level, error) {
+	rawLogLevel := os.Getenv("NIENNA_LOG_LEVEL")
+	if rawLogLevel == "" {
+		rawLogLevel = "info"
+	}
+	return log.ParseLevel(rawLogLevel)
 }

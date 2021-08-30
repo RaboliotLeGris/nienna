@@ -9,7 +9,7 @@ namespace PulsarTests
         [TearDown]
         public void Clean()
         {
-            Environment.SetEnvironmentVariable("LOG_LEVEL", null);
+            Environment.SetEnvironmentVariable("NIENNA_LOG_LEVEL", null);
             Environment.SetEnvironmentVariable("DB_PARAMS", null);
             Environment.SetEnvironmentVariable("AMQP_URI", null);
         }
@@ -17,7 +17,7 @@ namespace PulsarTests
         [Test]
         public void AllEnvVarSet()
         {
-            Environment.SetEnvironmentVariable("LOG_LEVEL", "log_level");
+            Environment.SetEnvironmentVariable("NIENNA_LOG_LEVEL", "log_level");
             Environment.SetEnvironmentVariable("DB_PARAMS", "db_uri");
             Environment.SetEnvironmentVariable("AMQP_URI", "amqp_uri");
 
@@ -31,7 +31,7 @@ namespace PulsarTests
         [Test]
         public void MissingAmqpUri()
         {
-            Environment.SetEnvironmentVariable("LOG_LEVEL", "log_level");
+            Environment.SetEnvironmentVariable("NIENNA_LOG_LEVEL", "log_level");
             Environment.SetEnvironmentVariable("DB_PARAMS", "db_uri");
 
             var ex = Assert.Throws<ArgumentException>(delegate { new Config(); });
@@ -41,7 +41,7 @@ namespace PulsarTests
         [Test]
         public void MissingDbUri()
         {
-            Environment.SetEnvironmentVariable("LOG_LEVEL", "log_level");
+            Environment.SetEnvironmentVariable("NIENNA_LOG_LEVEL", "log_level");
 
             var ex = Assert.Throws<ArgumentException>(delegate { new Config(); });
             Assert.That(ex.Message, Is.EqualTo("Env var DB_URI must not be null"));
@@ -52,7 +52,7 @@ namespace PulsarTests
         public void MissingLogLevel()
         {
             var ex = Assert.Throws<ArgumentException>(delegate { new Config(); });
-            Assert.That(ex.Message, Is.EqualTo("Env var LOG_LEVEL must not be null"));
+            Assert.That(ex.Message, Is.EqualTo("Env var NIENNA_LOG_LEVEL must not be null"));
         }
     }
 }

@@ -4,7 +4,7 @@ namespace pulsar
 {
     public class Config
     {
-        private const string LOG_LEVEL_KEY = "LOG_LEVEL";
+        private const string LOG_LEVEL_KEY = "NIENNA_LOG_LEVEL";
         private const string DB_PARAMS_KEY = "DB_PARAMS";
         private const string AMQP_URI_KEY = "AMQP_URI";
         
@@ -18,7 +18,7 @@ namespace pulsar
             this.logLevel = Environment.GetEnvironmentVariable(LOG_LEVEL_KEY);
             if (this.logLevel == null)
             {
-                throw new ArgumentException("Env var LOG_LEVEL must not be null");
+                throw new ArgumentException("Env var NIENNA_LOG_LEVEL must not be null");
             }
             this.dbURI = Environment.GetEnvironmentVariable(DB_PARAMS_KEY);
             if (this.dbURI == null)

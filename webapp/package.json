@@ -13,7 +13,7 @@
     "bulma": "^0.9.3",
     "core-js": "^3.16.4",
     "hls.js": "^1.0.10",
-    "js-cookie": "3.0.0",
+    "js-cookie": "3.0.1",
     "video.js": "^7.14.3",
     "videojs-contrib-quality-levels": "^2.1.0",
     "videojs-hls-quality-selector": "^1.1.4",

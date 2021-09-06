@@ -57,6 +57,7 @@ services:
       S3_SECRET_KEY: "minio123" # Yes
       AMQP_URI: "amqp://nienna:nienna123@rabbitmq:5672"
       # If NIENNA_DEV is defined, debug logs are printed
+      NIENNA_LOG_LEVEL: "debug"
       NIENNA_DEV: "true"
       SESSION_KEY: "95c5a0ae-6bd8-4866-81d3-6f67223f8ff2"
     depends_on:
@@ -82,7 +83,7 @@ services:
     build: ../../pulsar
     restart: unless-stopped
     environment:
-      LOG_LEVEL: "debug"
+      NIENNA_LOG_LEVEL: "debug"
       DB_PARAMS: "Host=pg;Username=nienna;Password=nienna;Database=nienna"
       AMQP_URI: "amqp://nienna:nienna123@rabbitmq:5672"
     depends_on:

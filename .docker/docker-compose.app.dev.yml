@@ -27,6 +27,7 @@ services:
       # If NIENNA_DEV is defined, debug logs are printed
       NIENNA_DEV: "true"
       SESSION_KEY: "95c5a0ae-6bd8-4866-81d3-6f67223f8ff2"
+      NIENNA_LOG_LEVEL: "debug"
     volumes:
       - $PWD/cliff:/go/src/cliff
     depends_on:
@@ -58,7 +59,7 @@ services:
     stdin_open: true
     tty: true
     environment:
-      LOG_LEVEL: "debug"
+      NIENNA_LOG_LEVEL: "debug"
       DB_PARAMS: "Host=pg;Username=nienna;Password=nienna;Database=nienna"
       AMQP_URI: "amqp://nienna:nienna123@rabbitmq:5672"
     volumes:

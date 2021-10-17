@@ -10,11 +10,11 @@ import (
 	"github.com/rs/cors"
 	log "github.com/sirupsen/logrus"
 
-	"nienna/core"
-	"nienna/core/msgbus"
-	"nienna/core/objectStorage"
-	"nienna/core/session"
-	"nienna/routes/videos"
+	"github.com/RaboliotLeGris/nienna/cliff/core"
+	"github.com/RaboliotLeGris/nienna/cliff/core/msgbus"
+	"github.com/RaboliotLeGris/nienna/cliff/core/objectStorage"
+	"github.com/RaboliotLeGris/nienna/cliff/core/session"
+	"github.com/RaboliotLeGris/nienna/cliff/routes/videos"
 )
 
 type router struct {

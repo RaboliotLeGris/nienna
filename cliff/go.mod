@@ -1,4 +1,4 @@
-module nienna
+module github.com/RaboliotLeGris/nienna/cliff
 
 go 1.16
 

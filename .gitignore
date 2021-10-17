@@ -24,6 +24,8 @@ pulsar/PulsarTests/bin
 pulsar/PulsarTests/obj
 *.user
 pulsar/publish
+\obj
+\bin
 
 # conf
 .deploy/dedicated

@@ -9,7 +9,7 @@ import (
 	"github.com/gorilla/mux"
 	log "github.com/sirupsen/logrus"
 
-	"nienna/core/objectStorage"
+	"github.com/RaboliotLeGris/nienna/cliff/core/objectStorage"
 )
 
 type GetStreamMasterVideoHandler struct {

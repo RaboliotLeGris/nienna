@@ -7,7 +7,7 @@ require (
 	github.com/gorilla/mux v1.8.0
 	github.com/gorilla/sessions v1.2.1 // indirect
 	github.com/jackc/pgx/v4 v4.13.0
-	github.com/minio/minio-go/v7 v7.0.14
+	github.com/minio/minio-go/v7 v7.0.15
 	github.com/prometheus/client_golang v1.11.0
 	github.com/rbcervilla/redisstore/v8 v8.1.0
 	github.com/rs/cors v1.8.0

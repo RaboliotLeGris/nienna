@@ -34,7 +34,7 @@ export default {
       // TODO: improve this bits
       this.status = 'Uploading';
       const formData = new FormData();
-      console.log('TITLE', this.title);
+      // console.log('TITLE', this.title);
       formData.append('title', this.title);
       formData.append('video', this.file);
       axios.post(routes.postVideo,
@@ -51,7 +51,7 @@ export default {
           }, 5000);
         })
         .catch((err) => {
-          console.log('FAILURE!!', err);
+          // console.log('FAILURE!!', err);
         });
     },
     handleFileUpload() {
@@ -67,7 +67,7 @@ export default {
           this.status = response.data.status;
         })
         .catch((err) => {
-          console.log('ERROR: GETSTATUSVIDEO', err);
+          // console.log('ERROR: GETSTATUSVIDEO', err);
           // TODO display error message
         });
     },

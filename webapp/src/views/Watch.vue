@@ -44,7 +44,7 @@ export default {
           this.video = response.data;
         })
         .catch((err) => {
-          console.log('ERROR: GETONEVIDEO', err);
+          // console.log('ERROR: GETONEVIDEO', err);
           // TODO display error message
         });
     },

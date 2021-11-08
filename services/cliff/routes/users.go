@@ -7,9 +7,9 @@ import (
 	"github.com/jackc/pgx/v4/pgxpool"
 	log "github.com/sirupsen/logrus"
 
-	"nienna/core"
-	"nienna/core/db/dao"
-	"nienna/core/session"
+	"github.com/RaboliotLeGris/nienna/cliff/core"
+	"github.com/RaboliotLeGris/nienna/cliff/core/db/dao"
+	"github.com/RaboliotLeGris/nienna/cliff/core/session"
 )
 
 type registerUserHandler struct {

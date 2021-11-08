@@ -50,4 +50,4 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - run: cd webapp && npm i && npm run build
+      - run: cd services/webapp && npm i && npm run build

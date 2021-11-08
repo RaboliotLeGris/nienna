@@ -2,28 +2,30 @@
 .idea
 
 # Backburner / Rust
-backburner/.cargo
-backburner/target
-backburner/.dev/samples/workdir
-backburner/.package-cache
-backburner/github.com*
-backburner/.dev/samples/4K-10bit-bkp.mkv
+services/backburner/.cargo
+services/backburner/target
+services/backburner/.dev/samples/workdir
+services/backburner/.package-cache
+services/backburner/github.com*
+services/backburner/.dev/samples/4K-10bit-bkp.mkv
 
 # Cliff / Go
-cliff/build
+services/cliff/build
 
 # Webapp / NodeJS
-webapp/dist
-webapp/node_modules
+services/webapp/dist
+services/webapp/node_modules
 release.zip
 
 # Pulsar / C# .Net
-pulsar/bin
-pulsar/obj
-pulsar/PulsarTests/bin
-pulsar/PulsarTests/obj
+services/pulsar/bin
+services/pulsar/obj
+services/pulsar/PulsarTests/bin
+services/pulsar/PulsarTests/obj
 *.user
-pulsar/publish
+services/pulsar/publish
+\obj
+\bin
 
 # conf
 .deploy/dedicated

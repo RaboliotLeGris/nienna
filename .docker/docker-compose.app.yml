@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   cliff:
-    build: ../cliff
+    build: ../services/cliff
     restart: unless-stopped
     environment:
       DB_URI: "postgresql://pg/nienna?user=nienna&password=nienna"
@@ -23,7 +23,7 @@ services:
       - rabbitmq
 
   backburner:
-    build: ../backburner
+    build: ../services/backburner
     restart: unless-stopped
     environment:
       RUST_LOG: "DEBUG"
@@ -36,7 +36,7 @@ services:
       - rabbitmq
 
   pulsar:
-    build: ../pulsar
+    build: ../services/pulsar
     restart: unless-stopped
     stdin_open: true
     tty: true
@@ -49,7 +49,7 @@ services:
       - db
 
   db:
-    build: ../db
+    build: ../services/db
     restart: on-failure
     environment:
       DB_URI: "postgresql://pg/nienna?user=nienna&password=nienna"
@@ -58,7 +58,7 @@ services:
       - pg
 
   webapp:
-    build: ../webapp
+    build: ../services/webapp
     restart: unless-stopped
     volumes:
       - $PWD/.docker/Caddyfile:/etc/caddy/Caddyfile

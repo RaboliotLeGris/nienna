@@ -31,6 +31,9 @@ func main() {
 
 	current_dir, _ := os.Getwd()
 	log.Print("Current dir: ", current_dir)
+	_ = os.Chdir("services")
+	current_dir, _ = os.Getwd()
+	log.Print("Current dir: ", current_dir)
 
 	for _, image := range images_to_publish {
 		log.Print("\nPublishing image: ", image)

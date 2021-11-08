@@ -10,10 +10,10 @@ import (
 	log "github.com/sirupsen/logrus"
 	"github.com/thanhpk/randstr"
 
-	"nienna/core/db/dao"
-	"nienna/core/msgbus"
-	"nienna/core/objectStorage"
-	"nienna/core/session"
+	"github.com/RaboliotLeGris/nienna/cliff/core/db/dao"
+	"github.com/RaboliotLeGris/nienna/cliff/core/msgbus"
+	"github.com/RaboliotLeGris/nienna/cliff/core/objectStorage"
+	"github.com/RaboliotLeGris/nienna/cliff/core/session"
 )
 
 type PostUploadVideoHandler struct {

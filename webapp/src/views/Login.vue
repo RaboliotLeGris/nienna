@@ -14,9 +14,9 @@
 </template>
 
 <script>
+import axios from 'axios';
 import cookies from 'js-cookie';
 import routes from '@/routes';
-import axios from 'axios';
 
 export default {
   data() {
@@ -49,7 +49,7 @@ export default {
         vm.$router.push('/');
       }).catch((err) => {
         // TODO toast
-        console.error('Catch error:', err);
+        // console.error('Catch error:', err);
       });
     },
   },

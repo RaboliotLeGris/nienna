@@ -9,7 +9,6 @@
 </template>
 
 <script>
-import routes from '@/routes';
 import axios from 'axios';
 
 import videojs from 'video.js';
@@ -17,6 +16,8 @@ import 'video.js/dist/video-js.css';
 import '@videojs/themes/dist/forest/index.css';
 import qualitySelector from 'videojs-hls-quality-selector';
 import qualityLevels from 'videojs-contrib-quality-levels';
+
+import routes from '@/routes';
 
 export default {
   name: 'Watch',

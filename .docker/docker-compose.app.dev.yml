@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   webapp:
-    build: ../webapp/.dev
+    build: ../services/webapp/.dev
     restart: unless-stopped
     stdin_open: true
     tty: true
@@ -12,7 +12,7 @@ services:
       - loadbalancer
 
   cliff:
-    build: ../cliff/.dev
+    build: ../services/cliff/.dev
     restart: unless-stopped
     stdin_open: true
     tty: true
@@ -37,7 +37,7 @@ services:
       - rabbitmq
 
   backburner:
-    build: ../backburner/.dev
+    build: ../services/backburner/.dev
     restart: unless-stopped
     stdin_open: true
     tty: true
@@ -54,7 +54,7 @@ services:
       - rabbitmq
 
   pulsar:
-    build: ../pulsar/.dev
+    build: ../services/pulsar/.dev
     restart: unless-stopped
     stdin_open: true
     tty: true
@@ -69,7 +69,7 @@ services:
       - db
 
   db:
-    build: ../db
+    build: ../services/db
     restart: on-failure
     environment:
       NIENNA_DEV: "true"

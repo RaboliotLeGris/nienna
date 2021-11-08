@@ -6,4 +6,4 @@ RUN npm i && npm run build
 
 FROM caddy:2.3.0-alpine
 
-COPY --from=builder /webapp/dist/ /usr/share/caddy/
+COPY --from=builder /services/webapp/dist/ /usr/share/caddy/

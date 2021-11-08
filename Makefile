@@ -25,31 +25,31 @@ build: build_cliff build_backburner build_webapp
 test: test_cliff test_backburner test_pulsar test_functional test_dockerfiles
 
 build_images: build_webapp
-	(cd backburner && make build_image)
-	(cd cliff && make build_image)
-	(cd pulsar && make build_image)
+	(cd services/backburner && make build_image)
+	(cd services/cliff && make build_image)
+	(cd services/pulsar && make build_image)
 
 publish_images:
 	go run .deploy/publish_images.go
 
 build_webapp:
-	(cd webapp && make build)
+	(cd services/webapp && make build)
 build_backburner:
-	(cd backburner && make build)
+	(cd services/backburner && make build)
 build_cliff:
-	(cd cliff && make build)
+	(cd services/cliff && make build)
 
 test_backburner:
-	(cd backburner && make test)
+	(cd services/backburner && make test)
 test_cliff:
-	(cd cliff && make test)
+	(cd services/cliff && make test)
 test_pulsar:
-	(cd pulsar && make test)
+	(cd services/pulsar && make test)
 test_functional:
-	(cd cliff && make -k test_functional)
+	(cd services/cliff && make -k test_functional)
 test_dockerfiles:
 	(cd .docker && chmod +x hadolint.sh && make lint)
 test_schema:
-	(cd db && make test_schema)
+	(cd services/db && make test_schema)
 test_db:
-	(cd db && make test)
+	(cd services/db && make test)

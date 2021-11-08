@@ -12,9 +12,9 @@
 </template>
 
 <script>
+import axios from 'axios';
 import Miniature from '@/components/Miniature.vue';
 import routes from '@/routes';
-import axios from 'axios';
 
 export default {
   name: 'Home',
@@ -38,8 +38,8 @@ export default {
           this.loading = false;
           this.videos = response.data;
         })
-        .catch((err) => {
-          console.log('ERROR: GETHOMEVIDEO', err);
+        .catch(() => {
+        // console.log('ERROR: GETHOMEVIDEO', err);
         // TODO display error message
         });
     },

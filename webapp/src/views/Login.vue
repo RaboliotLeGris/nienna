@@ -14,9 +14,9 @@
 </template>
 
 <script>
+import axios from 'axios';
 import cookies from 'js-cookie';
 import routes from '@/routes';
-import axios from 'axios';
 
 export default {
   data() {
@@ -47,9 +47,9 @@ export default {
         cookies.set('nienna_username', vm.username, { expires: 30 });
         vm.$store.commit('login', vm.username);
         vm.$router.push('/');
-      }).catch((err) => {
+      }).catch(() => {
         // TODO toast
-        console.error('Catch error:', err);
+        // console.error('Catch error:', err);
       });
     },
   },

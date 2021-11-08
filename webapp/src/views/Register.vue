@@ -14,9 +14,9 @@
 </template>
 
 <script>
+import axios from 'axios';
 import cookies from 'js-cookie';
 import routes from '@/routes';
-import axios from 'axios';
 
 export default {
   data() {

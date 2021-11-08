@@ -5,3 +5,7 @@ install:
 
 build: install
 	npm run build
+
+build-image:
+	rm -rf node_module
+	docker build .

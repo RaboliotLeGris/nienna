@@ -45,3 +45,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: make test_pulsar
+
+  Webapp-Build:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - run: cd webapp && npm i && npm run build

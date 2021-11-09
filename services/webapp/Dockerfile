@@ -1,4 +1,4 @@
-FROM node:16.13.0-alpine@sha256:7001ff8aabeabe8844ef8e7613afaf723e832e19fba55bf1b9929739c7723ece as builder
+FROM node:16.13.0-alpine@sha256:3bca55259ada636e5fee8f2836aba7fa01fed7afd0652e12773ad44af95868b9 as builder
 
 WORKDIR /webapp
 COPY . .

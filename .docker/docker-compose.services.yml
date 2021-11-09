@@ -44,7 +44,7 @@ services:
       - s3:/home/shared
 
   loadbalancer:
-    image: nginx:1.21.1@sha256:a05b0cdd4fc1be3b224ba9662ebdf98fe44c09c0c9215b45f84344c12867002e
+    image: nginx:1.21.3@sha256:644a70516a26004c97d0d85c7fe1d0c3a67ea8ab7ddf4aff193d9f301670cf36
     restart: unless-stopped
     ports:
       - "80:80"

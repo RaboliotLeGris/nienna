@@ -25,7 +25,7 @@ services:
       RABBITMQ_DEFAULT_PASS: "nienna123"
 
   s3:
-    image: minio/minio:RELEASE.2021-07-30T00-02-00Z@sha256:a7b01f7ea0e788466c94dcee588b557377b9b260e51919b0e200daab4ab1777f
+    image: minio/minio:RELEASE.2021-07-30T00-02-00Z@sha256:552e1b5f97878dcd8aae0df1d0a8dcd15a935124bfcbc92041ec31c9b24c898d
     restart: unless-stopped
     ports:
       - "9000:9000"

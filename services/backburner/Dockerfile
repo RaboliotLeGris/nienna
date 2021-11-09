@@ -1,4 +1,4 @@
-FROM rust:1.50.0-buster@sha256:91a70ac97ddb82978060db53b994f5edac1253f33dd417551810a4feac0b2245 as builder
+FROM rust:1.50.0-buster@sha256:25a32551f42722169ea0b50b9ea752bd43a31b3e52371e735ea675866e4eb164 as builder
 
 WORKDIR /usr/src/backburner
 COPY . .

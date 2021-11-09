@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   pg:
-    image: postgres:13.3-buster@sha256:b6df1345afa5990ea32866e5c331eefbf2e30a05f2a715c3a9691a6cb18fa253
+    image: postgres:13.3-buster@sha256:6647385dd9ae11aa2216bf55c54d126b0a85637b3cf4039ef24e3234113588e3
     restart: unless-stopped
     ports:
       - "5432:5432"

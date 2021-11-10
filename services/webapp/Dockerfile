@@ -4,6 +4,6 @@ WORKDIR /webapp
 COPY . .
 RUN npm i && npm run build
 
-FROM caddy:2.3.0-alpine
+FROM caddy:2.4.6-alpine
 
 COPY --from=builder /services/webapp/dist/ /usr/share/caddy/

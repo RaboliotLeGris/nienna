@@ -12,7 +12,7 @@
     "axios": "0.24.0",
     "bulma": "0.9.3",
     "core-js": "3.19.1",
-    "hls.js": "1.1.0",
+    "hls.js": "1.1.1",
     "js-cookie": "3.0.1",
     "video.js": "7.15.4",
     "videojs-contrib-quality-levels": "2.1.0",

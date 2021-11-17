@@ -1,4 +1,4 @@
-FROM golang:1.17.3-buster@sha256:eac5f1bc63ff9a91539f0048afc710e690623f75995e79a5da515004ea8de826 as builder
+FROM golang:1.17.3-buster@sha256:130b18fb9ba6a6d7ef89762e59475a04e2a8a0855270e4157ad330cc95215725 as builder
 
 WORKDIR /go/src/cliff
 

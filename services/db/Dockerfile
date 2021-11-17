@@ -5,7 +5,7 @@ COPY . .
 
 RUN go build -o build/db
 
-FROM debian:10.11-slim@sha256:544c93597c784cf68dbe492ef35c00de7f4f6a990955c7144a40b20d86a3475f
+FROM debian:10.11-slim@sha256:cfadaa70a452076a478dcfcf2da3a3dc3b741450afed5ab67a7f3df161387c48
 
 WORKDIR /db
 COPY --from=builder /go/src/db/build/db /db

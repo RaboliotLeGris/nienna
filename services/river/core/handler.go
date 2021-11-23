@@ -4,12 +4,12 @@ import (
 	"bytes"
 	"fmt"
 	"io"
-	"log"
 	"os"
 	"path/filepath"
 
 	"github.com/pkg/errors"
 	"github.com/yutopp/go-flv"
+	log "github.com/sirupsen/logrus"
 	flvtag "github.com/yutopp/go-flv/tag"
 	"github.com/yutopp/go-rtmp"
 	rtmpmsg "github.com/yutopp/go-rtmp/message"
@@ -28,17 +28,17 @@ func (h *Handler) OnServe(conn *rtmp.Conn) {
 }
 
 func (h *Handler) OnConnect(timestamp uint32, cmd *rtmpmsg.NetConnectionConnect) error {
-	log.Printf("OnConnect: %#v", cmd)
+	log.Debug("OnConnect: ", cmd)
 	return nil
 }
 
 func (h *Handler) OnCreateStream(timestamp uint32, cmd *rtmpmsg.NetConnectionCreateStream) error {
-	log.Printf("OnCreateStream: %#v", cmd)
+	log.Debug("OnCreateStream: ", cmd)
 	return nil
 }
 
 func (h *Handler) OnPublish(timestamp uint32, cmd *rtmpmsg.NetStreamPublish) error {
-	log.Printf("OnPublish: %#v", cmd)
+	log.Debug("OnPublish: ", cmd)
 
 	// (example) Reject a connection when PublishingName is empty
 	if cmd.PublishingName == "" {
@@ -67,6 +67,7 @@ func (h *Handler) OnPublish(timestamp uint32, cmd *rtmpmsg.NetStreamPublish) err
 }
 
 func (h *Handler) OnSetDataFrame(timestamp uint32, data *rtmpmsg.NetStreamSetDataFrame) error {
+	log.Debug("OnSetDataFrame: ", data)
 	r := bytes.NewReader(data.Payload)
 
 	var script flvtag.ScriptData

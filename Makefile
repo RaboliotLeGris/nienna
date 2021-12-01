@@ -53,3 +53,5 @@ test_schema:
 	(cd services/db && make test_schema)
 test_db:
 	(cd services/db && make test)
+test_webapp:
+	(cd services/webapp && make test)

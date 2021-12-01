@@ -9,3 +9,5 @@ build: install
 build-image:
 	rm -rf node_module
 	docker build .
+
+test: build-image

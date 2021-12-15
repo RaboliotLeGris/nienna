@@ -1,9 +1,9 @@
-FROM node:17.1.0-alpine@sha256:993bdfb0da7ae8fa4dad7282f797e3e26e88f810d410e0b0409d132d1fb17af3 as builder
+FROM node:16 as builder
 
 WORKDIR /webapp
 COPY . .
 RUN npm i && npm run build
 
-FROM caddy:2.4.6-alpine
+FROM nginx:1.21.4@sha256:2f14a471f2c2819a3faf88b72f56a0372ff5af4cb42ec45aab00c03ca5c9989f
 
-COPY --from=builder /services/webapp/dist/ /usr/share/caddy/
+COPY --from=builder /webapp/dist/ /usr/share/nginx/html

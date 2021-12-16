@@ -11,7 +11,7 @@ import (
 )
 
 func Test_Health(t *testing.T) {
-	host := os.Getenv("CLIFF_HOST")
+	host := os.Getenv("ENDPOINT_HOST")
 	g := Goblin(t)
 	g.Describe("Health >", func() {
 		g.It("Should return a 200 with correct body", func() {

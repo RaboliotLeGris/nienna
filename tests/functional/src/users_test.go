@@ -11,7 +11,7 @@ import (
 )
 
 func Test_Users(t *testing.T) {
-	host := os.Getenv("CLIFF_HOST")
+	host := os.Getenv("ENDPOINT_HOST")
 	g := Goblin(t)
 
 	g.Describe("User >", func() {

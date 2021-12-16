@@ -2,6 +2,8 @@
 
 d_launch: clean
 	docker-compose -f .docker/docker-compose.app.yml -f .docker/docker-compose.services.yml -p nienna up --build --remove-orphans
+d_launch_bg: clean
+	docker-compose -f .docker/docker-compose.app.yml -f .docker/docker-compose.services.yml -p nienna up -d --remove-orphans
 d_dev: clean
 	docker-compose -f .docker/docker-compose.app.dev.yml -f .docker/docker-compose.services.yml -p nienna up --build --remove-orphans
 
@@ -46,7 +48,7 @@ test_cliff:
 test_pulsar:
 	(cd services/pulsar && make test)
 test_functional:
-	(cd services/cliff && make -k test_functional)
+	(cd tests/functional && make -k test)
 test_dockerfiles:
 	(cd .docker && chmod +x hadolint.sh && make lint)
 test_schema:

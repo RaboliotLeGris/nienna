@@ -2,6 +2,7 @@ package nienna_test
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"testing"
@@ -16,10 +17,10 @@ import (
 )
 
 func Test_Video(t *testing.T) {
-	host := os.Getenv("CLIFF_HOST")
+	host := os.Getenv("ENDPOINT_HOST")
 	g := Goblin(t)
 	g.Describe("Video >", func() {
-		rootPath := "samples/"
+		rootPath := "../samples/"
 		g.Describe("Upload >", func() {
 			g.It("Without being logged should fail", func() {
 				session := helpers.NewSession(host)
@@ -27,6 +28,7 @@ func Test_Video(t *testing.T) {
 				filename := "sample_960x400_ocean_with_audio.flv"
 
 				statusCode, _, err := session.PostVideo("/api/videos/upload", rootPath+filename, title)
+				fmt.Println(err)
 				g.Assert(err).IsNil()
 				g.Assert(statusCode).Equal(401)
 			})

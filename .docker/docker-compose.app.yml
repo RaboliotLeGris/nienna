@@ -62,5 +62,3 @@ services:
     restart: unless-stopped
     volumes:
       - $PWD/.docker/webapp/nginx.conf:/etc/nginx/nginx.conf
-    depends_on:
-      - loadbalancer

@@ -4,6 +4,6 @@ WORKDIR /webapp
 COPY . .
 RUN npm i && npm run build
 
-FROM nginx:1.21.4@sha256:2f14a471f2c2819a3faf88b72f56a0372ff5af4cb42ec45aab00c03ca5c9989f
+FROM nginx:1.21.4@sha256:366e9f1ddebdb844044c2fafd13b75271a9f620819370f8971220c2b330a9254
 
 COPY --from=builder /webapp/dist/ /usr/share/nginx/html

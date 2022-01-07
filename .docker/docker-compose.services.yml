@@ -16,7 +16,7 @@ services:
     restart: unless-stopped
 
   rabbitmq:
-    image: rabbitmq:3.9.12-management@sha256:08ea381cf0a64361dfeafc9b3d99f37199e048071c65a760f20dcd572ce1d879
+    image: rabbitmq:3.9.12-management@sha256:821c31bdb35240822e9a7b95eb57e2aaa9590dc367b0598b58efd15fb037fc8c
     restart: unless-stopped
     ports:
       - "15672:15672"

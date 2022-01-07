@@ -44,7 +44,7 @@ services:
       - s3:/home/shared
 
   loadbalancer:
-    image: traefik:v2.6@sha256:d65d0be92a53c004a163cb35e4c0c31a58edebcef1de496a319b028fa2bd09a7
+    image: traefik:v2.6@sha256:44cbafeaa8d0387751ccb557a7738bb1d2a908cdd358e8acefcfcb8e8b9faf8f
     restart: unless-stopped
     ports:
       - "80:80"

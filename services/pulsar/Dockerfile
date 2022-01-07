@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/dotnet/runtime:5.0.13-buster-slim-amd64@sha256:6e7f7cfb89f5f23c2a731905f450fecc73dfebf53fe892dd65e902d6897bca1f AS base
 WORKDIR /pulsar
 
-FROM mcr.microsoft.com/dotnet/sdk:5.0.403-buster-slim-amd64@sha256:fedc10704a804fb3ded5bc4a81a82e102eb1ec2a7b219062cc9a08b5566c177f AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0.404-buster-slim-amd64@sha256:17e8a710a49a73bba03fbe4005fb791851aef8cf2af3efa4ec78767557e410e5 AS build
 WORKDIR /src
 COPY ["pulsar/pulsar.csproj", "pulsar/"]
 

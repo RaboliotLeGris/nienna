@@ -10,7 +10,7 @@ require (
 	github.com/minio/minio-go/v7 v7.0.20
 	github.com/prometheus/client_golang v1.11.0
 	github.com/rbcervilla/redisstore/v8 v8.1.0
-	github.com/rs/cors v1.8.0
+	github.com/rs/cors v1.8.2
 	github.com/sirupsen/logrus v1.8.1
 	github.com/streadway/amqp v1.0.0
 	github.com/thanhpk/randstr v1.0.4

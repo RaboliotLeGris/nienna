@@ -1,0 +1,48 @@
+replicaCount: 1
+image:
+  repository: raboliotlegris/nienna_webapp
+  tag: "v0.2.0"
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: "webapp"
+
+podAnnotations: {}
+podSecurityContext: {}
+
+securityContext: {}
+
+service:
+  name: webapp
+  type: ClusterIP
+  port: 80
+  path: /
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+
+resources: {}
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+
+nodeSelector: {}
+tolerations: []
+affinity: {}

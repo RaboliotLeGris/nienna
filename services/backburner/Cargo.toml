@@ -20,4 +20,4 @@ lapin = "1.9.0"
 rust-s3 = "0.26.4"
 
 [dev-dependencies]
-serial_test = "0.5.1"
+serial_test = "0.6.0"

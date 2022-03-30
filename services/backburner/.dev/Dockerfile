@@ -1,4 +1,4 @@
-FROM rust:1.59.0-buster@sha256:80f2e747f4d6b572e79b845df87b47dd9102f236113efd8921a115f4515b7df1
+FROM rust:1.59.0-buster@sha256:bf759cad8c6d7b3a5f879ac55f753e3b60fa010a955a8f6ccf4e0c6a5d3a45f8
 
 RUN apt-get update && apt-get install --no-install-recommends -y ffmpeg=7:4.1.8-0+deb10u1 && \
     rm -rf /var/lib/apt/lists/* && \

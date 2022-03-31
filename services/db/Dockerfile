@@ -1,4 +1,4 @@
-FROM golang:1.18.0-buster@sha256:87126aede310b29a5ee8fb7c655666e6fa1d8656fd5a26b3364021137cfcc453 as builder
+FROM golang:1.18.0-buster@sha256:f2b1b8a903a8204cb0e84db2348552df552af477390c2307f75a493138b58da8 as builder
 
 WORKDIR /go/src/db
 COPY . .

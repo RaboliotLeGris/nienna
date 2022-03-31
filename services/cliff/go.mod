@@ -14,5 +14,5 @@ require (
 	github.com/sirupsen/logrus v1.8.1
 	github.com/streadway/amqp v1.0.0
 	github.com/thanhpk/randstr v1.0.4
-	golang.org/x/crypto v0.0.0-20220321153916-2c7772ba3064
+	golang.org/x/crypto v0.0.0-20220331220935-ae2d96664a29
 )

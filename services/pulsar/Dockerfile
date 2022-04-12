@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/runtime:5.0.15-buster-slim-amd64@sha256:f06565e593634e0448d8fed72e028d31c01660854c98dfcb1bb247878e1db59d AS base
+FROM mcr.microsoft.com/dotnet/runtime:5.0.16-buster-slim-amd64@sha256:3cc2269da4a7e40248f39ce08a5e74288d6e59d4be68b57927ce36205847df60 AS base
 WORKDIR /pulsar
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0.406-buster-slim-amd64@sha256:654ebc0abbdb1b49f446dfe9a12cad3c47867af03a835426d98bec6c3f920057 AS build

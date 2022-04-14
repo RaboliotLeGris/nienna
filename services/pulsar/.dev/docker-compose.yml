@@ -14,7 +14,7 @@ services:
       - pg:/var/lib/postgresql/data
 
   rabbitmq:
-    image: rabbitmq:3.9.14-management@sha256:4eb967e3adb024f232f5aec77ddc559256b826d00f630e9cfb0d4b2b39e6b003
+    image: rabbitmq:3.9.15-management@sha256:0e54f7367502db2576b9587015fc227f488c614425a6d98bdd1a25bb65862ade
     ports:
       - "15672:15672"
       - "5672:5672"

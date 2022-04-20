@@ -4,7 +4,7 @@ WORKDIR /usr/src/backburner
 COPY . .
 RUN cargo build --release
 
-FROM debian:11.3-slim@sha256:78fd65998de7a59a001d792fe2d3a6d2ea25b6f3f068e5c84881250373577414
+FROM debian:11.3-slim@sha256:f75d8a3ac10acdaa9be6052ea5f28bcfa56015ff02298831994bd3e6d66f7e57
 
 RUN apt-get update && apt-get install --no-install-recommends -y ffmpeg=7:4.3.3-0+deb11u1 && \
     rm -rf /var/lib/apt/lists/*

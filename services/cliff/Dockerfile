@@ -5,7 +5,7 @@ COPY . .
 
 RUN go build -o build/cliff
 
-FROM debian:11.3-slim@sha256:78fd65998de7a59a001d792fe2d3a6d2ea25b6f3f068e5c84881250373577414
+FROM debian:11.3-slim@sha256:f75d8a3ac10acdaa9be6052ea5f28bcfa56015ff02298831994bd3e6d66f7e57
 
 WORKDIR /cliff
 COPY --from=builder /go/src/cliff/build/cliff /cliff

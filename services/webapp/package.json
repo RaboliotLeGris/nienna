@@ -17,16 +17,16 @@
     "video.js": "7.18.1",
     "videojs-contrib-quality-levels": "2.1.0",
     "videojs-hls-quality-selector": "1.1.4",
-    "vue": "2.6.14",
+    "vue": "3.2.33",
     "vue-router": "3.5.3",
-    "vuex": "3.6.2"
+    "vuex": "4.0.2"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "4.5.17",
-    "@vue/cli-plugin-eslint": "4.5.17",
-    "@vue/cli-plugin-router": "4.5.17",
-    "@vue/cli-plugin-vuex": "4.5.17",
-    "@vue/cli-service": "4.5.17",
+    "@vue/cli-plugin-babel": "5.0.4",
+    "@vue/cli-plugin-eslint": "5.0.4",
+    "@vue/cli-plugin-router": "5.0.4",
+    "@vue/cli-plugin-vuex": "5.0.4",
+    "@vue/cli-service": "5.0.4",
     "@vue/eslint-config-airbnb": "5.3.0",
     "babel-eslint": "10.1.0",
     "eslint": "6.8.0",

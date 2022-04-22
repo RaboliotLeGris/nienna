@@ -1,8 +1,8 @@
 # Nienna
 
-Nienna is a solution to upload and watch videos. It converts uploaded videos to HLS and serve it on demand.
+**/!\ Nienna is no longer actively be developed nor maintained**
 
-It later aims to allow streaming.
+Nienna is a solution to upload and watch videos. It converts uploaded videos to HLS and serve it on demand.
 
 ## Name origin:
 
@@ -32,22 +32,4 @@ It starts all the containers, but it also mount each services without launching 
 * Cliff (Go) -> serve webapp, and serve http request (handle uploaded file and watching)
 * Backburner (Rust) -> Process uploaded video into HLS
 * Pulsar (.Net) -> Save event from videos
-* River -> handle incoming livestream and save them (done later)
 
-### Tiers
-
-* Bucket storage (Minio) -> https://hub.docker.com/r/minio/minio/
-* Asynchronous message bus (RabbitMQ) -> https://hub.docker.com/_/rabbitmq
-* Relational database (Pgsql) -> https://hub.docker.com/_/postgres
-* Reverse proxy (Caddy) -> https://hub.docker.com/_/caddy
-
-## TODOLIST
-
-* Deploy -> Generate Docker-compose with code
-* Deploy -> Write ansible script to deploy docker-compose to some dedicated server
-* Doc -> flow
-* cliff -> fix memory usage when uploading file to minio (another client or some tweaks)
-* cliff -> Use resumable ?
-* cliff -> Prevent SQL injection (OMG)
-* Check -> https://github.com/dhall-lang/dhall-lang/blob/master/README.md - YAML A M L
-* RMQ -> configure
